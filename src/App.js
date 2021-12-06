@@ -7,7 +7,7 @@ import ProfileIndex from "./components/profile/ProfileIndex";
 // Components
 import Navbar from "./components/navbar/Navbar";
 import Header from "./components/header/Header";
-import Container from "./components/content/Container";
+import Container from "./components/container/Container";
 
 function App() {
   const [sideToggle, setSideToggle] = useState(false);
