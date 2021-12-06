@@ -1,19 +1,23 @@
-import Hello from './components/Hello'
+import {useState} from "react";
 import { useDispatch, useSelector } from 'react-redux'
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import { setLogged } from './actions/user'
 
-// INFO: This is only a example, this will be removed
+// Components
+import Navbar from "./components/navbar/Navbar";
+import Header from "./components/header/Header";
+import Content from "./components/content/Content";
 
 function App() {
-  const dispatch = useDispatch()
-  const { isLogged } = useSelector(state => state.user)
+  const [sideToggle, setSideToggle] = useState(false);
 
   return (
-    <>
-      <button onClick={() => dispatch(setLogged())}>Change Logged</button>
-      <p>Is logged? {isLogged.toString()}</p>
-      <Hello />
-    </>
+    <Router>
+      <Header click={() => setSideToggle(false) } clickClose={() => setSideToggle(true) } show={sideToggle}/>
+      <Navbar show={sideToggle} click={() => setSideToggle(false)}/>
+      <Content show={sideToggle} />
+
+    </Router>
   )
 }
 
