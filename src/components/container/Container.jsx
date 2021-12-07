@@ -16,6 +16,7 @@ const Content = ({show}) => {
       <section className={show && 'close'}>
         <Switch>
           <Route exact path="/roles" component={ProfileIndex} />
+
         </Switch>
         <button onClick={() => dispatch(setLogged())}>Change Logged</button>
         <p>Is logged? {isLogged.toString()}</p>
