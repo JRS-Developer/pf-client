@@ -3,9 +3,7 @@ import styled from 'styled-components';
 export const NavbarDiv = styled.div`
   & .navbar{
     padding: 20px 15px;
-
     font-family: "Roboto", sans-serif;
-    background: #ffffff;
     width: 260px;
     overflow: auto;
     display: inline-block;
@@ -32,7 +30,6 @@ export const NavbarDiv = styled.div`
     position: relative;
     display: flex;
     text-decoration: none;
-    color: #171717;
   }
 
   & .navbar_links > li.navbar_list > a > .icono{
@@ -50,13 +47,10 @@ export const NavbarDiv = styled.div`
     padding: 7px 5px;
     transition: all 0.3s;
     text-decoration: none;
-    color: #171717;
     border-radius: 10px;
   }
 
   & .navbar_sub_links > li > a:hover{
-    background-color: #1976D2;
-    color: #f4f4f4;
   }
 
   & .navbar_sub_links > li > a > span{
