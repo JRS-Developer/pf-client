@@ -7,8 +7,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+
 import { Close, Save } from '@mui/icons-material';
-import './Profile.css'
 
 const ProfileForm =  ({open, handleClose, titleForm, dataRole}) => {
   const [role, setRole] = React.useState(dataRole);

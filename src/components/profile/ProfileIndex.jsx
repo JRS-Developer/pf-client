@@ -1,7 +1,5 @@
 import React, {useState} from "react";
 import MaterialTable from "material-table";
-
-import './Profile.css';
 import ProfileForm from "./ProfileForm";
 import AlertDialog from "../alert/AlertDialog";
 import ConfirmDialog from "../alert/ConfirmDialog";
