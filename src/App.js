@@ -23,9 +23,9 @@ function App() {
           <Route path="/">
             <Header click={() => setSideToggle(false) } clickClose={() => setSideToggle(true) } show={sideToggle}/>
             <Navbar show={sideToggle} click={() => setSideToggle(false)}/>
+            <Container show={sideToggle} />
           </Route>
-        </Switch>
-        <Container show={sideToggle} />
+        </Switch>        
       </ThemeProvider>
     </Router>
   )
