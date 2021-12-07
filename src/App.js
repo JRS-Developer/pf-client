@@ -2,7 +2,8 @@ import {useState} from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import { setLogged } from './actions/user'
-import ProfileIndex from "./components/profile/ProfileIndex";
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from './theme'
 
 // Components
 import Navbar from "./components/navbar/Navbar";
@@ -16,14 +17,16 @@ function App() {
 
   return (
     <Router>
-      <Switch>
-      <Route exact path="/login" component={Login}/>
-      <Route path="/">
-      <Header click={() => setSideToggle(false) } clickClose={() => setSideToggle(true) } show={sideToggle}/>
-      <Navbar show={sideToggle} click={() => setSideToggle(false)}/>
-      </Route>
-      </Switch>
-      <Container show={sideToggle} />
+      <ThemeProvider theme={theme}>
+        <Switch>
+          <Route exact path="/login" component={Login}/>
+          <Route path="/">
+            <Header click={() => setSideToggle(false) } clickClose={() => setSideToggle(true) } show={sideToggle}/>
+            <Navbar show={sideToggle} click={() => setSideToggle(false)}/>
+          </Route>
+        </Switch>
+        <Container show={sideToggle} />
+      </ThemeProvider>
     </Router>
   )
 }
