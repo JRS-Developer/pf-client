@@ -3,12 +3,21 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
+
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import './Profile.css'
 
-const ProfileForm =  ({open, handleClose}) => {
+import { Close, Save } from '@mui/icons-material';
+
+const ProfileForm =  ({open, handleClose, titleForm, dataRole}) => {
+  const [role, setRole] = React.useState(dataRole);
+
+  const handleChange = (e) => {
+    setRole({
+      ...role, [e.target.name]: e.target.value
+    })
+  }
 
   return (
     <div>
@@ -21,12 +30,14 @@ const ProfileForm =  ({open, handleClose}) => {
         onClose={handleClose}
         maxWidth={`sm`}
         fullWidth={`sm`}
+        scroll='paper'
       >
-        <DialogTitle>Add Role</DialogTitle>
+        <DialogTitle>{titleForm}</DialogTitle>
         <DialogContent>
           <DialogContentText>
 
           </DialogContentText>
+          <TextField id="outlined-basic" variant="standard" type="hidden" value={role.id}/>
           <TextField
             name="name"
             autoFocus
@@ -34,13 +45,19 @@ const ProfileForm =  ({open, handleClose}) => {
             id="name"
             label="Name"
             type="text"
-            fullWidth
+            value={role.name}
+            onChange={handleChange}
+            fullWidth={true}
             variant="outlined"
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Save</Button>
+          <Button variant="contained" onClick={handleClose} endIcon={<Save />}>
+            Guardar
+          </Button>
+          <Button variant="outlined" onClick={handleClose} startIcon={<Close />}>
+            Cancelar
+          </Button>
         </DialogActions>
       </Dialog>
     </div>
