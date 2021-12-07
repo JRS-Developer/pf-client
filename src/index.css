@@ -19,8 +19,21 @@ img{
     padding: 16.5px 14px !important;
 }
 
-.MuiDialogActions-root > .MuiButtonBase-root{
-    padding: 6px 8px !important;
+.css-hlj6pa-MuiDialogActions-root{
+    padding: 8px 20px !important;
 }
 
-/*header*/
+.MuiDialogActions-root > .MuiButtonBase-root{
+    padding: 6px 15px !important;
+    border-radius: 4px !important;
+}
+
+.MuiDialogActions-root > .MuiButton-contained {
+    color: white !important;
+    background-color: #1976d2 !important;
+}
+
+.MuiDialogActions-root > .MuiButton-outlined {
+    border: 1px solid rgba(25, 118, 210, 0.5);
+    color: #1976d2;
+}
