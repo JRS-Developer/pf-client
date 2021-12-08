@@ -159,7 +159,7 @@ export default function Header({click, clickClose, show}) {
   return (
     <HeaderDiv>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="fixed">
+        <AppBar position="fixed" sx={{bgcolor: 'primary.main'}}>
           <Toolbar >
             <IconButton
               size="large"
