@@ -35,8 +35,6 @@ export default function ConfirmDialog({openConfirm, handleCloseConfirm, message,
         <DialogContent>
           <DialogContentText>
             {message}
-            <p><b>Id:</b> {dataRole.id}</p>
-            <p><b>Name:</b> {dataRole.name}</p>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
