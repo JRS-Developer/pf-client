@@ -27,13 +27,3 @@ img{
     padding: 6px 15px !important;
     border-radius: 4px !important;
 }
-
-.MuiDialogActions-root > .MuiButton-contained {
-    color: white !important;
-    background-color: #1976d2 !important;
-}
-
-.MuiDialogActions-root > .MuiButton-outlined {
-    border: 1px solid rgba(25, 118, 210, 0.5);
-    color: #1976d2;
-}
