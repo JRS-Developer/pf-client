@@ -11,7 +11,7 @@ export default function validate(input, name, error) {
   } else if (name === "email") {
     if (!input[name]) {
       errors[name] = `This field is required`;
-    } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(input[name])){
+    } else if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(input[name])){
       errors[name] = `Must be a valid email`;
     } else {
       delete errors[name];
