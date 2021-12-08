@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import { setLogged } from './actions/user'
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './theme'
+import CssBaseline from '@mui/material/CssBaseline'
 
 // Components
 import Navbar from "./components/navbar/Navbar";
@@ -18,6 +19,7 @@ function App() {
   return (
     <Router>
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Switch>
           <Route exact path="/login" component={Login}/>
           <Route path="/">
