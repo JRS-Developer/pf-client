@@ -11,8 +11,7 @@ export const NavbarDiv = styled.div`
     position: fixed;
     top: 64px;
     left: 0;
-    border-right: 1px solid #f2f4f9;
-    box-shadow: 0 8px 10px 0 rgba(183, 192, 206, 0.2);
+    box-shadow: 0 8px 10px 0 rgba(183, 192, 206, 0.8);
     z-index: 999 !important;
     transform: translateX(0%);
     transition: all 0.3s ease-out;
@@ -30,6 +29,8 @@ export const NavbarDiv = styled.div`
     position: relative;
     display: flex;
     text-decoration: none;
+    margin: 15px 0;
+    font-weight: bold;
   }
 
   & .navbar_links > li.navbar_list > a > .icono{
