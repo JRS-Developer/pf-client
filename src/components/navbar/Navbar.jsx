@@ -69,14 +69,14 @@ const data = [
     sub_data: [
       {
         id: 31,
-        name: "Cursos",
-        url: "/cursos",
+        name: "Materia",
+        url: "/materias",
         module_id: 3,
         icon: "campaign"
       }, {
         id: 32,
-        name: "Cursos 2",
-        url: "/cursos",
+        name: "Materia 2",
+        url: "/materias",
         module_id: 3,
         icon: "campaign"
       }
