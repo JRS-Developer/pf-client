@@ -3,7 +3,7 @@ import {useState} from "react";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 // import { setLogged } from './actions/user'
 import { ThemeProvider } from '@mui/material/styles';
-import { DarkTheme, LightTheme } from './theme'
+import * as theme from './theme'
 import CssBaseline from '@mui/material/CssBaseline'
 
 // Components
@@ -21,8 +21,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 function App() {
   const [sideToggle, setSideToggle] = useState(false);
-  const [mode, setMode] = useState("dark");
-  const selectedTheme = mode === "dark" ? DarkTheme : LightTheme;
+  const [mode, setMode] = useState("GaiaDarkTheme");
+  const selectedTheme = theme[mode]
   const dispatch = useDispatch()
   const selector = useSelector((state)=> state.users)
   console.log(selector)
@@ -34,7 +34,7 @@ function App() {
         <Switch>
           <Route exact path="/login" component={Login}/>
           <Route path="/">
-            <Header click={() => setSideToggle(false) } clickClose={() => setSideToggle(true) } show={sideToggle} setMode={setMode} mode={mode}/>
+            <Header click={() => setSideToggle(false) } clickClose={() => setSideToggle(true) } show={sideToggle} setMode={setMode}/>
             <Navbar show={sideToggle} click={() => setSideToggle(false)}/>
             <Container show={sideToggle} />
           </Route>

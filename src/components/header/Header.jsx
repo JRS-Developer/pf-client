@@ -16,7 +16,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Close } from '@mui/icons-material';
-import Switch from '@mui/material/Switch';
+import ThemeChanger from './ThemeChanger'
 import {HeaderDiv} from "./HeaderStyles"
 
 const Search = styled('div')(({ theme }) => ({
@@ -59,7 +59,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Header({click, clickClose, show, setMode, mode}) {
+export default function Header({click, clickClose, show, setMode}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -102,6 +102,10 @@ export default function Header({click, clickClose, show, setMode, mode}) {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem>
+        <ThemeChanger setMode={setMode}/>
+      </MenuItem>
+      
     </Menu>
   );
 
@@ -229,7 +233,6 @@ export default function Header({click, clickClose, show, setMode, mode}) {
                 <MoreIcon />
               </IconButton>
             </Box>
-            <Switch defaultChecked size="small" color="secondary" onChange={() => setMode(mode === "light" ? "dark" : "light")} />
           </Toolbar>
         </AppBar>
         {renderMobileMenu}
