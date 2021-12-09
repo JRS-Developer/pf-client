@@ -7,6 +7,7 @@ import Hello from '../Hello';
 import {setLogged} from "../../actions/user";
 import ProfileIndex from "../profile/ProfileIndex";
 import CreateUser from "../createUser/CreateUser"
+import ActionIndex from "../action/ActionIndex";
 
 const Content = ({show}) => {
   const dispatch = useDispatch()
@@ -17,6 +18,7 @@ const Content = ({show}) => {
       <section className={show && 'close'}>
         <Switch>
           <Route exact path="/roles" component={ProfileIndex} />
+          <Route exact path="/actions" component={ActionIndex} />
           <Route exact path="/create" component={CreateUser}/>
         </Switch>
        {/*  <button onClick={() => dispatch(setLogged())}>Change Logged</button>
