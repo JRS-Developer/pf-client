@@ -8,7 +8,7 @@ import {setLogged} from "../../actions/user";
 import ProfileIndex from "../profile/ProfileIndex";
 import ActionIndex from "../action/ActionIndex";
 import UserIndex from "../User/UserIndex"
-
+import ModuleIndex from "../module/ModuleIndex";
 
 const Content = ({show}) => {
   const dispatch = useDispatch()
@@ -20,6 +20,7 @@ const Content = ({show}) => {
         <Switch>
           <Route exact path="/roles" component={ProfileIndex} />
           <Route exact path="/actions" component={ActionIndex} />
+          <Route exact path="/modules" component={ModuleIndex} />
           <Route exact path="/users" component={UserIndex}/>
 
         </Switch>
