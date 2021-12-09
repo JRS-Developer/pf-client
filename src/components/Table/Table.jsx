@@ -10,7 +10,7 @@ import {
 import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
 import {AddCircle, Edit, Delete } from '@mui/icons-material';
-import {Box} from "@mui/material";
+import {Box, Paper} from "@mui/material";
 import AlertDialog from "../alert/AlertDialog";
 import ConfirmDialog from "../alert/ConfirmDialog";
 import Tooltip from '@mui/material/Tooltip';
@@ -190,38 +190,40 @@ const Table = ({data, DialogForm, title}) => {
             </Tooltip>
           </Box>
         </Box>
-        <Box sx={{ height: 'calc(100vh - 170px)', width: 1 }}>
-          <DataGrid
-            //checkboxSelection
-            pageSize={pageSize}
-            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-            pagination
-            rowsPerPageOptions={[25, 50, 100]}
-            //pageSize={2}
-            sx={{
-              borderRadius: 2,
-              boxShadow: 3,
-              border: 0,
-              borderColor: 'primary.light',
-              '& .MuiDataGrid-cell:hover': {
-                color: 'primary.main',
-              },
-            }}
-            onRowClick={(newSelection) => {
-              setSelection(newSelection.row);
-            }}
-            components={{ Toolbar: QuickSearchToolbar }}
-            rows={rows}
-            columns={data.columns}
-            componentsProps={{
-              toolbar: {
-                value: searchText,
-                onChange: (event) => requestSearch(event.target.value),
-                clearSearch: () => requestSearch(''),
-              },
-            }}
-          />
-        </Box>
+        <Paper elevation={90}>
+          <Box sx={{ height: 'calc(100vh - 170px)', width: 1 }}>
+            <DataGrid
+              //checkboxSelection
+              pageSize={pageSize}
+              onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+              pagination
+              rowsPerPageOptions={[25, 50, 100]}
+              //pageSize={2}
+              sx={{
+                borderRadius: 2,
+                boxShadow: 3,
+                border: 0,
+                borderColor: 'primary.light',
+                '& .MuiDataGrid-cell:hover': {
+                  color: 'primary.main',
+                },
+              }}
+              onRowClick={(newSelection) => {
+                setSelection(newSelection.row);
+              }}
+              components={{ Toolbar: QuickSearchToolbar }}
+              rows={rows}
+              columns={data.columns}
+              componentsProps={{
+                toolbar: {
+                  value: searchText,
+                  onChange: (event) => requestSearch(event.target.value),
+                  clearSearch: () => requestSearch(''),
+                },
+              }}
+            />
+          </Box>
+        </Paper>
     </Box>
   )
 }

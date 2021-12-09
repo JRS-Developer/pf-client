@@ -27,6 +27,7 @@ const currencies = [
   },
 ]
 export default function UserForm({open, handleClose, titleForm, dataForm}) {
+  console.log(dataForm)
   
   const [input, setInput] = useState(dataForm);
 

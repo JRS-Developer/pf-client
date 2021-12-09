@@ -3,41 +3,41 @@ import Table from "../Table/Table.jsx"
 
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 100 },
+  { field: 'id', headerName: 'ID', width: 50 },
   {
     field: 'firstName',
     headerName: 'Nombre',
-    width: 300,
+    width: 120,
     editable: true,
   },
   {
     field: 'lastName',
     headerName: 'Apellido',
-    width: 300,
+    width: 120,
     editable: true,
   },
   {
     field: 'role',
     headerName: 'Rol',
-    width: 300,
+    width: 120,
     editable: true,
   },
   {
     field: 'birthday',
     headerName: 'Fecha de Nacimiento',
-    width: 300,
+    width: 170,
     editable: true,
   },
   {
     field: 'country',
     headerName: 'País',
-    width: 300,
+    width: 120,
     editable: true,
   },
   {
     field: 'email',
     headerName: 'Correo Electronico',
-    width: 300,
+    width: 150,
     editable: true,
   },
 ];
