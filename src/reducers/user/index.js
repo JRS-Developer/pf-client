@@ -1,17 +1,52 @@
 // INFO: Simple user reducer
-import { SET_LOGGED } from '../../actions/user/types'
+import * as actionTypes from '../../actions/user/types'
 
 const initialState = {
+  users: [],
   isLogged: false,
 }
 
+
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case SET_LOGGED:
+    case actionTypes.GET_USERS_REQUEST:
       return {
         ...state,
-        isLogged: true,
+        loading: true,
+        users: []
       }
+
+    case actionTypes.GET_USERS:
+        return {
+          ...state,
+          loading: false,
+          users: action.payload
+        }
+    
+    // case actionTypes.GET_USER:
+    // return {
+    //   ...state,
+    //   loading: false,
+    //   users: action.payload
+    // }
+    // case actionTypes.ADD_USER:
+    // return {
+    //   ...state,
+    //   loading: false,
+    //   users: action.payload
+    // }
+    // case actionTypes.DELETE_USER:
+    // return {
+    //   ...state,
+    //   loading: false,
+    //   users: action.payload
+    // }
+    // case actionTypes.EDIT_USERS:
+    // return {
+    //   ...state,
+    //   loading: false,
+    //   users: action.payload
+    // }
     default:
       return state
   }
