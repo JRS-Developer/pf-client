@@ -30,14 +30,9 @@ export default function UserForm({open, handleClose, titleForm, dataForm}) {
   const [input, setInput] = useState(dataForm);
 
   const [errors, setErrors] = useState({
-    firstName: ``,
-    lastName: ``,
-    email: ``,
-    id: ``,
-    country: ``,
-    role: ``,
-    birthday: ``,
   })
+
+  console.log(input)
 
   /* const [input, setInput] = useState({
     firstName: '',
@@ -149,7 +144,6 @@ export default function UserForm({open, handleClose, titleForm, dataForm}) {
             label="Seleccione"
             value={input.rol}
             onChange={handleChange}
-            onFocus={handleChange}
             helperText={errors.role}
             defaultValue={input.role}
           >
@@ -185,7 +179,7 @@ export default function UserForm({open, handleClose, titleForm, dataForm}) {
       </Stack>
       </DialogContent>
         <DialogActions>
-          <Button type="submit" disabled={Object.values(input).length === 8 && Object.keys(errors).length === 0 ? false : true} variant="contained" onClick={handleClose} endIcon={<Save />}>
+          <Button type="submit" disabled={Object.values(input).length === 7 && Object.values(errors).length === 0 ? false : true} variant="contained" onClick={handleClose} endIcon={<Save />}>
             Guardar
           </Button>
           <Button variant="outlined" onClick={handleClose} startIcon={<Close />}>
