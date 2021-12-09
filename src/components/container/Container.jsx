@@ -9,6 +9,7 @@ import ProfileIndex from "../profile/ProfileIndex";
 import ActionIndex from "../action/ActionIndex";
 import UserIndex from "../User/UserIndex"
 import ModuleIndex from "../module/ModuleIndex";
+import ClassRoom from "../classroom/classroom";
 
 const Content = ({show}) => {
   const dispatch = useDispatch()
@@ -22,7 +23,7 @@ const Content = ({show}) => {
           <Route exact path="/actions" component={ActionIndex} />
           <Route exact path="/modules" component={ModuleIndex} />
           <Route exact path="/users" component={UserIndex}/>
-
+          <Route exact path="/materias" component={ClassRoom}/>
         </Switch>
        {/*  <button onClick={() => dispatch(setLogged())}>Change Logged</button>
         <p>Is logged? {isLogged.toString()}</p>

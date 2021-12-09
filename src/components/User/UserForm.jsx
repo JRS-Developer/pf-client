@@ -27,18 +27,16 @@ const currencies = [
   },
 ]
 export default function UserForm({open, handleClose, titleForm, dataForm}) {
-  console.log(dataForm)
-  
   const [input, setInput] = useState(dataForm);
 
   const [errors, setErrors] = useState({
-    firstName: `This field is required`,
-    lastName: `This field is required`,
-    email: `This field is required`,
-    id: `This field is required`,
-    country: `This field is required`,
-    role: `This field is required`,
-    birthday: `This field is required`,
+    firstName: ``,
+    lastName: ``,
+    email: ``,
+    id: ``,
+    country: ``,
+    role: ``,
+    birthday: ``,
   })
 
   /* const [input, setInput] = useState({
@@ -86,6 +84,7 @@ export default function UserForm({open, handleClose, titleForm, dataForm}) {
             label="Nombre"
             placeholder="Nombre"
             onChange={handleChange}
+            onFocus={handleChange}
             helperText={errors.firstName}
             value={input.firstName}
           />
@@ -97,6 +96,7 @@ export default function UserForm({open, handleClose, titleForm, dataForm}) {
             label="Apellido"
             placeholder="Apellido"
             onChange={handleChange}
+            onFocus={handleChange}
             helperText={errors.lastName}
             value={input.lastName}
           />
@@ -109,6 +109,7 @@ export default function UserForm({open, handleClose, titleForm, dataForm}) {
             label="Email"
             placeholder="Email"
             onChange={handleChange}
+            onFocus={handleChange}
             helperText={errors.email}
             value={input.email}
           />
@@ -121,6 +122,7 @@ export default function UserForm({open, handleClose, titleForm, dataForm}) {
             label="Identificacion"
             placeholder="Identificación"
             onChange={handleChange}
+            onFocus={handleChange}
             helperText={errors.id}
             value={input.id}
           />
@@ -133,6 +135,7 @@ export default function UserForm({open, handleClose, titleForm, dataForm}) {
             label="Pais"
             placeholder="País"
             onChange={handleChange}
+            onFocus={handleChange}
             helperText={errors.country}
             value={input.country}
           />
@@ -146,6 +149,7 @@ export default function UserForm({open, handleClose, titleForm, dataForm}) {
             label="Seleccione"
             value={input.rol}
             onChange={handleChange}
+            onFocus={handleChange}
             helperText={errors.role}
             defaultValue={input.role}
           >
@@ -164,6 +168,7 @@ export default function UserForm({open, handleClose, titleForm, dataForm}) {
           <TextField
             error={errors.birthday ? true : false}
             onChange={handleChange}
+            onFocus={handleChange}
             name="birthday"
             id="date"
             label="Birthday"
@@ -177,12 +182,10 @@ export default function UserForm({open, handleClose, titleForm, dataForm}) {
             }}
           />
         </div>
-        <div>
-        </div>
       </Stack>
       </DialogContent>
         <DialogActions>
-          <Button type="submit" disabled={Object.keys(errors).length === 0 ? false : true} variant="contained" onClick={handleClose} endIcon={<Save />}>
+          <Button type="submit" disabled={Object.values(input).length === 8 && Object.keys(errors).length === 0 ? false : true} variant="contained" onClick={handleClose} endIcon={<Save />}>
             Guardar
           </Button>
           <Button variant="outlined" onClick={handleClose} startIcon={<Close />}>
