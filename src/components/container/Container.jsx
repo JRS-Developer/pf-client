@@ -6,8 +6,11 @@ import {ContainerDiv} from './ContainerStyles'
 import Hello from '../Hello';
 import {setLogged} from "../../actions/user";
 import ProfileIndex from "../profile/ProfileIndex";
+
 import CreateUser from "../createUser/CreateUser"
 import ActionIndex from "../action/ActionIndex";
+import UserIndex from "../User/UserIndex"
+
 
 const Content = ({show}) => {
   const dispatch = useDispatch()
@@ -20,6 +23,8 @@ const Content = ({show}) => {
           <Route exact path="/roles" component={ProfileIndex} />
           <Route exact path="/actions" component={ActionIndex} />
           <Route exact path="/create" component={CreateUser}/>
+          <Route exact path="/users" component={UserIndex}/>
+
         </Switch>
        {/*  <button onClick={() => dispatch(setLogged())}>Change Logged</button>
         <p>Is logged? {isLogged.toString()}</p>

@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import {KeyboardArrowDown } from '@mui/icons-material';
 import { NavbarDiv } from './NavbarStyles';
 import Icon from '@mui/material/Icon';
+import Box from '@mui/material/Box';
 
 const data = [
   {
@@ -96,13 +97,13 @@ const Navbar = ({show, click}) => {
         <ul className="navbar_links">
           {data.map(module => (
             <li key={module.id} className="navbar_list">
-              <Link to={module.url}>{module.name} <KeyboardArrowDown className="icono"/></Link>
+              <Link to={module.url}><Box sx={{color: 'text.primary'}}>{module.name}</Box><KeyboardArrowDown className="icono" sx={{color: 'text.primary'}}/></Link>
               <ul className="navbar_sub_links">
                 {module.sub_data.map(subModule => (
                   <li key={subModule.id}>
                     <Link to={subModule.url}>
-                      <Icon>{subModule.icon}</Icon>
-                      <span>{subModule.name}</span>
+                      <Icon sx={{color: 'text.primary'}}>{subModule.icon}</Icon>
+                      <span><Box sx={{color: 'text.primary'}}>{subModule.name}</Box></span>
                     </Link>
                   </li>
                 ))}

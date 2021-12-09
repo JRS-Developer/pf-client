@@ -1,32 +1,78 @@
-import ProfileForm from './ProfileForm'
-import Table from '../Table/Table.jsx'
+import React, {useState} from "react";
+import PropTypes from 'prop-types';
+import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
+import {
+  DataGrid,
+  GridToolbarDensitySelector,
+  GridToolbarFilterButton
+} from '@mui/x-data-grid';
+import ClearIcon from '@mui/icons-material/Clear';
+import SearchIcon from '@mui/icons-material/Search';
+import {AddCircle, Edit, Delete } from '@mui/icons-material';
+import {Box} from "@mui/material";
+import AlertDialog from "../alert/AlertDialog";
+import ConfirmDialog from "../alert/ConfirmDialog";
+import Tooltip from '@mui/material/Tooltip';
 
-const columns = [
-  { field: 'id', headerName: 'ID', width: 100 },
-  {
-    field: 'name',
-    headerName: 'Roles',
-    width: 300,
-    editable: true,
-  },
-]
-const rows = [
-  { id: 1, name: 'Super Administrador' },
-  { id: 2, name: 'Administrador' },
-  { id: 3, name: 'Profesor' },
-  { id: 4, name: 'Alumno' },
-  { id: 5, name: 'Administrativo' },
-]
 
-const data = {
-  columns,
-  rows,
+
+function escapeRegExp(value) {
+  return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
 }
 
-const form = ProfileForm
-
-export default function ProfileIndex() {
-  return <Table data={data} DialogForm={form} title="ROLES" />
+function QuickSearchToolbar(props) {
+  return (
+    <Box
+      sx={{
+        p: 0.5,
+        pb: 0,
+        justifyContent: 'space-between',
+        display: 'flex',
+        alignItems: 'flex-start',
+        flexWrap: 'wrap',
+      }}
+    >
+      <div>
+        <GridToolbarFilterButton />
+        <GridToolbarDensitySelector />
+      </div>
+      <TextField
+        variant="standard"
+        value={props.value}
+        onChange={props.onChange}
+        placeholder="Search…"
+        InputProps={{
+          startAdornment: <SearchIcon fontSize="small" />,
+          endAdornment: (
+            <IconButton
+              title="Clear"
+              aria-label="Clear"
+              size="small"
+              style={{ visibility: props.value ? 'visible' : 'hidden' }}
+              onClick={props.clearSearch}
+            >
+              <ClearIcon fontSize="small" />
+            </IconButton>
+          ),
+        }}
+        sx={{
+          width: {
+            xs: 1,
+            sm: 'auto',
+          },
+          m: (theme) => theme.spacing(1, 0.5, 1.5),
+          '& .MuiSvgIcon-root': {
+            mr: 0,
+          },
+          '& .MuiInput-underline:before': {
+            borderBottom: 1,
+            borderColor: 'divider',
+          },
+        }}
+      />
+    </Box>
+  );
 }
 
 QuickSearchToolbar.propTypes = {
@@ -35,7 +81,7 @@ QuickSearchToolbar.propTypes = {
   value: PropTypes.string.isRequired,
 };
 
-const ProfileIndex = () => {
+const Table = ({data, DialogForm, title}) => {
 
   const [pageSize, setPageSize] = React.useState(25);
 
@@ -67,9 +113,13 @@ const ProfileIndex = () => {
   const [openConfirm, setOpenConfirm] = React.useState(false);
 
   // Open DialogAlert
-  const handleOpenAlert = () => {
+//Lo dejamos comentado, Capaz que Wilmer lo necesita
+/*   const handleOpenAlert = () => {
     setOpenAlert(true);
-  };
+  }; */
+
+
+
   // Close DialogAlert
   const handleCloseAlert = () => {
     setOpenAlert(false);
@@ -101,7 +151,7 @@ const ProfileIndex = () => {
   const handleCloseConfirm = () => {
     setOpenConfirm(false);
   };
-
+  
   return (
     <Box style={{ maxWidth: "100%" }}>
 
@@ -117,19 +167,19 @@ const ProfileIndex = () => {
         openAlert={openAlert}
         handleCloseAlert={handleCloseAlert}
       />}
-      {open && <ProfileForm open={open} handleClose={handleClose} titleForm={titleForm} dataRole={selection}/>}
+      {open && <DialogForm open={open} handleClose={handleClose} titleForm={titleForm} dataRole={selection}/>}
         <Box style={{display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', }}>
           <Box>
-            <h3>LISTA DE ROLES</h3>
+            <h3>{`LISTA DE ${title}`}</h3>
           </Box>
           <Box>
             <Tooltip title="Add">
-              <IconButton aria-label="add" size="large" onClick={() => handleClickOpen('add')} >
+              <IconButton aria-label="delete" size="large" onClick={() => handleClickOpen('add')} >
                 <AddCircle fontSize="inherit" />
               </IconButton>
             </Tooltip>
             <Tooltip title="Edit">
-              <IconButton aria-label="edit" size="large" onClick={() => handleClickOpen('edit')} >
+              <IconButton aria-label="delete" size="large" onClick={() => handleClickOpen('edit')} >
                 <Edit fontSize="inherit" />
               </IconButton>
             </Tooltip>
@@ -176,4 +226,4 @@ const ProfileIndex = () => {
   )
 }
 
-export default ProfileIndex
+export default Table
