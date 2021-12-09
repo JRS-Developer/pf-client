@@ -10,8 +10,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import { Close, Save } from '@mui/icons-material';
 
-const ProfileForm =  ({open, handleClose, titleForm, dataRole}) => {
-  const [role, setRole] = React.useState(dataRole);
+const ProfileForm =  ({open, handleClose, titleForm, dataForm}) => {
+  const [role, setRole] = React.useState(dataForm);
 
   const handleChange = (e) => {
     setRole({

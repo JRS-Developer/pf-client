@@ -22,11 +22,14 @@ const currencies = [
     label: 'Profesor',
   },
   {
-    value: 'Alumno',
-    label: 'Alumno',
+    value: 'Estudiante',
+    label: 'Estudiante',
   },
 ]
-export default function UserForm({open, handleClose, titleForm, dataRole}) {
+export default function UserForm({open, handleClose, titleForm, dataForm}) {
+  
+  const [input, setInput] = useState(dataForm);
+
   const [errors, setErrors] = useState({
     firstName: `This field is required`,
     lastName: `This field is required`,
@@ -37,7 +40,7 @@ export default function UserForm({open, handleClose, titleForm, dataRole}) {
     birthday: `This field is required`,
   })
 
-  const [input, setInput] = useState({
+  /* const [input, setInput] = useState({
     firstName: '',
     lastName: '',
     email: '',
@@ -45,7 +48,7 @@ export default function UserForm({open, handleClose, titleForm, dataRole}) {
     country: '',
     role: '',
     birthday: '',
-  })
+  }) */
 
   const handleChange = (event) => {
     setInput({ ...input, [event.target.name]: event.target.value })
@@ -83,6 +86,7 @@ export default function UserForm({open, handleClose, titleForm, dataRole}) {
             placeholder="Nombre"
             onChange={handleChange}
             helperText={errors.firstName}
+            value={input.firstName}
           />
           <TextField
             error={errors.lastName ? true : false}
@@ -93,6 +97,7 @@ export default function UserForm({open, handleClose, titleForm, dataRole}) {
             placeholder="Apellido"
             onChange={handleChange}
             helperText={errors.lastName}
+            value={input.lastName}
           />
         </div>
         <div>
@@ -104,6 +109,7 @@ export default function UserForm({open, handleClose, titleForm, dataRole}) {
             placeholder="Email"
             onChange={handleChange}
             helperText={errors.email}
+            value={input.email}
           />
 
           <TextField
@@ -115,6 +121,7 @@ export default function UserForm({open, handleClose, titleForm, dataRole}) {
             placeholder="Identificación"
             onChange={handleChange}
             helperText={errors.id}
+            value={input.id}
           />
         </div>
         <div>
@@ -126,6 +133,7 @@ export default function UserForm({open, handleClose, titleForm, dataRole}) {
             placeholder="País"
             onChange={handleChange}
             helperText={errors.country}
+            value={input.country}
           />
 
           <TextField
@@ -138,6 +146,7 @@ export default function UserForm({open, handleClose, titleForm, dataRole}) {
             value={input.rol}
             onChange={handleChange}
             helperText={errors.role}
+            defaultValue={input.role}
           >
             <MenuItem disabled value="">
               <em>Seleccione</em>
@@ -161,6 +170,7 @@ export default function UserForm({open, handleClose, titleForm, dataRole}) {
             defaultValue="2017-05-24"
             helperText={errors.birthday}
             sx={{ width: 220 }}
+            value={input.birthday}
             InputLabelProps={{
               shrink: true,
             }}
