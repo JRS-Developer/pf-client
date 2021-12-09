@@ -34,9 +34,15 @@ const columns = [
     width: 300,
     editable: true,
   },
+  {
+    field: 'email',
+    headerName: 'Correo Electronico',
+    width: 300,
+    editable: true,
+  },
 ];
 const rows = [
-  { id: 1, firstName: 'Bart', lastName: "Simpson" , role:"Estudiante",birthday:"1995-08-02",country:"USA"},
+  { id: 1, firstName: 'Bart', lastName: "Simpson" , role:"Estudiante",birthday:"1995-08-02",country:"USA", email: "asd@hotmail.com"},
   { id: 2, firstName: 'Edna', lastName: "Krabappel" , role:"Profesor",birthday:"1978-02-19",country:"USA"},
   { id: 3, firstName: 'Bob', lastName: "Patiño" , role:"Estudiante", birthday:"1971-12-16", country:"USA"},
   { id: 4, firstName: 'Marge', lastName: "Simpson" , role:"Administrador", birthday:"1968-05-24", country:"USA"},

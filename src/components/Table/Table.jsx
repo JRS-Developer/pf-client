@@ -167,7 +167,7 @@ const Table = ({data, DialogForm, title}) => {
         openAlert={openAlert}
         handleCloseAlert={handleCloseAlert}
       />}
-      {open && <DialogForm open={open} handleClose={handleClose} titleForm={titleForm} dataRole={selection}/>}
+      {open && <DialogForm open={open} handleClose={handleClose} titleForm={titleForm} dataForm={selection}/>}
         <Box style={{display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', }}>
           <Box>
             <h3>{`LISTA DE ${title}`}</h3>

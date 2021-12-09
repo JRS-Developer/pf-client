@@ -11,8 +11,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import { Close, Save } from '@mui/icons-material';
 
-const ActionForm =  ({open, handleClose, titleForm, dataAction}) => {
-  const [rowAction, setRowAction] = React.useState(dataAction);
+const ActionForm =  ({open, handleClose, titleForm, dataForm}) => {
+  const [rowAction, setRowAction] = React.useState(dataForm);
 
   const handleChange = (e) => {
     setRowAction({
