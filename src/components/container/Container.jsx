@@ -1,18 +1,18 @@
 import {Switch, Route} from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
+//import { useDispatch, useSelector } from 'react-redux';
 import {ContainerDiv} from './ContainerStyles'
 
 // Components
-import Hello from '../Hello';
-import {setLogged} from "../../actions/user";
+// import Hello from '../Hello';
+// import {setLogged} from "../../actions/user";
 import ProfileIndex from "../profile/ProfileIndex";
 import ActionIndex from "../action/ActionIndex";
 import UserIndex from "../User/UserIndex"
 import ModuleIndex from "../module/ModuleIndex";
 
 const Content = ({show}) => {
-  const dispatch = useDispatch()
-  const { isLogged } = useSelector(state => state.user)
+  // const dispatch = useDispatch()
+  // const { isLogged } = useSelector(state => state.user)
 
   return(
     <ContainerDiv> {/*Div para styled-components*/}
