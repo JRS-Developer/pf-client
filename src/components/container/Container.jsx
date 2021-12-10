@@ -8,7 +8,7 @@ import UserIndex from "../User/UserIndex"
 import ModuleIndex from "../module/ModuleIndex";
 import ClassRoom from "../classroom/classroom";
 
-const Content = ({ show }) => {// Es Export defualt podes poner cualquier nombre en el import
+const Content = ({ show }) => {
   return (
     <ContainerDiv> {/*Div para styled-components*/}
       <section className={show && 'close'}>
