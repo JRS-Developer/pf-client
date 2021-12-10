@@ -9,7 +9,7 @@ import Tooltip from '@mui/material/Tooltip';
 
 export default function ThemeChanger({setTheme}){
 
-  const [selectedValue, setSelectedValue] = React.useState('GaiaDarkTheme');
+  const [selectedValue, setSelectedValue] = React.useState('GaiaTheme');
   const [open, setOpen] = React.useState(false);
   const [name, setName] = React.useState('');
   
@@ -46,7 +46,7 @@ export default function ThemeChanger({setTheme}){
       Temas:
         <Grid container rowSpacing={0} columnSpacing={0} justify="center">
           <Grid item xs={4} align="center">
-            <Tooltip title="Gaia Oscuro" placement='top' arrow followCursor>
+            <Tooltip title="Gaia" placement='top' arrow followCursor>
               <Radio
                 sx={{p: 0, m: 0}}
                 checked={selectedValue === 'GaiaTheme'}
