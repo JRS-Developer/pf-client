@@ -15,7 +15,7 @@ import Container from "./components/container/Container";
 
 
 //import { getUsers } from "./actions/user";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 
 
@@ -27,8 +27,6 @@ function App() {
   const [mode, setMode] = useState(true);
   const actualTheme = themes[theme]
   const selectedTheme = createTheme(mode ? themes[theme] : {...actualTheme, palette: {...actualTheme.palette, mode: 'light', background:{paper: '#e6e6e6'}}});
-
-  const dispatch = useDispatch()
   const selector = useSelector((state)=> state.users)
 
   console.log()

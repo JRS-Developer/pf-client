@@ -9,6 +9,8 @@ import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { Button } from '@mui/material'
 import Validate from './validateform'
+import axios from 'axios'
+import { useHistory } from 'react-router-dom';
 
 export default function Login() {
   const [values, setValues] = useState({
@@ -21,9 +23,11 @@ export default function Login() {
   })
 
   const [errors, setErrors] = useState({
-    user: 'Usuario o mail requerido',
+    user: 'Email requerido',
     password: 'Password requerido',
   })
+
+  const history = useHistory();
 
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value })
@@ -40,8 +44,24 @@ export default function Login() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault()
   }
+
+  
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    let { data } = await axios.post(
+      `${process.env.REACT_APP_SERVER}/auth/login`,
+      { email: values.user, password: values.password }
+    )
+    localStorage.setItem("token",data.token)
+    // Para que sea el header global pero todavia no funciona
+    //axios.defaults.headers.common["x-access-token"] = data.token
+    history.push("/")
+
+    
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <Box sx={{ '& > :not(style)': { m: 1 } }}>
         <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
           <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
@@ -50,7 +70,7 @@ export default function Login() {
             name="user"
             onChange={handleChange}
             value={values.user}
-            label="Usuario o email"
+            label="Email"
             variant="standard"
             helperText={errors.user ? errors.user : ''}
             error={!!errors.user}
