@@ -15,22 +15,18 @@ import Container from "./components/container/Container";
 
 
 //import { getUsers } from "./actions/user";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import './lib/axios'
-
-
-
 
 function App() {
   const [sideToggle, setSideToggle] = useState(false);
 
   const [theme, setTheme] = useState("GaiaTheme");
   const [mode, setMode] = useState(true);
+  
   const actualTheme = themes[theme]
-  const selectedTheme = createTheme(mode ? themes[theme] : { ...actualTheme, palette: { ...actualTheme.palette, mode: 'light', background: { paper: '#e6e6e6' } } });
-
-  const dispatch = useDispatch()
-  const selector = useSelector((state) => state.users)
+  const selectedTheme = createTheme(mode ? themes[theme] : {...actualTheme, palette: {...actualTheme.palette, mode: 'light', background:{paper: '#e6e6e6'}}});
+  const selector = useSelector((state)=> state.users)
 
   console.log()
 

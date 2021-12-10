@@ -35,7 +35,8 @@ export const getUsers = () => async (dispatch) => {
     dispatch ({
       type: actionTypes.GET_USERS_REQUEST,
     })
-    const {data} = await axios.get(`${REACT_APP_SERVER}/users`)
+    const token = localStorage.getItem("token")
+    const {data} = await axios.get(`${REACT_APP_SERVER}/users`,{headers:{"x-access-token":token}})
     dispatch ({
       type: actionTypes.GET_USERS,
       payload: data
