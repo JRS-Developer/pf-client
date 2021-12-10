@@ -1,24 +1,4 @@
-import { createTheme } from '@mui/material/styles';
-
-export const LightTheme = createTheme({
-  palette: {
-    mode: 'light',
-    primary: {
-      main: '#668C4A',
-    },
-    secondary: {
-      main: '#0367A6',
-    },
-    info: {
-      main: '#846699',
-    },
-    background: {
-      paper: '#e6e6e6',
-    },
-  },
-});
-
-export const DarkTheme = createTheme({
+export const GaiaTheme = {
   palette: {
     mode: 'dark',
     primary: {
@@ -31,47 +11,11 @@ export const DarkTheme = createTheme({
       main: '#846699',
     },
   },
-});
+};
 
-
-//------------------------------------------- Future themes
-
-export const GaiaDarkTheme = createTheme({
+export const HermesTheme = {
   palette: {
     mode: 'dark',
-    primary: {
-      main: '#668C4A',
-    },
-    secondary: {
-      main: '#0367A6',
-    },
-    info: {
-      main: '#846699',
-    },
-  },
-});
-
-export const GaiaLightTheme = createTheme({
-  palette: {
-    mode: 'light',
-    primary: {
-      main: '#668C4A',
-    },
-    secondary: {
-      main: '#0367A6',
-    },
-    info: {
-      main: '#846699',
-    },
-    background: {
-      paper: '#e6e6e6',
-    },
-  },
-});
-
-export const HermesTheme = createTheme({
-  palette: {
-    mode: 'light',
     primary: {
       main: '#A4222E',
     },
@@ -81,13 +25,10 @@ export const HermesTheme = createTheme({
     info: {
       main: '#F2B705',
     },
-    background: {
-      paper: '#e6e6e6',
-    },
   },
-});
+};
 
-export const HecateTheme = createTheme({
+export const HecateTheme = {
   palette: {
     mode: 'dark',
     primary: {
@@ -100,11 +41,11 @@ export const HecateTheme = createTheme({
       main: '#2196f3',
     },
   },
-});
+};
 
-export const AfroditaTheme = createTheme({
+export const AfroditaTheme = {
   palette: {
-    mode: 'light',
+    mode: 'dark',
     primary: {
       main: '#8C0F4A',
     },
@@ -114,13 +55,10 @@ export const AfroditaTheme = createTheme({
     info: {
       main: '#d41e12',
     },
-    background: {
-      paper: '#e6e6e6',
-    },
   }
-});
+};
 
-export const PoseidonTheme = createTheme({
+export const PoseidonTheme = {
   palette: {
     mode: 'dark',
     primary: {
@@ -133,11 +71,11 @@ export const PoseidonTheme = createTheme({
       main: '#D9C3B0',
     },
   }
-});
+};
 
-export const  ZeusTheme = createTheme({
+export const  ZeusTheme = {
   palette: {
-    mode: 'light',
+    mode: 'dark',
     primary: {
       main: '#313C3F',
     },
@@ -147,8 +85,5 @@ export const  ZeusTheme = createTheme({
     info: {
       main: '#5595A7',
     },
-    background: {
-      paper: '#e6e6e6',
-    },
   }
-});
+};

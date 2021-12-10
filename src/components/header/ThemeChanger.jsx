@@ -7,16 +7,16 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Tooltip from '@mui/material/Tooltip';
 
-export default function ThemeChanger({setMode}){
+export default function ThemeChanger({setTheme}){
 
-  const [selectedValue, setSelectedValue] = React.useState('GaiaDarkTheme');
+  const [selectedValue, setSelectedValue] = React.useState('GaiaTheme');
   const [open, setOpen] = React.useState(false);
   const [name, setName] = React.useState('');
   
   const handleChangeTheme = (event) => {
     setName(event.target.name)
     setSelectedValue(event.target.value);
-    setMode(event.target.value)
+    setTheme(event.target.value)
     setOpen(true)
   };
 
@@ -43,32 +43,21 @@ export default function ThemeChanger({setMode}){
 
   return(
     <Stack spacing={0}>
+      Temas:
         <Grid container rowSpacing={0} columnSpacing={0} justify="center">
-          <Grid item xs={3} align="center">
-            <Tooltip title="Gaia Oscuro" placement='top' arrow followCursor>
+          <Grid item xs={4} align="center">
+            <Tooltip title="Gaia" placement='top' arrow followCursor>
               <Radio
                 sx={{p: 0, m: 0}}
-                checked={selectedValue === 'GaiaDarkTheme'}
+                checked={selectedValue === 'GaiaTheme'}
                 onChange={handleChangeTheme}
-                value="GaiaDarkTheme"
-                name="Gaia Oscuro"
+                value="GaiaTheme"
+                name="Gaia"
                 inputProps={{ 'aria-label': 'A' }}
               />
               </Tooltip>
           </Grid>
-          <Grid item xs={3} align="center">
-            <Tooltip title="Gaia Claro" placement='top' arrow followCursor>
-                <Radio
-                  sx={{p: 0, m: 0}}
-                  checked={selectedValue === 'GaiaLightTheme'}
-                  onChange={handleChangeTheme}
-                  value="GaiaLightTheme"
-                  name="Gaia Claro"
-                  inputProps={{ 'aria-label': 'B' }}
-                />
-              </Tooltip>
-          </Grid>
-          <Grid item xs={3} align="center">
+          <Grid item xs={4} align="center">
             <Tooltip title="Hermes" placement='top' arrow followCursor>
                 <Radio
                   sx={{p: 0, m: 0}}
@@ -80,7 +69,7 @@ export default function ThemeChanger({setMode}){
                 />
               </Tooltip>
           </Grid>
-          <Grid item xs={3} align="center">
+          <Grid item xs={4} align="center">
             <Tooltip title="Hecate" placement='top' arrow followCursor>
                 <Radio
                   sx={{p: 0, m: 0}}
@@ -94,7 +83,7 @@ export default function ThemeChanger({setMode}){
           </Grid>
           </Grid>
           <Grid container rowSpacing={0} columnSpacing={0} justify="center">
-          <Grid item xs={3} align="center">
+          <Grid item xs={4} align="center">
             <Tooltip title="Afrodita" placement='top' arrow followCursor>
                 <Radio
                   sx={{p: 0, m: 0}}
@@ -106,7 +95,7 @@ export default function ThemeChanger({setMode}){
                 />
               </Tooltip>
           </Grid>
-          <Grid item xs={3} align="center">
+          <Grid item xs={4} align="center">
             <Tooltip title="Poseidon" placement='top' arrow followCursor>
                 <Radio
                   sx={{p: 0, m: 0}}
@@ -118,7 +107,7 @@ export default function ThemeChanger({setMode}){
                 />
               </Tooltip>
           </Grid>
-          <Grid item xs={3} align="center">
+          <Grid item xs={4} align="center">
               <Tooltip title="Zeus" placement='top' arrow followCursor>
                 <Radio
                   sx={{p: 0, m: 0}}

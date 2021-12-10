@@ -3,8 +3,9 @@ import {useState} from "react";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 // import { setLogged } from './actions/user'
 import { ThemeProvider } from '@mui/material/styles';
-import * as theme from './theme'
+import * as themes from './theme'
 import CssBaseline from '@mui/material/CssBaseline'
+import { createTheme } from '@mui/material/styles';
 
 // Components
 import Navbar from "./components/navbar/Navbar";
@@ -21,11 +22,16 @@ import { useDispatch, useSelector } from "react-redux";
 
 function App() {
   const [sideToggle, setSideToggle] = useState(false);
-  const [mode, setMode] = useState("GaiaDarkTheme");
-  const selectedTheme = theme[mode]
+
+  const [theme, setTheme] = useState("GaiaTheme");
+  const [mode, setMode] = useState(true);
+  const actualTheme = themes[theme]
+  const selectedTheme = createTheme(mode ? themes[theme] : {...actualTheme, palette: {...actualTheme.palette, mode: 'light', background:{paper: '#e6e6e6'}}});
+
   const dispatch = useDispatch()
   const selector = useSelector((state)=> state.users)
-  console.log(selector)
+
+  console.log()
 
   return (
     <Router>
@@ -34,7 +40,7 @@ function App() {
         <Switch>
           <Route exact path="/login" component={Login}/>
           <Route path="/">
-            <Header click={() => setSideToggle(false) } clickClose={() => setSideToggle(true) } show={sideToggle} setMode={setMode}/>
+            <Header click={() => setSideToggle(false) } clickClose={() => setSideToggle(true) } show={sideToggle} setTheme={setTheme} setMode={setMode} mode={mode}/>
             <Navbar show={sideToggle} click={() => setSideToggle(false)}/>
             <Container show={sideToggle} />
           </Route>
