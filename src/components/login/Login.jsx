@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Box from '@mui/material/Box'
 import InputAdornment from '@mui/material/InputAdornment'
 import FormControl from '@mui/material/FormControl'
@@ -9,8 +9,10 @@ import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { Button } from '@mui/material'
 import Validate from './validateform'
+import { useHistory } from 'react-router-dom'
+import { setLogged, checkLogged } from '../../actions/auth/'
+import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
-import { useHistory } from 'react-router-dom';
 
 export default function Login() {
   const [values, setValues] = useState({
@@ -22,12 +24,15 @@ export default function Login() {
     showPassword: false,
   })
 
+  const dispatch = useDispatch()
+  const { isLogged } = useSelector((state) => state.auth)
+
   const [errors, setErrors] = useState({
     user: 'Email requerido',
     password: 'Password requerido',
   })
 
-  const history = useHistory();
+  const history = useHistory()
 
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value })
@@ -45,20 +50,28 @@ export default function Login() {
     event.preventDefault()
   }
 
-  
   const handleSubmit = async (event) => {
-    event.preventDefault()
-    let { data } = await axios.post(
-      `${process.env.REACT_APP_SERVER}/auth/login`,
-      { email: values.user, password: values.password }
-    )
-    localStorage.setItem("token",data.token)
-    // Para que sea el header global pero todavia no funciona
-    //axios.defaults.headers.common["x-access-token"] = data.token
-    history.push("/")
+    try {
+      event.preventDefault()
+      let { data } = await axios.post(
+        `${process.env.REACT_APP_SERVER}/auth/login`,
+        { email: values.user, password: values.password }
+      )
+      localStorage.setItem('token', data.token)
 
-    
+      dispatch(setLogged())
+    } catch (error) {
+      // TODO: Mostrar un mensaje cuando el usuario no es valido
+    }
   }
+
+  useEffect(() => {
+    isLogged && history.push('/')
+  }, [isLogged, history])
+
+  useEffect(() => {
+    dispatch(checkLogged())
+  }, [])
 
   return (
     <form onSubmit={handleSubmit}>

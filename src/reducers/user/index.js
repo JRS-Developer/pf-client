@@ -3,7 +3,6 @@ import * as actionTypes from '../../actions/user/types'
 
 const initialState = {
   users: [],
-  isLogged: false,
 }
 
 
@@ -17,12 +16,12 @@ export default function reducer(state = initialState, action) {
       }
 
     case actionTypes.GET_USERS:
-        return {
-          ...state,
-          loading: false,
-          users: action.payload
-        }
-    
+      return {
+        ...state,
+        loading: false,
+        users: action.payload
+      }
+
     // case actionTypes.GET_USER:
     // return {
     //   ...state,
