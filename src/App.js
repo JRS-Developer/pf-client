@@ -14,7 +14,7 @@ import Container from "./components/container/Container";
 
 
 //import { getUsers } from "./actions/user";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 
 
@@ -23,7 +23,7 @@ function App() {
   const [sideToggle, setSideToggle] = useState(false);
   const [mode, setMode] = useState("dark");
   const selectedTheme = mode === "dark" ? DarkTheme : LightTheme;
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const selector = useSelector((state)=> state.users)
   console.log(selector)
 
