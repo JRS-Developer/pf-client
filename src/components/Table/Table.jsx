@@ -312,6 +312,9 @@ const Table = ({
                 clearSearch: () => requestSearch(''),
               },
             }}
+            getRowClassName={(params) => {
+              return params.row.status === false && 'error'
+            }}
           />
         </Box>
       </Paper>
