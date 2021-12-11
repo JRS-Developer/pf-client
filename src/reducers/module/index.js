@@ -39,7 +39,7 @@ export const getModulesReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        errors: action.payload
+        error: action.payload
       }
     default:
       return state

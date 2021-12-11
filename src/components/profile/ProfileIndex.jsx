@@ -1,30 +1,39 @@
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import ProfileForm from './ProfileForm'
 import Table from '../Table/Table.jsx'
 
-const columns = [
-  { field: 'id', headerName: 'ID', width: 100 },
-  {
-    field: 'name',
-    headerName: 'Roles',
-    width: 300,
-    editable: true,
-  },
-]
-const rows = [
-  { id: 1, name: 'Super Administrador' },
-  { id: 2, name: 'Administrador' },
-  { id: 3, name: 'Profesor' },
-  { id: 4, name: 'Alumno' },
-  { id: 5, name: 'Administrativo' },
-]
+import {getRoles as listRoles, getDataById, modifiedRole } from "../../actions/role";
 
-const data = {
-  columns,
-  rows,
-}
+const columns = [
+  { field: 'id', headerName: 'ID', width: 300 },
+  {field: 'name', headerName: 'Roles', width: 400}
+]
 
 const form = ProfileForm
 
 export default function ProfileIndex() {
-  return <Table data={data} DialogForm={form} title="ROLES" />
+  const dispatch = useDispatch();
+
+  const getRoles = useSelector(state => state.rolesReducer);
+  const { roles, loading, error, message } = getRoles;
+
+  const data = {
+    columns,
+    rows: roles,
+  }
+
+  useEffect(() => {
+    dispatch(listRoles())
+  }, [dispatch])
+
+  return <Table
+    data={data}
+    DialogForm={form}
+    title="ROLES"
+    getDataById={getDataById}
+    getActions={getRoles}
+    modifiedAction={modifiedRole}
+    listData={listRoles}
+  />
 }

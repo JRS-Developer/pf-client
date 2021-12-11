@@ -1,0 +1,7 @@
+export const GET_ROLES_REQUEST = "role/get_role_request"
+export const GET_ROLES = "role/get_roles"
+export const GET_ROLE = "role/get_role"
+export const ADD_ROLE = "role/add_role"
+export const DELETE_ROLE = "role/delete_role"
+export const EDIT_ROLE = "role/edit_role"
+export const ROLE_FAIL = "role/fail"

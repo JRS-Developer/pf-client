@@ -59,7 +59,7 @@ export const createModule = (body) => async (dispatch) => {
     const { data } = await axios.post(`${REACT_APP_SERVER}/modules`, body);
 
     dispatch({
-      type: actionType.GET_MODULES,
+      type: actionType.ADD_MODULE,
       payload: data
     })
   }catch (error) {
