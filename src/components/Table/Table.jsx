@@ -109,6 +109,7 @@ const Table = ({data, DialogForm, title, getDataById, getActions, modifiedAction
   const [searchText, setSearchText] = React.useState('');
   const [rows, setRows] = React.useState(data.rows);
 
+
   const requestSearch = (searchValue) => {
     setSearchText(searchValue);
     const searchRegex = new RegExp(escapeRegExp(searchValue), 'i');
