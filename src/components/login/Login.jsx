@@ -8,13 +8,20 @@ import IconButton from '@mui/material/IconButton'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { Button } from '@mui/material'
-import Validate from './validateform'
+import validate from './validate'
 import { useHistory } from 'react-router-dom'
 import { setLogged, checkLogged } from '../../actions/auth/'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
+import * as React from 'react'
+import Avatar from '@mui/material/Avatar'
+import Paper from '@mui/material/Paper'
+import Grid from '@mui/material/Grid'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import Typography from '@mui/material/Typography'
+import ReactLogo from './logo.png'
 
-export default function Login() {
+export default function SignInSide() {
   const [values, setValues] = useState({
     amount: '',
     password: '',
@@ -27,16 +34,18 @@ export default function Login() {
   const dispatch = useDispatch()
   const { isLogged } = useSelector((state) => state.auth)
 
-  const [errors, setErrors] = useState({
-    user: 'Email requerido',
-    password: 'Password requerido',
-  })
+  const [errors, setErrors] = useState({})
 
   const history = useHistory()
 
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value })
-    setErrors(Validate({ ...values, [event.target.name]: event.target.value }))
+    setErrors(
+      validate(
+        { ...values, [event.target.name]: event.target.value },
+        event.target.name
+      )
+    )
   }
 
   const handleClickShowPassword = () => {
@@ -74,55 +83,154 @@ export default function Login() {
   }, [])
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Box sx={{ '& > :not(style)': { m: 1 } }}>
-        <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-          <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-          <TextField
-            id="input-with-sx"
-            name="user"
-            onChange={handleChange}
-            value={values.user}
-            label="Email"
-            variant="standard"
-            helperText={errors.user ? errors.user : ''}
-            error={!!errors.user}
-          />
-        </Box>
-        <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
-          <TextField
-            label="Password"
-            name="password"
-            id="standard-adornment-password"
-            type={values.showPassword ? 'text' : 'password'}
-            value={values.password}
-            onChange={handleChange}
-            helperText={errors.password ? errors.password : ''}
-            variant="standard"
-            error={!!errors.password}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                  >
-                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </FormControl>
-        <Button
-          disabled={!!errors.user || !!errors.password}
-          variant="outlined"
-          type="submit"
+    <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid
+        item
+        xs={false}
+        sm={5}
+        md={8}
+        sx={{
+          backgroundImage: 'url(https://source.unsplash.com/random)',
+          backgroundRepeat: 'no-repeat',
+          backgroundColor: (t) =>
+            t.palette.mode === 'light'
+              ? t.palette.grey[50]
+              : t.palette.grey[900],
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+      <Grid
+        item
+        xs={12}
+        sm={7}
+        md={4}
+        component={Box}
+        elevation={6}
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-around',
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'space-around',
+            height: '100%',
+          }}
         >
-          Log in
-        </Button>
-      </Box>
-    </form>
+          <Box
+              sx={{
+                width: 100,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <img src={ReactLogo} style={{ width: '100%' }} alt="React Logo" />
+              <Typography component="h1" variant="h5">
+                GAIA
+              </Typography>
+            </Box>
+          <Box sx={{  }}>
+          <form onSubmit={handleSubmit}>
+            {/* <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Avatar sx={{ bgcolor: 'primary.light' }}>
+                <LockOutlinedIcon />
+              </Avatar>
+              Sign in
+            </Box> */}
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                height: 200,
+              }}
+            >
+              <Box sx={{ display: 'flex', alignItems: 'center', mr: 4 }}>
+                <AccountCircle sx={{ color: 'primary.light', mr: 1, mb: 4 }} />
+                <TextField
+                  sx={{ width: 250, height: 70 }}
+                  id="input-with-sx"
+                  name="user"
+                  onChange={handleChange}
+                  value={values.user}
+                  label="Email"
+                  variant="outlined"
+                  helperText={errors.user ? errors.user : ''}
+                  error={!!errors.user}
+                  onFocus={handleChange}
+                  size="small"
+                />
+              </Box>
+              <Box>
+                <FormControl>
+                  <TextField
+                    sx={{ width: 250, height: 70 }}
+                    label="Password"
+                    name="password"
+                    id="standard-adornment-password"
+                    type={values.showPassword ? 'text' : 'password'}
+                    value={values.password}
+                    onChange={handleChange}
+                    helperText={errors.password ? errors.password : ''}
+                    variant="outlined"
+                    size="small"
+                    error={!!errors.password}
+                    onFocus={handleChange}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            sx={{ color: 'primary.light' }}
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {values.showPassword ? (
+                              <VisibilityOff />
+                            ) : (
+                              <Visibility />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </FormControl>
+              </Box>
+              <Box>
+                <Button
+                  disabled={
+                    values.user &&
+                    values.password &&
+                    Object.values(errors).length === 0
+                      ? false
+                      : true
+                  }
+                  variant="contained"
+                  type="submit"
+                >
+                  Log in
+                </Button>
+              </Box>
+            </Box>
+          </form>
+          </Box>
+        </Box>
+      </Grid>
+    </Grid>
   )
 }
