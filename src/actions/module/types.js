@@ -1,0 +1,7 @@
+export const GET_MODULES_REQUEST = "module/get_module_request"
+export const GET_MODULE = "module/get_module"
+export const GET_MODULES = "module/get_modules"
+export const ADD_MODULE = "module/add_module"
+export const DELETE_MODULE = "module/delete_module"
+export const EDIT_MODULE = "module/edit_module"
+export const MODULE_FAIL = "module/fail"

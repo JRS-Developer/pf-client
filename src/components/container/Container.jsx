@@ -1,7 +1,6 @@
 import { Switch, Route } from "react-router-dom";
 import { ContainerDiv } from './ContainerStyles'
 
-// Components
 import ProfileIndex from "../profile/ProfileIndex";
 import ActionIndex from "../action/ActionIndex";
 import UserIndex from "../User/UserIndex"

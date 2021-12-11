@@ -1,28 +1,49 @@
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+
 import React from "react";
+
 import ModuleForm from "./ModuleForm";
 import Table from "../Table/Table"
 
+import {getModules as listModules, getDataById, modifiedModule } from "../../actions/module";
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 100 },
+  { field: 'id', headerName: 'ID', width: 200 },
   { field: 'name', headerName: 'Name', width: 300},
   { field: 'url', headerName: 'Url', width: 300},
   { field: 'icon', headerName: 'Icon', width: 300}
 ];
-const rows = [
-  { id: 1, name: 'SEGURIDAD', url: '#', icon: '' },
-  { id: 2, name: 'Roles', url: '/roles', icon: 'account_circle'},
-  { id: 3, name: 'Usuarios', url: '/users', icon: 'people'},
-  { id: 4, name: 'Acciones', url: '/actions', icon: 'format_list_bulleted'},
-  { id: 5, name: 'Módulos', url: '/modules', icon: 'recent_actors'},
-];
-
-const data = {
-  columns, rows
-}
 
 const form = ModuleForm
 
 export default function ModuleIndex() {
-  return <Table data={data} DialogForm={form} title="MÓDULOS" />
+
+  const dispatch = useDispatch();
+
+  const getModules = useSelector(state => state.modulesReducer);
+  const { modules, loading, error, message } = getModules;
+
+  const data = {
+    columns,
+    rows : modules
+  }
+
+  useEffect(() => {
+    dispatch(listModules())
+  }, [dispatch])
+
+  return (
+    <>
+      <Table
+      data={data}
+      DialogForm={form}
+      title="MÓDULOS"
+      getDataById={getDataById}
+      getActions={getModules}
+      modifiedAction={modifiedModule}
+      listData={listModules}
+      />
+    </>
+  )
 }
