@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
+
+import React from "react";
+
 import ModuleForm from "./ModuleForm";
 import Table from "../Table/Table"
 

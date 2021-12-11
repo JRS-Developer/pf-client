@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Box from '@mui/material/Box'
 import InputAdornment from '@mui/material/InputAdornment'
 import FormControl from '@mui/material/FormControl'
@@ -9,6 +9,10 @@ import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { Button } from '@mui/material'
 import Validate from './validateform'
+import { useHistory } from 'react-router-dom'
+import { setLogged, checkLogged } from '../../actions/auth/'
+import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
 
 export default function Login() {
   const [values, setValues] = useState({
@@ -20,10 +24,15 @@ export default function Login() {
     showPassword: false,
   })
 
+  const dispatch = useDispatch()
+  const { isLogged } = useSelector((state) => state.auth)
+
   const [errors, setErrors] = useState({
-    user: 'Usuario o mail requerido',
+    user: 'Email requerido',
     password: 'Password requerido',
   })
+
+  const history = useHistory()
 
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value })
@@ -40,8 +49,32 @@ export default function Login() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault()
   }
+
+  const handleSubmit = async (event) => {
+    try {
+      event.preventDefault()
+      let { data } = await axios.post(
+        `${process.env.REACT_APP_SERVER}/auth/login`,
+        { email: values.user, password: values.password }
+      )
+      localStorage.setItem('token', data.token)
+
+      dispatch(setLogged())
+    } catch (error) {
+      // TODO: Mostrar un mensaje cuando el usuario no es valido
+    }
+  }
+
+  useEffect(() => {
+    isLogged && history.push('/')
+  }, [isLogged, history])
+
+  useEffect(() => {
+    dispatch(checkLogged())
+  }, [])
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <Box sx={{ '& > :not(style)': { m: 1 } }}>
         <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
           <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
@@ -50,7 +83,7 @@ export default function Login() {
             name="user"
             onChange={handleChange}
             value={values.user}
-            label="Usuario o email"
+            label="Email"
             variant="standard"
             helperText={errors.user ? errors.user : ''}
             error={!!errors.user}

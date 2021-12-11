@@ -17,7 +17,10 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Close } from '@mui/icons-material';
 import Switch from '@mui/material/Switch';
+import ThemeChanger from './ThemeChanger'
 import {HeaderDiv} from "./HeaderStyles"
+import { logout } from '../../actions/auth';
+import { useDispatch } from 'react-redux'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -59,12 +62,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Header({click, clickClose, show, setMode, mode}) {
+export default function Header({click, clickClose, show, setTheme, setMode, mode}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const dispatch = useDispatch()
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -102,6 +105,11 @@ export default function Header({click, clickClose, show, setMode, mode}) {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem>
+        <ThemeChanger setTheme={setTheme}/>
+      </MenuItem>
+      <MenuItem onClick={() => {handleMenuClose(); logout(dispatch)}}>Logout</MenuItem>
+      
     </Menu>
   );
 
@@ -229,7 +237,7 @@ export default function Header({click, clickClose, show, setMode, mode}) {
                 <MoreIcon />
               </IconButton>
             </Box>
-            <Switch defaultChecked size="small" color="secondary" onChange={() => setMode(mode === "light" ? "dark" : "light")} />
+            <Switch defaultChecked size="small" color="secondary" onChange={() => setMode(mode ? false : true)} />
           </Toolbar>
         </AppBar>
         {renderMobileMenu}
