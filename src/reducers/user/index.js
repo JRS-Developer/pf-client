@@ -3,6 +3,8 @@ import * as actionTypes from '../../actions/user/types'
 
 const initialState = {
   users: [],
+  message: {},
+  dataEdit: {}
 }
 
 

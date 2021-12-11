@@ -2,7 +2,7 @@ import UserForm from "./UserForm.jsx";
 import Table from "../Table/Table.jsx";
 import { useDispatch , useSelector } from "react-redux"
 import { useEffect } from "react";
-import { getUsers } from "../../actions/user/index.js";
+import { getUsers, getUser, editUser } from "../../actions/user/index.js";
 
 
 const columns = [
@@ -71,13 +71,18 @@ export default function UserIndex(){
     dispatch(getUsers())
   },[])
 
-  const rows = useSelector(state => state.users)
+  const userReducer = useSelector(state => state.usersReducer)
 
-  const data = {columns,rows:rows.users}
-  console.log("usuarios",rows)
+  const data = {columns,rows:userReducer.users}
 
 
   return (
-    <Table data={data} DialogForm={form} title="USUARIOS"/>
+    <Table data={data} 
+    DialogForm={form} 
+    title="USUARIOS" 
+    getDataById={getUser} 
+    getActions={userReducer}
+    modifiedAction={editUser}
+    listData={getUsers}/>
   )
 }
