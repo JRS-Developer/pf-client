@@ -1,9 +1,11 @@
 import React, {useState} from "react";
+import { useSelector, useDispatch } from "react-redux";
 import PropTypes from 'prop-types';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import {
   DataGrid,
+  GridToolbarColumnsButton,
   GridToolbarDensitySelector,
   GridToolbarFilterButton
 } from '@mui/x-data-grid';
@@ -14,8 +16,14 @@ import {Box, Paper} from "@mui/material";
 import AlertDialog from "../alert/AlertDialog";
 import ConfirmDialog from "../alert/ConfirmDialog";
 import Tooltip from '@mui/material/Tooltip';
+import Stack from "@mui/material/Stack";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function escapeRegExp(value) {
   return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
@@ -34,6 +42,7 @@ function QuickSearchToolbar(props) {
       }}
     >
       <div>
+        <GridToolbarColumnsButton/>
         <GridToolbarFilterButton />
         <GridToolbarDensitySelector />
       </div>
@@ -81,10 +90,22 @@ QuickSearchToolbar.propTypes = {
   value: PropTypes.string.isRequired,
 };
 
-const Table = ({data, DialogForm, title}) => {
+/*
+* data: "La data que se mostrará en la grilla" => data = {columns, rows}
+* DialogForm: "Formulario para registrar y editar el registro"
+* title: Es el título de la DaraGrid
+* getDataById: Es una función que nos traerá la data por Id,
+* getActions: Es el estado del componente
+* modifiedAction: Es una función que nos permite modificar el status del registro
+* listData: Es una función que nos permite traer la lista de registros
+* */
+const Table = ({data, DialogForm, title, getDataById, getActions, modifiedAction, listData}) => {
 
+  const dispatch = useDispatch();
+
+  const { dataEdit, loading, error, message } = getActions;
+  const [openMessage, setOpenMessage] = React.useState(false);
   const [pageSize, setPageSize] = React.useState(25);
-
   const [searchText, setSearchText] = React.useState('');
   const [rows, setRows] = React.useState(data.rows);
 
@@ -112,14 +133,6 @@ const Table = ({data, DialogForm, title}) => {
   /* Dialog Confirm */
   const [openConfirm, setOpenConfirm] = React.useState(false);
 
-  // Open DialogAlert
-//Lo dejamos comentado, Capaz que Wilmer lo necesita
-/*   const handleOpenAlert = () => {
-    setOpenAlert(true);
-  }; */
-
-
-
   // Close DialogAlert
   const handleCloseAlert = () => {
     setOpenAlert(false);
@@ -129,10 +142,10 @@ const Table = ({data, DialogForm, title}) => {
   const handleClickOpen = (action) => {
     if(action === 'add'){
       setSelection({})
-      setTitleForm('Add Role');
+      setTitleForm('Add');
       setOpen(true);
     }else if(selection.id){
-      setTitleForm('Edit Role')
+      setTitleForm('Edit')
       setOpen(true);
     }else{
       setOpenAlert(true);
@@ -151,15 +164,41 @@ const Table = ({data, DialogForm, title}) => {
   const handleCloseConfirm = () => {
     setOpenConfirm(false);
   };
+
+  const handleClickGetData =  (id) => {
+    dispatch(getDataById(id));
+  }
+
+  //Open message
+  const handleClickMessage = () => {
+    setOpenMessage(true);
+  };
+  //Close message
+  const handleCloseMessage = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenMessage(false);
+  };
   
   return (
     <Box style={{ maxWidth: "100%" }}>
-
+      {<Stack spacing={2} sx={{ width: '100%' }}>
+          <Snackbar open={openMessage} autoHideDuration={6000} onClose={handleCloseMessage}>
+            <Alert onClose={handleCloseMessage} severity={error ? 'error' : 'success'} sx={{ width: '100%' }}>
+                { error ? error : message.message }
+            </Alert>
+          </Snackbar>
+        </Stack>}
       {openConfirm && <ConfirmDialog
         openConfirm={openConfirm}
         handleCloseConfirm={handleCloseConfirm}
         message="¿ Esta seguro de eliminar el registro ?"
-        dataRole={selection}
+        dataForm={dataEdit}
+        fnModifiedStatus={modifiedAction}
+        listData={listData}
+        handleClickMessage={handleClickMessage}
       />}
       {openAlert && <AlertDialog
         title="ADVERTENCIA"
@@ -167,7 +206,13 @@ const Table = ({data, DialogForm, title}) => {
         openAlert={openAlert}
         handleCloseAlert={handleCloseAlert}
       />}
-      {open && <DialogForm open={open} handleClose={handleClose} titleForm={titleForm} dataForm={selection}/>}
+      {open && <DialogForm
+        open={open}
+        handleClose={handleClose}
+        titleForm={titleForm}
+        dataForm={selection.id ? dataEdit: {}}
+        handleClickMessage={handleClickMessage}
+      />}
         <Box style={{display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', }}>
           <Box>
             <h3>{`LISTA DE ${title}`}</h3>
@@ -210,6 +255,7 @@ const Table = ({data, DialogForm, title}) => {
               }}
               onRowClick={(newSelection) => {
                 setSelection(newSelection.row);
+                handleClickGetData(newSelection.row.id);
               }}
               components={{ Toolbar: QuickSearchToolbar }}
               rows={rows}

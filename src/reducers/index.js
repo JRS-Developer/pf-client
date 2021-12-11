@@ -1,6 +1,9 @@
 import { combineReducers } from 'redux'
-import userReducer from './user/'
-
+import getUserReducer from './user/'
+import {getActionsReducer} from "./action";
+import {getModulesReducer} from "./module";
 export default combineReducers({
-  users: userReducer,
+  usersReducer: getUserReducer,
+  actionsReducer: getActionsReducer,
+  modulesReducer: getModulesReducer
 })

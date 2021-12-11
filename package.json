@@ -9,6 +9,7 @@
     "@mui/icons-material": "^5.2.0",
     "@mui/material": "^5.2.3",
     "@mui/styled-engine": "^5.2.0",
+    "@mui/styled-engine-sc": "^5.1.0",
     "@mui/styles": "^5.2.3",
     "@mui/x-data-grid": "^5.1.0",
     "@mui/x-data-grid-generator": "^5.1.0",
@@ -59,6 +60,7 @@
     ]
   },
   "devDependencies": {
+    "@mui/lab": "^5.0.0-alpha.59",
     "prop-types": "^15.7.2"
   }
 }

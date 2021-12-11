@@ -4,7 +4,7 @@ import {ContainerDiv} from './ContainerStyles'
 
 // Components
 // import Hello from '../Hello';
-// import {setLogged} from "../../actions/user";
+// import {setLogged} from "../../action/user";
 import ProfileIndex from "../profile/ProfileIndex";
 import ActionIndex from "../action/ActionIndex";
 import UserIndex from "../User/UserIndex"

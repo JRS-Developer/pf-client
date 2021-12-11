@@ -1,7 +1,7 @@
 import {useState} from "react";
 // import { useDispatch, useSelector } from 'react-redux'
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-// import { setLogged } from './actions/user'
+// import { setLogged } from './action/user'
 import { ThemeProvider } from '@mui/material/styles';
 import { DarkTheme, LightTheme } from './theme'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -13,7 +13,7 @@ import Login from "./components/login/Login";
 import Container from "./components/container/Container";
 
 
-//import { getUsers } from "./actions/user";
+//import { getUsers } from "./action/user";
 import { useDispatch, useSelector } from "react-redux";
 
 

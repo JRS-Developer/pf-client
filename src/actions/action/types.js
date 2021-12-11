@@ -1,0 +1,7 @@
+export const GET_ACTIONS_REQUEST = "action/get_action_request"
+export const GET_ACTION = "action/get_action"
+export const GET_ACTIONS = "action/get_actions"
+export const ADD_ACTION = "action/add_action"
+export const DELETE_ACTION = "action/delete_action"
+export const EDIT_ACTION = "action/edit_action"
+export const ACTION_FAIL = "action/fail"
