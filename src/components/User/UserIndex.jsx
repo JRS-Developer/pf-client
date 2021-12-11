@@ -35,6 +35,12 @@ const columns = [
     editable: true,
   },
   {
+    field: 'password',
+    headerName: 'Contraseña',
+    width: 150,
+    editable: true,
+  },
+  {
     field: 'role',
     headerName: 'Rol',
     width: 120,

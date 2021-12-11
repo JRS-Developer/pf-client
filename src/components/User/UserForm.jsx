@@ -129,30 +129,6 @@ export default function UserForm({
               </div>
               <div>
                 <TextField
-                  error={errors.userName ? true : false}
-                  name="userName"
-                  id="userName"
-                  label="Nombre de usuario"
-                  placeholder="Nombre de usuario"
-                  onChange={handleChange}
-                  onFocus={handleChange}
-                  helperText={errors.userName}
-                  value={input.userName}
-                />
-                <TextField
-                  name="avatar"
-                  sx={{ ml: 2 }}
-                  id="avatar"
-                  label="Avatar"
-                  placeholder="Avatar"
-                  onChange={handleChange}
-                  onFocus={handleChange}
-                  value={input.avatar}
-                  defaultValue={''}
-                />
-              </div>
-              <div>
-                <TextField
                   error={errors.email ? true : false}
                   name="email"
                   id="email"
@@ -163,7 +139,31 @@ export default function UserForm({
                   helperText={errors.email}
                   value={input.email}
                 />
-
+                <TextField
+                  error={errors.password ? true : false}
+                  sx={{ ml: 2 }}
+                  name="password"
+                  id="password"
+                  label="Contraseña"
+                  placeholder="Contraseña"
+                  onChange={handleChange}
+                  onFocus={handleChange}
+                  helperText={errors.password}
+                  value={input.password}
+                />
+              </div>
+              <div>
+                <TextField
+                  error={errors.userName ? true : false}
+                  name="userName"
+                  id="userName"
+                  label="Nombre de usuario"
+                  placeholder="Nombre de usuario"
+                  onChange={handleChange}
+                  onFocus={handleChange}
+                  helperText={errors.userName}
+                  value={input.userName}
+                />
                 <TextField
                   error={errors.identification ? true : false}
                   sx={{ ml: 2 }}
@@ -193,7 +193,7 @@ export default function UserForm({
                 <TextField
                   error={errors.role ? true : false}
                   name="role"
-                  sx={{ ml: 2, width: 223 }}
+                  sx={{ ml: 2, width: 200 }}
                   id="outlined-select-currency"
                   select
                   label="Seleccione"
@@ -214,6 +214,17 @@ export default function UserForm({
                 </TextField>
               </div>
               <div>
+                <TextField
+                  name="avatar"
+                  sx={{ mr: 2 }}
+                  id="avatar"
+                  label="Avatar"
+                  placeholder="Avatar"
+                  onChange={handleChange}
+                  onFocus={handleChange}
+                  value={input.avatar}
+                  defaultValue={''}
+                />
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DatePicker
                     label="Basic example"
@@ -244,7 +255,12 @@ export default function UserForm({
               <>
                 <Button
                   type="submit"
-                  disabled={Object.values(errors).length === 0 ? false : true}
+                  disabled={
+                    Object.values(input).length >= 8 &&
+                    Object.values(errors).length === 0
+                      ? false
+                      : true
+                  }
                   variant="contained"
                   endIcon={<Save />}
                 >
