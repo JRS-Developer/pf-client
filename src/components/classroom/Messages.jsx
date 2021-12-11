@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React  from 'react';
 import { styled } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -20,116 +20,113 @@ import SearchIcon from '@mui/icons-material/Search';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import NewMessage from "./newMessage";
 import Container from "@mui/material/Container"
+import { useState } from 'react';
 
-const messages = [
+const mensajes = [
   {
     id: 1,
-    primary: 'Juan',
-    secondary: "Hola como andan?",
-    person: '/static/images/avatar/5.jpg',
+    name: 'Juan',
+    message: "Hola como andan?",
+    avatar: '/static/images/avatar/5.jpg',
   },
   {
     id: 2,
-    primary: 'Lean',
-    secondary: `Bien cagado de`,
-    person: '/static/images/avatar/1.jpg',
+    name: 'Lean',
+    message: `Bien cagado de`,
+    avatar: '/static/images/avatar/1.jpg',
   },
   {
     id: 3,
-    primary: 'Juan',
-    secondary: 'Mal yo tambien',
-    person: '/static/images/avatar/2.jpg',
+    name: 'Juan',
+    message: 'Mal yo tambien',
+    avatar: '/static/images/avatar/2.jpg',
   },
   {
     id: 4,
-    primary: 'Lean',
-    secondary: 'Esta para un sandwich de milanesa',
-    person: '/static/images/avatar/3.jpg',
+    name: 'Lean',
+    message: 'Esta para un sandwich de milanesa',
+    avatar: '/static/images/avatar/3.jpg',
   },
   {
     id: 5,
-    primary: "Juan",
-    secondary: 'Siii con una buena birra',
-    person: '/static/images/avatar/4.jpg',
+    name: "Juan",
+    message: 'Siii con una buena birra',
+    avatar: '/static/images/avatar/4.jpg',
   },
   {
     id: 6,
-    primary: 'Lean',
-    secondary: `Venite`,
-    person: '/static/images/avatar/5.jpg',
+    name: 'Lean',
+    message: `Venite`,
+    avatar: '/static/images/avatar/5.jpg',
   },
   {
     id: 7,
-    primary: 'Juan',
-    secondary: `Yendo`,
-    person: '/static/images/avatar/1.jpg',
+    name: 'Juan',
+    message: `Yendo`,
+    avatar: '/static/images/avatar/1.jpg',
   },
   {
     id: 7,
-    primary: 'Juan',
-    secondary: `Yendo`,
-    person: '/static/images/avatar/1.jpg',
+    name: 'Juan',
+    message: `Yendo`,
+    avatar: '/static/images/avatar/1.jpg',
   },
   {
     id: 7,
-    primary: 'Juan',
-    secondary: `Yendo`,
-    person: '/static/images/avatar/1.jpg',
+    name: 'Juan',
+    message: `Yendo`,
+    avatar: '/static/images/avatar/1.jpg',
   },
   {
     id: 7,
-    primary: 'Juan',
-    secondary: `Yendo`,
-    person: '/static/images/avatar/1.jpg',
+    name: 'Juan',
+    message: `Yendo`,
+    avatar: '/static/images/avatar/1.jpg',
   },
   {
     id: 7,
-    primary: 'Juan',
-    secondary: `Yendo`,
-    person: '/static/images/avatar/1.jpg',
+    name: 'Juan',
+    message: `Yendo`,
+    avatar: '/static/images/avatar/1.jpg',
   },
   {
     id: 7,
-    primary: 'Juan',
-    secondary: `Yendo`,
-    person: '/static/images/avatar/1.jpg',
+    name: 'Juan',
+    message: `Yendo`,
+    avatar: '/static/images/avatar/1.jpg',
   },
   {
     id: 7,
-    primary: 'Juan',
-    secondary: `Yendo`,
-    person: '/static/images/avatar/1.jpg',
+    name: 'Juan',
+    message: `Yendo`,
+    avatar: '/static/images/avatar/1.jpg',
   },
   {
     id: 7,
-    primary: 'Juan',
-    secondary: `Yendo`,
-    person: '/static/images/avatar/1.jpg',
+    name: 'Juan',
+    message: `Yendo`,
+    avatar: '/static/images/avatar/1.jpg',
   },
   {
     id: 7,
-    primary: 'Juan',
-    secondary: `Yendo`,
-    person: '/static/images/avatar/1.jpg',
+    name: 'Juan',
+    message: `Yendo`,
+    avatar: '/static/images/avatar/1.jpg',
   },
   {
     id: 7,
-    primary: 'Juan',
-    secondary: `Yendo`,
-    person: '/static/images/avatar/1.jpg',
+    name: 'Juan',
+    message: `Yendo`,
+    avatar: '/static/images/avatar/1.jpg',
   },
 ];
 
-const StyledFab = styled(Fab)({
-  position: 'absolute',
-  zIndex: 1,
-  top: -30,
-  left: 0,
-  right: 0,
-  margin: '0 auto',
-});
+
 
 export default function Messages() {
+  const [messages, setMessages] = useState([mensajes])
+
+  
   return (
     <Box>
       <Box sx={{maxHeight: '80vh', overflow: 'auto'}} >
@@ -139,27 +136,14 @@ export default function Messages() {
             Inbox
           </Typography>
           <List sx={{ mb: 2 }}>
-            {messages.map(({ id, primary, secondary, person }) => (
-              <React.Fragment key={id}>
-                {id === 1 && (
-                  <ListSubheader sx={{ bgcolor: 'background.paper' }}>
-                    Today
-                  </ListSubheader>
-                )}
-
-                {id === 3 && (
-                  <ListSubheader sx={{ bgcolor: 'background.paper' }}>
-                    Yesterday
-                  </ListSubheader>
-                )}
-
+            {mensajes.map(({ id, name, message, person }) => (
                 <ListItem button>
                   <ListItemAvatar>
-                    <Avatar alt="Profile Picture" src={person} />
+                    <Avatar alt="Profile Picture" />
                   </ListItemAvatar>
-                  <ListItemText primary={primary} secondary={secondary} />
+                  <ListItemText primary={name} secondary={message} />
                 </ListItem>
-              </React.Fragment>
+              
             ))}
           </List>
         </Paper>

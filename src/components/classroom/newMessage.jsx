@@ -16,7 +16,8 @@ const NewMessage = () => {
   const [message, setMessage] = useState('');
 
   const handleSubmit = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
+    console.log(e.target.value) 
   };
 
 
