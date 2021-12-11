@@ -21,6 +21,7 @@ import ThemeChanger from './ThemeChanger'
 import {HeaderDiv} from "./HeaderStyles"
 import { logout } from '../../actions/auth';
 import { useDispatch } from 'react-redux'
+import Logo from '../../logo2.png'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -186,7 +187,9 @@ export default function Header({click, clickClose, show, setTheme, setMode, mode
               component="div"
               sx={{ display: { xs: 'none', sm: 'block' } }}
             >
-              LOGO
+              <Box sx={{width: 50, mt: 1}}>
+                <img src={Logo} style={{ width: '100%' }} alt="Logo Gaia" />
+              </Box>
             </Typography>
             <Search>
               <SearchIconWrapper>
