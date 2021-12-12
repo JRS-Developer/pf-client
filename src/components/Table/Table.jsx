@@ -313,7 +313,7 @@ const Table = ({
               },
             }}
             getRowClassName={(params) => {
-              return params.row.status === false && 'error'
+              return params.row.status === false ? 'error' : ''
             }}
           />
         </Box>
