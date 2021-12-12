@@ -7,6 +7,7 @@ import {
   getDataById,
   modifiedUser,
 } from '../../actions/user'
+import {format} from 'date-fns'
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 300 },
@@ -45,12 +46,22 @@ const columns = [
     headerName: 'Rol',
     width: 120,
     editable: true,
+    // Con esto obtengo el nombre del role
+    valueGetter: (params) => {
+      const role = params.row.role
+      if (role?.name) return role.name
+
+      return 
+    },
   },
   {
     field: 'birthdate',
     headerName: 'Fecha de Nacimiento',
     width: 170,
     editable: true,
+    valueFormatter: (params) => {
+      return format(new Date(params.value), 'dd/mm/yyyy')
+    }
   },
   {
     field: 'country',
