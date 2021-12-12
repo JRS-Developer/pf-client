@@ -11,6 +11,7 @@ import { Button } from '@mui/material'
 import validate from './validate'
 import { useHistory } from 'react-router-dom'
 import { setLogged, checkLogged } from '../../actions/auth/'
+import { getLoginPhoto } from '../../actions/loginPhoto'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import * as React from 'react'
@@ -29,6 +30,7 @@ export default function SignInSide() {
 
   const dispatch = useDispatch()
   const { isLogged } = useSelector((state) => state.auth)
+  const { photo } = useSelector((state) => state.loginPhoto)
 
   const [errors, setErrors] = useState({})
 
@@ -75,6 +77,7 @@ export default function SignInSide() {
   }, [isLogged, history])
 
   useEffect(() => {
+    dispatch(getLoginPhoto())
     dispatch(checkLogged())
   }, [])
 
@@ -86,7 +89,7 @@ export default function SignInSide() {
         sm={5}
         md={8}
         sx={{
-          backgroundImage: 'url(https://source.unsplash.com/random)',
+          backgroundImage: `url(${photo})`,
           backgroundRepeat: 'no-repeat',
           backgroundColor: (t) =>
             t.palette.mode === 'light'
