@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import TextField from '@mui/material/TextField'
 import MenuItem from '@mui/material/MenuItem'
 import Button from '@mui/material/Button'
@@ -19,6 +19,7 @@ import {
   createUser,
   modifiedUser,
 } from '../../actions/user/'
+import { getRoles as listRoles } from '../../actions/role'
 import { useSelector, useDispatch } from 'react-redux'
 
 const currencies = [
@@ -45,8 +46,12 @@ export default function UserForm({
 }) {
   const [input, setInput] = useState(dataForm)
   const dispatch = useDispatch()
-  const getUsers = useSelector((state) => state.usersReducer)
-  const { loading, message, error } = getUsers
+
+  const { usersReducer: getUsers, rolesReducer: getRoles } = useSelector(
+    (state) => state
+  )
+  const { loading } = getUsers
+  const { roles } = getRoles
 
   const [errors, setErrors] = useState({})
 
@@ -87,6 +92,11 @@ export default function UserForm({
     dispatch(listUsers())
   }
 
+  // Si no hay roles en el stado, entonces los obtengo
+  useEffect(() => {
+    if (!roles.length) dispatch(listRoles())
+  }, [roles])
+
   return (
     <center>
       <Dialog
@@ -101,7 +111,7 @@ export default function UserForm({
           <DialogContent>
             <DialogContentText></DialogContentText>
 
-            <Stack component="form" noValidate spacing={2}>
+            <Stack spacing={2}>
               <div>
                 <TextField
                   error={errors.firstName ? true : false}
@@ -197,18 +207,17 @@ export default function UserForm({
                   id="outlined-select-currency"
                   select
                   label="Seleccione"
-                  value={input.role || ''}
+                  value={input.role?.id || input.role || ''}
                   onChange={handleChange}
                   helperText={errors.role}
-                  defaultValue={input.role}
                 >
                   <MenuItem disabled value="">
                     <em>Seleccione</em>
                   </MenuItem>
 
-                  {currencies.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
+                  {roles.map((role) => (
+                    <MenuItem key={role.id} value={role.id}>
+                      {role.name}
                     </MenuItem>
                   ))}
                 </TextField>
