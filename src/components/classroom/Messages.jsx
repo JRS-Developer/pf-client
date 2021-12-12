@@ -36,31 +36,31 @@ const mensajes = [
     avatar: '/static/images/avatar/1.jpg',
   },
   {
-    id: 3,
+    id: 1,
     name: 'Juan',
     message: 'Mal yo tambien',
     avatar: '/static/images/avatar/2.jpg',
   },
   {
-    id: 4,
+    id: 2,
     name: 'Lean',
     message: 'Esta para un sandwich de milanesa',
     avatar: '/static/images/avatar/3.jpg',
   },
   {
-    id: 5,
+    id: 1,
     name: "Juan",
     message: 'Siii con una buena birra',
     avatar: '/static/images/avatar/4.jpg',
   },
   {
-    id: 6,
+    id: 2,
     name: 'Lean',
     message: `Venite`,
     avatar: '/static/images/avatar/5.jpg',
   },
   {
-    id: 7,
+    id: 1,
     name: 'Juan',
     message: `Yendo`,
     avatar: '/static/images/avatar/1.jpg',
@@ -129,7 +129,7 @@ export default function Messages() {
   
   return (
     <Box>
-      <Box sx={{maxHeight: '80vh', overflow: 'auto'}} >
+      <Box sx={{overflow: 'auto'}} style={{height: 'calc(100vh - 280px)'}} >
         <Paper sx={{ pb: '50px' }}>
           
           <Typography variant="h5" gutterBottom component="div" sx={{ p: 2, pb: 0 }}>
@@ -137,7 +137,7 @@ export default function Messages() {
           </Typography>
           <List sx={{ mb: 2 }}>
             {mensajes.map(({ id, name, message, person }) => (
-                <ListItem button>
+                <ListItem button sx={{color: name === 'Juan' ? 'primary.main' : 'secondary.main'}}>
                   <ListItemAvatar>
                     <Avatar alt="Profile Picture" />
                   </ListItemAvatar>
