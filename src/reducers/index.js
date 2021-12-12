@@ -13,6 +13,6 @@ export default combineReducers({
   modulesReducer: getModulesReducer,
   rolesReducer: getRolesReducer,
   auth: authReducer,
-  navbarReducer: getNavbarReducer
+  navbarReducer: getNavbarReducer,
   loginPhoto: loginPhotoReducer,
 })
