@@ -4,6 +4,7 @@ import { getUsersReducer } from './user/'
 import { getActionsReducer } from './action'
 import { getModulesReducer } from './module'
 import { getRolesReducer } from './role'
+import {getNavbarReducer} from './navbar'
 import { loginPhotoReducer } from './loginPhoto'
 
 export default combineReducers({
@@ -12,5 +13,6 @@ export default combineReducers({
   modulesReducer: getModulesReducer,
   rolesReducer: getRolesReducer,
   auth: authReducer,
+  navbarReducer: getNavbarReducer
   loginPhoto: loginPhotoReducer,
 })
