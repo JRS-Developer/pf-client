@@ -12,7 +12,7 @@ const Content = ({ show }) => {
     <ContainerDiv> {/*Div para styled-components*/}
       <section className={show && 'close'}>
         <Switch>
-          {/* <Route exact path="/roles" component={ProfileIndex} /> */}
+          <Route exact path="/roles" component={ProfileIndex} />
           <Route exact path="/actions" component={ActionIndex} />
           <Route exact path="/modules" component={ModuleIndex} />
           <Route exact path="/users" component={UserIndex} />

@@ -1,32 +1,31 @@
-import React, {useState} from "react";
-import { useSelector, useDispatch } from "react-redux";
-import PropTypes from 'prop-types';
-import IconButton from '@mui/material/IconButton';
-import TextField from '@mui/material/TextField';
+import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import PropTypes from 'prop-types'
+import IconButton from '@mui/material/IconButton'
+import TextField from '@mui/material/TextField'
 import {
   DataGrid,
   GridToolbarColumnsButton,
   GridToolbarDensitySelector,
-  GridToolbarFilterButton
-} from '@mui/x-data-grid';
-import ClearIcon from '@mui/icons-material/Clear';
-import SearchIcon from '@mui/icons-material/Search';
-import {AddCircle, Edit, Delete } from '@mui/icons-material';
-import {Box, Paper} from "@mui/material";
-import AlertDialog from "../alert/AlertDialog";
-import ConfirmDialog from "../alert/ConfirmDialog";
-import Tooltip from '@mui/material/Tooltip';
-import Stack from "@mui/material/Stack";
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
-
+  GridToolbarFilterButton,
+} from '@mui/x-data-grid'
+import ClearIcon from '@mui/icons-material/Clear'
+import SearchIcon from '@mui/icons-material/Search'
+import { AddCircle, Edit, Delete } from '@mui/icons-material'
+import { Box, Paper } from '@mui/material'
+import AlertDialog from '../alert/AlertDialog'
+import ConfirmDialog from '../alert/ConfirmDialog'
+import Tooltip from '@mui/material/Tooltip'
+import Stack from '@mui/material/Stack'
+import Snackbar from '@mui/material/Snackbar'
+import MuiAlert from '@mui/material/Alert'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+})
 
 function escapeRegExp(value) {
-  return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+  return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
 }
 
 function QuickSearchToolbar(props) {
@@ -42,7 +41,7 @@ function QuickSearchToolbar(props) {
       }}
     >
       <div>
-        <GridToolbarColumnsButton/>
+        <GridToolbarColumnsButton />
         <GridToolbarFilterButton />
         <GridToolbarDensitySelector />
       </div>
@@ -81,195 +80,244 @@ function QuickSearchToolbar(props) {
         }}
       />
     </Box>
-  );
+  )
 }
 
 QuickSearchToolbar.propTypes = {
   clearSearch: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
-};
+}
 
 /*
-* data: "La data que se mostrará en la grilla" => data = {columns, rows}
-* DialogForm: "Formulario para registrar y editar el registro"
-* title: Es el título de la DaraGrid
-* getDataById: Es una función que nos traerá la data por Id,
-* getActions: Es el estado del componente
-* modifiedAction: Es una función que nos permite modificar el status del registro
-* listData: Es una función que nos permite traer la lista de registros
-* */
-const Table = ({data, DialogForm, title, getDataById, getActions, modifiedAction, listData}) => {
+ * data: "La data que se mostrará en la grilla" => data = {columns, rows}
+ * DialogForm: "Formulario para registrar y editar el registro"
+ * title: Es el título de la DaraGrid
+ * getDataById: Es una función que nos traerá la data por Id,
+ * getActions: Es el estado del componente
+ * modifiedAction: Es una función que nos permite modificar el status del registro
+ * listData: Es una función que nos permite traer la lista de registros
+ * */
+const Table = ({
+  data,
+  DialogForm,
+  title,
+  getDataById,
+  getActions,
+  modifiedAction,
+  listData,
+}) => {
+  const dispatch = useDispatch()
 
-  const dispatch = useDispatch();
-
-  const { dataEdit, loading, error, message } = getActions;
-  const [openMessage, setOpenMessage] = React.useState(false);
-  const [pageSize, setPageSize] = React.useState(25);
-  const [searchText, setSearchText] = React.useState('');
-  const [rows, setRows] = React.useState(data.rows);
+  const { dataEdit, loading, error, message } = getActions
+  const [openMessage, setOpenMessage] = React.useState(false)
+  const [pageSize, setPageSize] = React.useState(25)
+  const [searchText, setSearchText] = React.useState('')
+  const [rows, setRows] = React.useState(data.rows)
 
   const requestSearch = (searchValue) => {
-    setSearchText(searchValue);
-    const searchRegex = new RegExp(escapeRegExp(searchValue), 'i');
+    setSearchText(searchValue)
+    const searchRegex = new RegExp(escapeRegExp(searchValue), 'i')
     const filteredRows = data.rows.filter((row) => {
       return Object.keys(row).some((field) => {
-        return searchRegex.test(row[field].toString());
-      });
-    });
-    setRows(filteredRows);
-  };
+        // Algunos valores son null e undefined y causaban un error
+        const result =
+          row[field] !== null &&
+          row[field] !== undefined &&
+          searchRegex.test(row[field].toString())
+        return result
+      })
+    })
+    setRows(filteredRows)
+  }
 
   React.useEffect(() => {
-    setRows(data.rows);
-  }, [data.rows]);
+    setRows(data.rows)
+  }, [data.rows])
 
-  const [selection, setSelection] = useState({});
+  const [selection, setSelection] = useState({})
   /*Dialog Form*/
-  const [open, setOpen] = React.useState(false);
-  const [titleForm, setTitleForm] = React.useState('Add Role');
+  const [open, setOpen] = React.useState(false)
+  const [titleForm, setTitleForm] = React.useState('Add Role')
   /*Dialog Alert*/
-  const [openAlert, setOpenAlert] = React.useState(false);
+  const [openAlert, setOpenAlert] = React.useState(false)
   /* Dialog Confirm */
-  const [openConfirm, setOpenConfirm] = React.useState(false);
+  const [openConfirm, setOpenConfirm] = React.useState(false)
 
   // Close DialogAlert
   const handleCloseAlert = () => {
-    setOpenAlert(false);
-  };
+    setOpenAlert(false)
+  }
 
   /*Open DialogForm*/
   const handleClickOpen = (action) => {
-    if(action === 'add'){
+    if (action === 'add') {
       setSelection({})
-      setTitleForm('Add');
-      setOpen(true);
-    }else if(selection.id){
+      setTitleForm('Add')
+      setOpen(true)
+    } else if (selection.id) {
       setTitleForm('Edit')
-      setOpen(true);
-    }else{
-      setOpenAlert(true);
+      setOpen(true)
+    } else {
+      setOpenAlert(true)
     }
-  };
+  }
   /** Close DialogForm*/
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   /* Open DialogConfirm */
   const handleOpenConfirm = () => {
-    selection.id ? setOpenConfirm(true) : setOpenAlert(true);
-  };
+    selection.id ? setOpenConfirm(true) : setOpenAlert(true)
+  }
   /* Close DialogConfirm */
   const handleCloseConfirm = () => {
-    setOpenConfirm(false);
-  };
+    setOpenConfirm(false)
+  }
 
-  const handleClickGetData =  (id) => {
-    dispatch(getDataById(id));
+  const handleClickGetData = (id) => {
+    dispatch(getDataById(id))
   }
 
   //Open message
   const handleClickMessage = () => {
-    setOpenMessage(true);
-  };
+    setOpenMessage(true)
+  }
   //Close message
   const handleCloseMessage = (event, reason) => {
     if (reason === 'clickaway') {
-      return;
+      return
     }
 
-    setOpenMessage(false);
-  };
-  
+    setOpenMessage(false)
+  }
+
   return (
-    <Box style={{ maxWidth: "100%" }}>
-      {<Stack spacing={2} sx={{ width: '100%' }}>
-          <Snackbar open={openMessage} autoHideDuration={6000} onClose={handleCloseMessage}>
-            <Alert onClose={handleCloseMessage} severity={error ? 'error' : 'success'} sx={{ width: '100%' }}>
-                { error ? error : message.message }
+    <Box style={{ maxWidth: '100%' }}>
+      {
+        <Stack spacing={2} sx={{ width: '100%' }}>
+          <Snackbar
+            open={openMessage}
+            autoHideDuration={6000}
+            onClose={handleCloseMessage}
+          >
+            <Alert
+              onClose={handleCloseMessage}
+              severity={error ? 'error' : 'success'}
+              sx={{ width: '100%' }}
+            >
+              {error ? error : message.message}
             </Alert>
           </Snackbar>
-        </Stack>}
-      {openConfirm && <ConfirmDialog
-        openConfirm={openConfirm}
-        handleCloseConfirm={handleCloseConfirm}
-        message="¿ Esta seguro de eliminar el registro ?"
-        dataForm={dataEdit}
-        fnModifiedStatus={modifiedAction}
-        listData={listData}
-        handleClickMessage={handleClickMessage}
-      />}
-      {openAlert && <AlertDialog
-        title="ADVERTENCIA"
-        message="Seleccione un registro para poder continuar"
-        openAlert={openAlert}
-        handleCloseAlert={handleCloseAlert}
-      />}
-      {open && <DialogForm
-        open={open}
-        handleClose={handleClose}
-        titleForm={titleForm}
-        dataForm={selection.id ? dataEdit: {}}
-        handleClickMessage={handleClickMessage}
-      />}
-        <Box style={{display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', }}>
-          <Box>
-            <h3>{`LISTA DE ${title}`}</h3>
-          </Box>
-          <Box>
-            <Tooltip title="Add">
-              <IconButton aria-label="delete" size="large" onClick={() => handleClickOpen('add')} >
-                <AddCircle fontSize="inherit" />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Edit">
-              <IconButton aria-label="delete" size="large" onClick={() => handleClickOpen('edit')} >
-                <Edit fontSize="inherit" />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Delete">
-              <IconButton aria-label="delete" size="large" onClick={() => handleOpenConfirm()}>
-                <Delete fontSize="inherit" />
-              </IconButton>
-            </Tooltip>
-          </Box>
+        </Stack>
+      }
+      {openConfirm && (
+        <ConfirmDialog
+          openConfirm={openConfirm}
+          handleCloseConfirm={handleCloseConfirm}
+          message="¿ Esta seguro de eliminar el registro ?"
+          dataForm={dataEdit}
+          fnModifiedStatus={modifiedAction}
+          listData={listData}
+          handleClickMessage={handleClickMessage}
+        />
+      )}
+      {openAlert && (
+        <AlertDialog
+          title="ADVERTENCIA"
+          message="Seleccione un registro para poder continuar"
+          openAlert={openAlert}
+          handleCloseAlert={handleCloseAlert}
+        />
+      )}
+      {open && (
+        <DialogForm
+          open={open}
+          handleClose={handleClose}
+          titleForm={titleForm}
+          dataForm={selection.id ? dataEdit : {}}
+          handleClickMessage={handleClickMessage}
+        />
+      )}
+      <Box
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'baseline',
+        }}
+      >
+        <Box>
+          <h3>{`LISTA DE ${title}`}</h3>
         </Box>
-        <Paper elevation={90}>
-          <Box sx={{ height: 'calc(100vh - 170px)', width: 1 }}>
-            <DataGrid
-              //checkboxSelection
-              pageSize={pageSize}
-              onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-              pagination
-              rowsPerPageOptions={[25, 50, 100]}
-              //pageSize={2}
-              sx={{
-                borderRadius: 2,
-                boxShadow: 3,
-                border: 0,
-                borderColor: 'primary.light',
-                '& .MuiDataGrid-cell:hover': {
-                  color: 'primary.main',
-                },
-              }}
-              onRowClick={(newSelection) => {
-                setSelection(newSelection.row);
-                handleClickGetData(newSelection.row.id);
-              }}
-              components={{ Toolbar: QuickSearchToolbar }}
-              rows={rows}
-              columns={data.columns}
-              componentsProps={{
-                toolbar: {
-                  value: searchText,
-                  onChange: (event) => requestSearch(event.target.value),
-                  clearSearch: () => requestSearch(''),
-                },
-              }}
-            />
-          </Box>
-        </Paper>
+        <Box>
+          <Tooltip title="Add">
+            <IconButton
+              aria-label="delete"
+              size="large"
+              onClick={() => handleClickOpen('add')}
+            >
+              <AddCircle fontSize="inherit" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Edit">
+            <IconButton
+              aria-label="delete"
+              size="large"
+              onClick={() => handleClickOpen('edit')}
+            >
+              <Edit fontSize="inherit" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Delete">
+            <IconButton
+              aria-label="delete"
+              size="large"
+              onClick={() => handleOpenConfirm()}
+            >
+              <Delete fontSize="inherit" />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      </Box>
+      <Paper elevation={90}>
+        <Box sx={{ height: 'calc(100vh - 170px)', width: 1 }}>
+          <DataGrid
+            //checkboxSelection
+            pageSize={pageSize}
+            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+            pagination
+            rowsPerPageOptions={[25, 50, 100]}
+            //pageSize={2}
+            sx={{
+              borderRadius: 2,
+              boxShadow: 3,
+              border: 0,
+              borderColor: 'primary.light',
+              '& .MuiDataGrid-cell:hover': {
+                color: 'primary.main',
+              },
+            }}
+            onRowClick={(newSelection) => {
+              setSelection(newSelection.row)
+              handleClickGetData(newSelection.row.id)
+            }}
+            components={{ Toolbar: QuickSearchToolbar }}
+            rows={rows}
+            columns={data.columns}
+            componentsProps={{
+              toolbar: {
+                value: searchText,
+                onChange: (event) => requestSearch(event.target.value),
+                clearSearch: () => requestSearch(''),
+              },
+            }}
+            getRowClassName={(params) => {
+              return params.row.status === false && 'error'
+            }}
+          />
+        </Box>
+      </Paper>
     </Box>
   )
 }

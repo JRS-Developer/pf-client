@@ -59,7 +59,7 @@ export const createAction = (body) => async (dispatch) => {
     const { data } = await axios.post(`${REACT_APP_SERVER}/actions`, body);
 
     dispatch({
-      type: actionType.GET_ACTIONS,
+      type: actionType.ADD_ACTION,
       payload: data
     })
   }catch (error) {

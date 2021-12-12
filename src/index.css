@@ -27,3 +27,7 @@ img{
     padding: 6px 15px !important;
     border-radius: 4px !important;
 }
+
+.MuiDataGrid-row.error {
+  background: #e63946 !important;
+}
