@@ -6,7 +6,7 @@ import Table from "../Table/Table"
 import {getModules as listModules, getDataById, modifiedModule } from "../../actions/module";
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 200 },
+  { field: 'id', headerName: 'ID', width: 300 },
   { field: 'name', headerName: 'Name', width: 300},
   { field: 'url', headerName: 'Url', width: 300},
   { field: 'icon', headerName: 'Icon', width: 300}
