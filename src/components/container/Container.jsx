@@ -6,6 +6,7 @@ import ActionIndex from "../action/ActionIndex";
 import UserIndex from "../User/UserIndex"
 import ModuleIndex from "../module/ModuleIndex";
 import ClassRoom from "../classroom/classroom";
+import Homework from "../classroom/Homework"
 
 const Content = ({ show }) => {
   return (
@@ -17,6 +18,7 @@ const Content = ({ show }) => {
           <Route exact path="/modules" component={ModuleIndex} />
           <Route exact path="/users" component={UserIndex} />
           <Route exact path="/materias" component={ClassRoom} />
+          <Route exact path="/tareas/:id" component={Homework} />
         </Switch>
       </section>
     </ContainerDiv>

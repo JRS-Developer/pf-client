@@ -1,5 +1,6 @@
 import Messages from "./Messages";
 import Feed from "./Feed";
+import Homeworks from "./Homeworks"
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
@@ -28,7 +29,7 @@ export default function ClassRoom() {
         <Paper elevation={90}>
           <TabPanel value="1"><Feed /></TabPanel>
           <TabPanel value="2"><Messages /></TabPanel>
-          <TabPanel value="3">TAREAS</TabPanel>
+          <TabPanel value="3"><Homeworks /></TabPanel>
         </Paper>
       </TabContext>
     </Box>
