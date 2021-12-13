@@ -1,5 +1,5 @@
 import React from "react";
-import {useHistory} from 'react-router-dom'
+import {useHistory, useParams} from 'react-router-dom'
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -11,7 +11,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 const tarea = {id: 9, title: "Tarea 9", complete: true, description: "Descripción de la tarea que tiene que realizar el alumno"}
 
 export default function Homework(){
-   // const id = useParams().id
+    const id = useParams().id
     const history = useHistory()
     
     function handleClick(){
@@ -21,13 +21,13 @@ export default function Homework(){
 
     return(
         <Paper elevation={90}>
-            <IconButton aria-label="delete" onClick={handleClick}>
-                <ArrowBackIcon />
-            </IconButton>
             <Box sx={{ overflow: 'auto' }} style={{ height: 'calc(100vh - 110px)' }}>
                 <Grid container>
                     <Grid item xs={9}>
-                        <center><Typography variant="h4">{tarea.title}</Typography></center>
+                    <IconButton aria-label="delete" onClick={handleClick}>
+                        <ArrowBackIcon />
+                    </IconButton>
+                        <center><Typography variant="h4">Tarea {id}</Typography></center>
                         <Typography variant="body1" >{tarea.description}</Typography>
                     </Grid>
                     <Grid item xs={3} sx={{backgroundColor: "secondary.light", p: 1}}>
