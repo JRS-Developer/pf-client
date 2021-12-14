@@ -3,14 +3,15 @@ import axios from "axios";
 
 const {REACT_APP_SERVER} = process.env
 
-export const getTasks = (body) => async (dispatch) => {
+export const getTasks = (params) => async (dispatch) => {
   try {
     dispatch({
       type: actionType.GET_TASKS_REQUEST
     })
 
-    const { data } = await axios.get(`${REACT_APP_SERVER}/tasks`,body);
-    //console.log(data);
+    const { data } = await axios.get(`${REACT_APP_SERVER}/tasks/?materia_id=${params.materia_id}&class_id=${params.class_id}`);
+    // console.log("data",data);
+    // console.log("params",params)
     dispatch({
       type: actionType.GET_TASKS,
       payload: data
