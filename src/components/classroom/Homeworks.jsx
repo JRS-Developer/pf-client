@@ -23,7 +23,7 @@ const tareas =[
 export default function Homeworks(){
 
   return(
-    <Box sx={{ overflow: 'auto' }} style={{ height: 'calc(100vh - 210px)' }}>
+    <Box sx={{ overflow: 'auto', height: 'calc(100vh - 180px)' }}>
       <Box sx={{backgroundColor: "primary.light", height: 40}}></Box>
         <Grid container spacing={2} sx={{mt: 1}}>
           <Grid item xs={6} display="flex" flexDirection="column" align="center">

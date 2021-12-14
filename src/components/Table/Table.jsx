@@ -194,7 +194,7 @@ const Table = ({
   }
 
   return (
-    <Box style={{ maxWidth: '100%' }}>
+    <Box>
       {
         <Stack spacing={2} sx={{ width: '100%' }}>
           <Snackbar
@@ -281,7 +281,7 @@ const Table = ({
         </Box>
       </Box>
       <Paper elevation={90}>
-        <Box sx={{ height: 'calc(100vh - 170px)', width: 1 }}>
+        <Box sx={{ height: 'calc(100vh - 132px)', width: 1 }}>
           <DataGrid
             //checkboxSelection
             pageSize={pageSize}

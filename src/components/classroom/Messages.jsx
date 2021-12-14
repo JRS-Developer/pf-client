@@ -128,8 +128,8 @@ export default function Messages() {
 
   
   return (
-    <Box>
-      <Box sx={{overflow: 'auto'}} style={{height: 'calc(100vh - 280px)'}} >
+    <Box sx={{overflow: 'auto', height: 'calc(100vh - 180px)'}}>
+      <Box sx={{overflow: 'auto', height: 'calc(100vh - 252px)'}}>
         <Paper sx={{ pb: '50px' }}>
           
           <Typography variant="h5" gutterBottom component="div" sx={{ p: 2, pb: 0 }}>
