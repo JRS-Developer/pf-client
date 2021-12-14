@@ -20,10 +20,9 @@ function App() {
   const { isLogged } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
 
-
-  const [theme, setTheme] = useState('GaiaTheme')
-  const [mode, setMode] = useState(true)
-
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'GaiaTheme')
+  const [mode, setMode] = useState(localStorage.getItem('mode') === "0" ? 0 : 1)
+  
   const actualTheme = themes[theme]
   const selectedTheme = createTheme(
     mode
