@@ -70,6 +70,16 @@ export default function Header({click, clickClose, show, setTheme, setMode, mode
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const dispatch = useDispatch()
 
+  const handleModeChange = () => {
+    if(mode){
+      setMode(0)
+      localStorage.setItem('mode', 0)
+    }else{
+      setMode(1)
+      localStorage.setItem('mode', 1)
+    }
+  }
+
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -240,7 +250,7 @@ export default function Header({click, clickClose, show, setTheme, setMode, mode
                 <MoreIcon />
               </IconButton>
             </Box>
-            <Switch defaultChecked size="small" color="secondary" onChange={() => setMode(mode ? false : true)} />
+            <Switch defaultChecked={mode ? true : false} size="small" color="secondary" onChange={handleModeChange} />
           </Toolbar>
         </AppBar>
         {renderMobileMenu}

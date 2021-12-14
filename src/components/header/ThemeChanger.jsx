@@ -9,14 +9,15 @@ import Tooltip from '@mui/material/Tooltip';
 
 export default function ThemeChanger({setTheme}){
 
-  const [selectedValue, setSelectedValue] = React.useState('GaiaTheme');
+  const [selectedValue, setSelectedValue] = React.useState(localStorage.getItem('theme') || 'GaiaTheme');
   const [open, setOpen] = React.useState(false);
   const [name, setName] = React.useState('');
   
   const handleChangeTheme = (event) => {
     setName(event.target.name)
     setSelectedValue(event.target.value);
-    setTheme(event.target.value)
+    localStorage.setItem('theme', event.target.value);
+    setTheme(localStorage.getItem('theme'))
     setOpen(true)
   };
 
