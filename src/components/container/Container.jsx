@@ -1,5 +1,5 @@
 import { Switch, Route } from "react-router-dom";
-import { ContainerDiv } from './ContainerStyles'
+import Box from '@mui/material/Box'
 
 import ProfileIndex from "../profile/ProfileIndex";
 import ActionIndex from "../action/ActionIndex";
@@ -10,8 +10,8 @@ import Homework from "../classroom/Homework"
 
 const Content = ({ show }) => {
   return (
-    <ContainerDiv> {/*Div para styled-components*/}
-      <section className={show && 'close'}>
+    
+      <Box sx={{marginLeft: show ? 0 : "260px", p: 2, mt: 6, transition: "all 0.3s" }}>
         <Switch>
           <Route exact path="/roles" component={ProfileIndex} />
           <Route exact path="/actions" component={ActionIndex} />
@@ -20,8 +20,7 @@ const Content = ({ show }) => {
           <Route exact path="/materias" component={ClassRoom} />
           <Route exact path="/tareas/:id" component={Homework} />
         </Switch>
-      </section>
-    </ContainerDiv>
+      </Box>
   )
 }
 

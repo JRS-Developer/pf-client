@@ -58,17 +58,17 @@ export default function Feed() {
   ]
 
   return (
-    <Box sx={{ overflow: 'auto' }} style={{ height: 'calc(100vh - 210px)' }}>
+    <Box sx={{ overflow: 'auto', height: 'calc(100vh - 180px)' }}>
       <Grid container spacing={2}>
         {data.map(e => (
-          <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12}>
             <Box sx={{ width: '95%' }}>
               <Paper display="flex" flexDirection="column" align="center" sx={{p: 1, border: 1, borderColor: 'primary.main', borderRadius: 2}}>
                 <Box display="flex" sx={{alignItems: 'center', pb: 1}}>
                   <Avatar alt={e.name} src={e.avatar} sx={{ width: 24, height: 24, mr: 1 }}/>
                   <Typography variant="subtitle1">{e.name}</Typography>
                 </Box>
-                <Box sx={{width: "80%", pb: 1,}}>
+                <Box sx={{width: "50%", pb: 1,}}>
                   <img src={e.img} alt={e.title} styles={{objectFit: "cover"}} />
                 </Box>
                 <Typography variant="h6">{e.title}</Typography>
