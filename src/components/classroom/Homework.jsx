@@ -20,7 +20,7 @@ export default function Homework(){
     
 
     return(
-        <Paper elevation={90}>
+        <Paper elevation={24}>
             <Box sx={{ overflow: 'auto' }} style={{ height: 'calc(100vh - 110px)' }}>
                 <Grid container>
                     <Grid item xs={9}>

@@ -181,16 +181,23 @@ export default function Header({click, clickClose, show, setTheme, setMode, mode
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" sx={{bgcolor: 'primary.main'}}>
           <Toolbar >
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: 2 }}
-            >
-              {show ? <MenuIcon onClick={click}/> : <Close onClick={clickClose}/>}
-
-            </IconButton>
+              {show ? <MenuIcon 
+                      onClick={click}
+                      size="large"
+                      edge="start"
+                      color="inherit"
+                      aria-label="open drawer"
+                      sx={{ mr: 2 }}
+                      cursor='pointer'/>
+                      :
+                      <Close 
+                      onClick={clickClose}
+                      size="large"
+                      edge="start"
+                      color="inherit"
+                      aria-label="open drawer"
+                      sx={{ mr: 2 }}
+                      cursor='pointer'/>}
             <Typography
               variant="h6"
               noWrap

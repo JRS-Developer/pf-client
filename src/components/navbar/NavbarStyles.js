@@ -4,7 +4,7 @@ export const NavbarDiv = styled.div`
   & .navbar{
     padding: 20px 15px;
     font-family: "Roboto", sans-serif;
-    width: 260px;
+    width: 200px;
     overflow: auto;
     display: inline-block;
     height: calc(100vh - 60px);
