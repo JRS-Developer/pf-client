@@ -43,7 +43,7 @@ export default function Homeworks(){
             <Paper display="flex" sx={{flexDirection: "column"}}>
               {/* {tareas.filter(t => t.complete === false).map((t, i) => {return ( */}
                 {tasks.map((t, i) => {return (
-                <Link to={`/tareas/${t.id}` key={`tp${i}`}}>
+                <Link to={`/tareas/${t.id}`} key={`tp${i}`}>
                   <Box>{t.title}</Box>
                   <Box>{t.description}</Box>
                 </Link>
