@@ -11,7 +11,7 @@ import Homework from "../classroom/Homework"
 const Content = ({ show }) => {
   return (
     
-      <Box sx={{marginLeft: show ? 0 : "260px", p: 2, mt: 6, transition: "all 0.3s" }}>
+      <Box sx={{marginLeft: show ? 0 : "200px", p: 2, mt: 6, transition: "all 0.3s" }}>
         <Switch>
           <Route exact path="/roles" component={ProfileIndex} />
           <Route exact path="/actions" component={ActionIndex} />

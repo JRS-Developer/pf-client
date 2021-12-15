@@ -136,8 +136,8 @@ export default function Messages() {
             Inbox
           </Typography>
           <List sx={{ mb: 2 }}>
-            {mensajes.map(({ id, name, message, person }) => (
-                <ListItem button sx={{color: name === 'Juan' ? 'primary.main' : 'secondary.main'}}>
+            {mensajes.map(({ id, name, message, person }, i) => (
+                <ListItem key={`m${i}`}button sx={{color: name === 'Juan' ? 'primary.main' : 'secondary.main'}}>
                   <ListItemAvatar>
                     <Avatar alt="Profile Picture" />
                   </ListItemAvatar>

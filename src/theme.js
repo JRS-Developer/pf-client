@@ -1,4 +1,7 @@
 export const GaiaTheme = {
+  typography: {
+    fontSize: 12,
+  },
   palette: {
     mode: 'dark',
     primary: {
@@ -14,6 +17,9 @@ export const GaiaTheme = {
 };
 
 export const HermesTheme = {
+  typography: {
+    fontSize: 12,
+  },
   palette: {
     mode: 'dark',
     primary: {
@@ -29,6 +35,9 @@ export const HermesTheme = {
 };
 
 export const HecateTheme = {
+  typography: {
+    fontSize: 12,
+  },
   palette: {
     mode: 'dark',
     primary: {
@@ -44,6 +53,9 @@ export const HecateTheme = {
 };
 
 export const AfroditaTheme = {
+  typography: {
+    fontSize: 12,
+  },
   palette: {
     mode: 'dark',
     primary: {
@@ -59,6 +71,9 @@ export const AfroditaTheme = {
 };
 
 export const PoseidonTheme = {
+  typography: {
+    fontSize: 12,
+  },
   palette: {
     mode: 'dark',
     primary: {
@@ -74,6 +89,9 @@ export const PoseidonTheme = {
 };
 
 export const  ZeusTheme = {
+  typography: {
+    fontSize: 12,
+  },
   palette: {
     mode: 'dark',
     primary: {

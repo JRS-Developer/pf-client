@@ -60,10 +60,10 @@ export default function Feed() {
   return (
     <Box sx={{ overflow: 'auto', height: 'calc(100vh - 180px)' }}>
       <Grid container spacing={2}>
-        {data.map(e => (
-          <Grid item xs={12}>
+        {data.map((e, i) => (
+          <Grid item xs={12} key={`f${i}`}>
             <Box sx={{ width: '95%' }}>
-              <Paper display="flex" flexDirection="column" align="center" sx={{p: 1, border: 1, borderColor: 'primary.main', borderRadius: 2}}>
+              <Paper display="flex" align="center" sx={{p: 1, border: 1, borderColor: 'primary.main', borderRadius: 2, flexDirection: "column"}}>
                 <Box display="flex" sx={{alignItems: 'center', pb: 1}}>
                   <Avatar alt={e.name} src={e.avatar} sx={{ width: 24, height: 24, mr: 1 }}/>
                   <Typography variant="subtitle1">{e.name}</Typography>

@@ -280,7 +280,7 @@ const Table = ({
           </Tooltip>
         </Box>
       </Box>
-      <Paper elevation={90}>
+      <Paper elevation={24}>
         <Box sx={{ height: 'calc(100vh - 132px)', width: 1 }}>
           <DataGrid
             //checkboxSelection

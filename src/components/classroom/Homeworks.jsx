@@ -26,21 +26,21 @@ export default function Homeworks(){
     <Box sx={{ overflow: 'auto', height: 'calc(100vh - 180px)' }}>
       <Box sx={{backgroundColor: "primary.light", height: 40}}></Box>
         <Grid container spacing={2} sx={{mt: 1}}>
-          <Grid item xs={6} display="flex" flexDirection="column" align="center">
+          <Grid item xs={6} display="flex" align="center" sx={{flexDirection: "column"}}>
             Tareas sin entregar
-            <Paper display="flex" flexDirection="column">
-              {tareas.filter(t => t.complete === false).map(t => {return (
-                <Link to={`/tareas/${t.id}`}>
+            <Paper display="flex" sx={{flexDirection: "column"}}>
+              {tareas.filter(t => t.complete === false).map((t, i) => {return (
+                <Link to={`/tareas/${t.id}`} key={`tp${i}`}>
                   <Box>{t.name}</Box>
                 </Link>
               )})}
             </Paper>
           </Grid>
-          <Grid item xs={6} display="flex" flexDirection="column" align="center">
+          <Grid item xs={6} display="flex" align="center" sx={{flexDirection: "column"}}>
             Tareas entregadas
-            <Paper display="flex" flexDirection="column">
-              {tareas.filter(t => t.complete === true).map(t => {return (
-                  <Link to={`/tareas/${t.id}`}>
+            <Paper display="flex" sx={{flexDirection: "column"}}>
+              {tareas.filter(t => t.complete === true).map((t, i) => {return (
+                  <Link to={`/tareas/${t.id}`} key={`tc${i}`}>
                     <Box>{t.name}</Box>
                   </Link>
                 )})}

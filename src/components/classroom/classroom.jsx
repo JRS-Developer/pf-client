@@ -20,13 +20,13 @@ export default function ClassRoom() {
     <Box>
       <TabContext value={value}>
         <Box>
-          <TabList onChange={handleChange} centered>
+          <TabList onChange={handleChange}>
             <Tab label="Publicaciones" value="1" />
             <Tab label="Chat" value="2" />
             <Tab label="Tareas" value="3" />
           </TabList>
         </Box>
-        <Paper elevation={90}>
+        <Paper elevation={24}>
           <TabPanel value="1"><Feed /></TabPanel>
           <TabPanel value="2"><Messages /></TabPanel>
           <TabPanel value="3"><Homeworks /></TabPanel>
