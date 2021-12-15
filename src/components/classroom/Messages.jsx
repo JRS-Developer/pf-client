@@ -32,7 +32,7 @@ const mensajes = [
   {
     id: 2,
     name: 'Lean',
-    message: `Bien cagado de`,
+    message: `Cansado`,
     avatar: '/static/images/avatar/1.jpg',
   },
   {
