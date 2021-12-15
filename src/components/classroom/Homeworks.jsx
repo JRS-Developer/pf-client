@@ -3,6 +3,9 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getTasks } from "../../actions/tasks";
 
 const tareas =[
   {id: 1, name: "Tarea 1", complete: false},
@@ -21,6 +24,15 @@ const tareas =[
 ]
 
 export default function Homeworks(){
+  const dispatch = useDispatch()
+  const tasks = useSelector(state=>state.tasksReducer.tasks)
+  // console.log(tasks)
+  
+  useEffect(() => {
+    //datos mockeados para mandar por body asi devuelve la tarea de la clase 4to año materia biología.
+    let body = {class_id:"57e3dc00-da1f-4522-b71c-3a09af7b670b" , materia_id:"10910772-1b07-4622-833c-633bcaddbe91"}
+    dispatch(getTasks(body))
+  }, [dispatch])
 
   return(
     <Box sx={{ overflow: 'auto', height: 'calc(100vh - 180px)' }}>
@@ -29,9 +41,11 @@ export default function Homeworks(){
           <Grid item xs={6} display="flex" align="center" sx={{flexDirection: "column"}}>
             Tareas sin entregar
             <Paper display="flex" sx={{flexDirection: "column"}}>
-              {tareas.filter(t => t.complete === false).map((t, i) => {return (
-                <Link to={`/tareas/${t.id}`} key={`tp${i}`}>
-                  <Box>{t.name}</Box>
+              {/* {tareas.filter(t => t.complete === false).map((t, i) => {return ( */}
+                {tasks.map((t, i) => {return (
+                <Link to={`/tareas/${t.id}` key={`tp${i}`}}>
+                  <Box>{t.title}</Box>
+                  <Box>{t.description}</Box>
                 </Link>
               )})}
             </Paper>
