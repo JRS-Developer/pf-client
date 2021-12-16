@@ -7,6 +7,7 @@ import UserIndex from "../User/UserIndex"
 import ModuleIndex from "../module/ModuleIndex";
 import ClassRoom from "../classroom/classroom";
 import Homework from "../classroom/Homework"
+import NotasAlumnos from '..//notas/NotasAlumno'
 
 const Content = ({ show }) => {
   return (
@@ -19,6 +20,7 @@ const Content = ({ show }) => {
           <Route exact path="/users" component={UserIndex} />
           <Route exact path="/materias" component={ClassRoom} />
           <Route exact path="/tareas/:id" component={Homework} />
+          <Route exact path="/notasalumnos" component={NotasAlumnos} />
         </Switch>
       </Box>
   )

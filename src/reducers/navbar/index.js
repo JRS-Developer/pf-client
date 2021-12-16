@@ -18,7 +18,7 @@ export const getNavbarReducer = (state = { navbar: [] }, action) => {
       return {
         //...state,
         loading: false,
-        errors: action.payload
+        error: action.payload
       }
     default:
       return state

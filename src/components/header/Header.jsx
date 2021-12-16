@@ -22,6 +22,8 @@ import {HeaderDiv} from "./HeaderStyles"
 import { logout } from '../../actions/auth';
 import { useDispatch } from 'react-redux'
 import Logo from '../../logo2.png'
+import { useHistory } from 'react-router-dom';
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -69,6 +71,7 @@ export default function Header({click, clickClose, show, setTheme, setMode, mode
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const handleModeChange = () => {
     if(mode){
@@ -88,8 +91,9 @@ export default function Header({click, clickClose, show, setTheme, setMode, mode
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMenuClose = () => {
+  const handleMenuClose = (URL) => {
     setAnchorEl(null);
+    history.push(URL)
     handleMobileMenuClose();
   };
 
@@ -116,6 +120,7 @@ export default function Header({click, clickClose, show, setTheme, setMode, mode
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={() => handleMenuClose('/notasalumnos')} >Notas</MenuItem>
       <MenuItem>
         <ThemeChanger setTheme={setTheme}/>
       </MenuItem>
