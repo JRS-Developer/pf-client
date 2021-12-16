@@ -7,6 +7,7 @@ import Icon from '@mui/material/Icon';
 import Box from '@mui/material/Box';
 
 import { getNavbar as listNavbar } from "../../actions/navbar";
+import { getActionsByModule } from "../../actions/actionsModule";
 /*
 const data = [
   {
@@ -99,12 +100,17 @@ const Navbar = ({show, click}) => {
     dispatch(listNavbar())
   }, [dispatch])
 
+  const getActionsModule = (moduleId) => {
+    dispatch(getActionsByModule(moduleId))
+  }
+
   const navbarClass = ["navbar"];
 
   if(show){
     navbarClass.push('close')
   }
   //console.log(loading && navbar)
+
   return (
 
     <NavbarDiv>
@@ -115,7 +121,7 @@ const Navbar = ({show, click}) => {
               <Link to={module.url}><Box sx={{color: 'text.primary'}}>{module.name}</Box><KeyboardArrowDown className="icono" sx={{color: 'text.primary'}}/></Link>
               <ul className="navbar_sub_links">
                 {module.sub_data.map(subModule => (
-                  <li key={subModule.id}>
+                  <li key={subModule.id} onClick={() => getActionsModule(subModule.id)}>
                     <Link to={subModule.url}>
                       <Icon sx={{color: 'text.primary'}}>{subModule.icon}</Icon>
                       <span><Box sx={{color: 'text.primary'}}>{subModule.name}</Box></span>
