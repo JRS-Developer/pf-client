@@ -32,7 +32,7 @@ const mensajes = [
   {
     id: 2,
     name: 'Lean',
-    message: `Bien cagado de`,
+    message: `Cansado`,
     avatar: '/static/images/avatar/1.jpg',
   },
   {
@@ -128,16 +128,16 @@ export default function Messages() {
 
   
   return (
-    <Box>
-      <Box sx={{overflow: 'auto'}} style={{height: 'calc(100vh - 280px)'}} >
+    <Box sx={{overflow: 'auto', height: 'calc(100vh - 180px)'}}>
+      <Box sx={{overflow: 'auto', height: 'calc(100vh - 252px)'}}>
         <Paper sx={{ pb: '50px' }}>
           
           <Typography variant="h5" gutterBottom component="div" sx={{ p: 2, pb: 0 }}>
             Inbox
           </Typography>
           <List sx={{ mb: 2 }}>
-            {mensajes.map(({ id, name, message, person }) => (
-                <ListItem button sx={{color: name === 'Juan' ? 'primary.main' : 'secondary.main'}}>
+            {mensajes.map(({ id, name, message, person }, i) => (
+                <ListItem key={`m${i}`}button sx={{color: name === 'Juan' ? 'primary.main' : 'secondary.main'}}>
                   <ListItemAvatar>
                     <Avatar alt="Profile Picture" />
                   </ListItemAvatar>

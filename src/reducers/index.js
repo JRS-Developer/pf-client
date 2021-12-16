@@ -9,6 +9,8 @@ import { loginPhotoReducer } from './loginPhoto'
 import { getActionsModuleReducer } from './actionsModule'
 import { getAccessUserReducer,addAccessUserReducer } from './access'
 
+import { getTasksReducer } from './task'
+
 export default combineReducers({
   usersReducer: getUsersReducer,
   actionsReducer: getActionsReducer,
@@ -20,4 +22,5 @@ export default combineReducers({
   actionsModuleReducer: getActionsModuleReducer,
   accessUserReducer: getAccessUserReducer,
   addAccessUserReducer: addAccessUserReducer
+  tasksReducer: getTasksReducer
 })

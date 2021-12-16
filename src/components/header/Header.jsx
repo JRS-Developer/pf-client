@@ -22,6 +22,8 @@ import {HeaderDiv} from "./HeaderStyles"
 import { logout } from '../../actions/auth';
 import { useDispatch } from 'react-redux'
 import Logo from '../../logo2.png'
+import { useHistory } from 'react-router-dom';
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -69,6 +71,17 @@ export default function Header({click, clickClose, show, setTheme, setMode, mode
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const dispatch = useDispatch()
+  const history = useHistory()
+
+  const handleModeChange = () => {
+    if(mode){
+      setMode(0)
+      localStorage.setItem('mode', 0)
+    }else{
+      setMode(1)
+      localStorage.setItem('mode', 1)
+    }
+  }
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -78,8 +91,9 @@ export default function Header({click, clickClose, show, setTheme, setMode, mode
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMenuClose = () => {
+  const handleMenuClose = (URL) => {
     setAnchorEl(null);
+    history.push(URL)
     handleMobileMenuClose();
   };
 
@@ -106,6 +120,7 @@ export default function Header({click, clickClose, show, setTheme, setMode, mode
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={() => handleMenuClose('/notasalumnos')} >Notas</MenuItem>
       <MenuItem>
         <ThemeChanger setTheme={setTheme}/>
       </MenuItem>
@@ -171,16 +186,23 @@ export default function Header({click, clickClose, show, setTheme, setMode, mode
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" sx={{bgcolor: 'primary.main'}}>
           <Toolbar >
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: 2 }}
-            >
-              {show ? <MenuIcon onClick={click}/> : <Close onClick={clickClose}/>}
-
-            </IconButton>
+              {show ? <MenuIcon 
+                      onClick={click}
+                      size="large"
+                      edge="start"
+                      color="inherit"
+                      aria-label="open drawer"
+                      sx={{ mr: 2 }}
+                      cursor='pointer'/>
+                      :
+                      <Close 
+                      onClick={clickClose}
+                      size="large"
+                      edge="start"
+                      color="inherit"
+                      aria-label="open drawer"
+                      sx={{ mr: 2 }}
+                      cursor='pointer'/>}
             <Typography
               variant="h6"
               noWrap
@@ -240,7 +262,7 @@ export default function Header({click, clickClose, show, setTheme, setMode, mode
                 <MoreIcon />
               </IconButton>
             </Box>
-            <Switch defaultChecked size="small" color="secondary" onChange={() => setMode(mode ? false : true)} />
+            <Switch defaultChecked={mode ? true : false} size="small" color="secondary" onChange={handleModeChange} />
           </Toolbar>
         </AppBar>
         {renderMobileMenu}

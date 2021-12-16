@@ -1,0 +1,7 @@
+export const GET_TASKS_REQUEST = "task/get_tasks_request"
+export const GET_TASK = "task/get_task"
+export const GET_TASKS = "task/get_tasks"
+export const ADD_TASK = "task/add_task"
+export const DELETE_TASK = "task/delete_task"
+export const EDIT_TASK = "task/edit_task"
+export const TASK_FAIL = "task/fail"
