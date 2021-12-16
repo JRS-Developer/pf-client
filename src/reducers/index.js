@@ -21,6 +21,6 @@ export default combineReducers({
   loginPhoto: loginPhotoReducer,
   actionsModuleReducer: getActionsModuleReducer,
   accessUserReducer: getAccessUserReducer,
-  addAccessUserReducer: addAccessUserReducer
+  addAccessUserReducer: addAccessUserReducer,
   tasksReducer: getTasksReducer
 })
