@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch} from 'react-redux'
 import PropTypes from 'prop-types'
 import IconButton from '@mui/material/IconButton'
+import Icon from '@mui/material/Icon';
+import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField'
 import {
   DataGrid,
@@ -11,7 +13,7 @@ import {
 } from '@mui/x-data-grid'
 import ClearIcon from '@mui/icons-material/Clear'
 import SearchIcon from '@mui/icons-material/Search'
-import { AddCircle, Edit, Delete } from '@mui/icons-material'
+
 import { Box, Paper } from '@mui/material'
 import AlertDialog from '../alert/AlertDialog'
 import ConfirmDialog from '../alert/ConfirmDialog'
@@ -19,6 +21,7 @@ import Tooltip from '@mui/material/Tooltip'
 import Stack from '@mui/material/Stack'
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert from '@mui/material/Alert'
+import AccessForm from "../access/AccessForm";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
@@ -131,6 +134,10 @@ const Table = ({
     setRows(filteredRows)
   }
 
+  //Obtenemos las acciones por módulos
+  const getActionsModule = useSelector(state => state.actionsModuleReducer);
+  const { actionsModule, loadingActions, errorActions } = getActionsModule;
+
   React.useEffect(() => {
     setRows(data.rows)
   }, [data.rows])
@@ -143,6 +150,8 @@ const Table = ({
   const [openAlert, setOpenAlert] = React.useState(false)
   /* Dialog Confirm */
   const [openConfirm, setOpenConfirm] = React.useState(false)
+  /* Dialog Confirm */
+  const [openAccess, setOpenAccess] = React.useState(false)
 
   // Close DialogAlert
   const handleCloseAlert = () => {
@@ -155,6 +164,12 @@ const Table = ({
       setSelection({})
       setTitleForm('Add')
       setOpen(true)
+    }else if( action === 'delete') {
+      /* Open DialogConfirm Delete*/
+      selection.id ? setOpenConfirm(true) : setOpenAlert(true)
+    }else if( action === 'access') {
+      /* Open DialogConfirm Access*/
+      selection.id ? setOpenAccess(true) : setOpenAlert(true)
     } else if (selection.id) {
       setTitleForm('Edit')
       setOpen(true)
@@ -167,13 +182,14 @@ const Table = ({
     setOpen(false)
   }
 
-  /* Open DialogConfirm */
-  const handleOpenConfirm = () => {
-    selection.id ? setOpenConfirm(true) : setOpenAlert(true)
-  }
   /* Close DialogConfirm */
   const handleCloseConfirm = () => {
     setOpenConfirm(false)
+  }
+
+  /* Close DialogAccess */
+  const handleCloseAccess = () => {
+    setOpenAccess(false)
   }
 
   const handleClickGetData = (id) => {
@@ -212,6 +228,15 @@ const Table = ({
           </Snackbar>
         </Stack>
       }
+      {openAccess && (
+        <AccessForm
+          openAccess={openAccess}
+          handleCloseAccess={handleCloseAccess}
+          dataForm={dataEdit}
+          listData={listData}
+          handleClickMessage={handleClickMessage}
+        />
+      )}
       {openConfirm && (
         <ConfirmDialog
           openConfirm={openConfirm}
@@ -251,6 +276,24 @@ const Table = ({
           <h3>{`LISTA DE ${title}`}</h3>
         </Box>
         <Box>
+
+          {loadingActions ?
+            <Box sx={{ display: 'flex' }}>
+              <CircularProgress />
+            </Box> : errorActions ? <h4>{errorActions}</h4> : actionsModule.map(act => (
+            <Tooltip title={act.name}>
+              <IconButton
+                aria-label={act.name}
+                size="large"
+                onClick={() => handleClickOpen(`${act.action_param}`)}
+              >
+                <Icon fontSize="inherit">
+                  {act.icon}
+                </Icon>
+              </IconButton>
+            </Tooltip>
+          ))}
+          {/*
           <Tooltip title="Add">
             <IconButton
               aria-label="delete"
@@ -277,7 +320,7 @@ const Table = ({
             >
               <Delete fontSize="inherit" />
             </IconButton>
-          </Tooltip>
+          </Tooltip>*/}
         </Box>
       </Box>
       <Paper elevation={90}>
