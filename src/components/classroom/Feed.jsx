@@ -1,15 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Box from '@mui/material/Box'
-import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
-import { useSelector } from 'react-redux'
+import Post from './Post'
+import { useSelector, useDispatch } from 'react-redux'
+import { getPosts, createPost, updatePost, deletePost, likePost, getPost } from '../../actions/post'
 
 export default function Feed() {
-  let photo = useSelector((store) => store.loginPhoto).photo
+  const posts = useSelector((store) => store.postsReducer).posts
+  const dispatch = useDispatch()
+  
+  useEffect(() => {
+   /*  dispatch(createPost({
+      "title": "Prueba Dispatch",
+      "text": "Bienvenidos todos al inicio a clases",
+      "publisher_id": "ab11729b-d0f1-4976-821d-8a30c3c178e7"
+    })) */
+    /* dispatch(updatePost({
+      "title": "Bienvenidos"
+    }, "a446b611-1ef0-4290-86f1-d0054655a31a")) */
+    /* dispatch(deletePost("a446b611-1ef0-4290-86f1-d0054655a31a")) */
+    /* dispatch(likePost("a446b611-1ef0-4290-86f1-d0054655a31a")) */
+    //dispatch(getPost("93a1fcac-7b9e-47d3-86c1-9442ceaee3c0"))
+    dispatch(getPosts())
+  }, [])
 
-  const data = [
+  /* const data = [
     {
       id: 1,
       name: 'Juan',
@@ -55,27 +70,13 @@ export default function Feed() {
       description: `Hola alumnos!
       Les dejo el material que vamos a usar todo este módulo`,
     },
-  ]
+  ] */
 
   return (
-    <Box sx={{ overflow: 'auto', height: 'calc(100vh - 180px)' }}>
+    <Box sx={{ overflow: 'auto' }}>
       <Grid container spacing={2}>
-        {data.map((e, i) => (
-          <Grid item xs={12} key={`f${i}`}>
-            <Box sx={{ width: '95%' }}>
-              <Paper display="flex" align="center" sx={{p: 1, border: 1, borderColor: 'primary.main', borderRadius: 2, flexDirection: "column"}}>
-                <Box display="flex" sx={{alignItems: 'center', pb: 1}}>
-                  <Avatar alt={e.name} src={e.avatar} sx={{ width: 24, height: 24, mr: 1 }}/>
-                  <Typography variant="subtitle1">{e.name}</Typography>
-                </Box>
-                <Box sx={{width: "50%", pb: 1,}}>
-                  <img src={e.img} alt={e.title} styles={{objectFit: "cover"}} />
-                </Box>
-                <Typography variant="h6">{e.title}</Typography>
-                <Typography variant="body2">{e.description}</Typography>
-              </Paper>
-            </Box>
-          </Grid>
+        {posts && posts.map((e, i) => (
+          <Post key={`p${i}`} avatar={e.publisher.avatar} title={e.title} description={e.text} name={`${e.publisher.firstName} ${e.publisher.lastName}`} img={e.images}/>
         ))}
       </Grid>
     </Box>

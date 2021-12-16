@@ -7,6 +7,7 @@ import { getRolesReducer } from './role'
 import {getNavbarReducer} from './navbar'
 import { loginPhotoReducer } from './loginPhoto'
 import { getTasksReducer } from './task'
+import { getPostsReducer } from './post'
 
 export default combineReducers({
   usersReducer: getUsersReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
   auth: authReducer,
   navbarReducer: getNavbarReducer,
   loginPhoto: loginPhotoReducer,
-  tasksReducer: getTasksReducer
+  tasksReducer: getTasksReducer,
+  postsReducer: getPostsReducer
 })
