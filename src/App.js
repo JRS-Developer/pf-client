@@ -2,7 +2,6 @@ import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkLogged } from './actions/auth'
-import './lib/axios'
 
 import { ThemeProvider } from '@mui/material/styles'
 import * as themes from './theme'
