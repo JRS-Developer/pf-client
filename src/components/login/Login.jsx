@@ -73,6 +73,7 @@ export default function SignInSide() {
       setOpen(true)
       setMessage({ type: 'success', text: data.message })
       localStorage.setItem('token', data.token)
+      localStorage.setItem('user', data.user)
 
       dispatch(setLogged())
     } catch (error) {
