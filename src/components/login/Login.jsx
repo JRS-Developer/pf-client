@@ -7,7 +7,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle'
 import IconButton from '@mui/material/IconButton'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
-import { Button } from '@mui/material'
+import { Button, Typography, Snackbar, Alert } from '@mui/material'
 import validate from './validate'
 import { useHistory } from 'react-router-dom'
 import { setLogged, checkLogged } from '../../actions/auth/'
@@ -33,6 +33,11 @@ export default function SignInSide() {
   const { photo } = useSelector((state) => state.loginPhoto)
 
   const [errors, setErrors] = useState({})
+  const [message, setMessage] = useState({
+    type: 'success',
+    text: '',
+  })
+  const [open, setOpen] = useState(false)
 
   const history = useHistory()
 
@@ -64,11 +69,19 @@ export default function SignInSide() {
         `${process.env.REACT_APP_SERVER}/auth/login`,
         { email: values.user, password: values.password }
       )
+
+      setOpen(true)
+      setMessage({ type: 'success', text: data.message })
       localStorage.setItem('token', data.token)
 
       dispatch(setLogged())
     } catch (error) {
-      // TODO: Mostrar un mensaje cuando el usuario no es valido
+      // Si hay algun error se le muestra al usuario
+      setMessage({
+        type: 'error',
+        text: error.response?.data?.message || error.message,
+      })
+      setOpen(true)
     }
   }
 
@@ -131,7 +144,7 @@ export default function SignInSide() {
               m: 5,
             }}
           >
-            <Box sx={{minWidth: 100}}>
+            <Box sx={{ minWidth: 100 }}>
               <img src={Logo} style={{ width: '100%' }} alt="Logo Gaia" />
             </Box>
           </Box>
@@ -229,6 +242,20 @@ export default function SignInSide() {
                     Log in
                   </Button>
                 </Box>
+                <Snackbar
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                  open={open}
+                  autoHideDuration={6000}
+                  onClose={() => setOpen(false)}
+                >
+                  <Alert
+                    onClose={() => setOpen(false)}
+                    severity={message.type}
+                    sx={{ width: '100%' }}
+                  >
+                    {message.text}
+                  </Alert>
+                </Snackbar>
               </Box>
             </form>
           </Box>
