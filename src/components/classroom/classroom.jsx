@@ -1,7 +1,8 @@
 import Messages from "./Messages";
 import Feed from "./Feed";
-import Homeworks from "./Homeworks"
+import Homeworks from "./Homeworks";
 import * as React from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -11,10 +12,17 @@ import Paper from '@mui/material/Paper';
 import NotasProfesor from '../notas/NotasProfesor'
 
 export default function ClassRoom() {
-  const [value, setValue] = React.useState('1');
-
+  const [value, setValue] = useState('1');
+  const [materia, setMateria] = useState('');
+  
   const handleChange = (event, newValue) => {
+    if(Number(newValue) === 2){
+      setValue(newValue);
+      setMateria(newValue);
+      return
+    }
     setValue(newValue);
+    
   };
 
   return (
@@ -30,7 +38,7 @@ export default function ClassRoom() {
         </Box>
         <Paper elevation={24}>
           <TabPanel value="1"><Feed /></TabPanel>
-          <TabPanel value="2"><Messages /></TabPanel>
+          <TabPanel value="2"><Messages materia={materia}/></TabPanel>
           <TabPanel value="3"><Homeworks /></TabPanel>
           <TabPanel value="4"><NotasProfesor /></TabPanel>
         </Paper>
