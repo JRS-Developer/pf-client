@@ -20,7 +20,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import NewMessage from "./newMessage";
 import Container from "@mui/material/Container"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+import socket from '../socket'
 
 const mensajes = [
   {
@@ -123,10 +125,13 @@ const mensajes = [
 
 
 
-export default function Messages() {
+export default function Messages({materia}) {
   const [messages, setMessages] = useState([mensajes])
 
-  
+    useEffect(() => {
+      socket.emit('conectado');
+    }, []);
+
   return (
     <Box sx={{overflow: 'auto', height: 'calc(100vh - 180px)'}}>
       <Box sx={{overflow: 'auto', height: 'calc(100vh - 252px)'}}>
