@@ -2,7 +2,6 @@ import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkLogged } from './actions/auth'
-import './lib/axios'
 
 import { ThemeProvider } from '@mui/material/styles'
 import * as themes from './theme'
@@ -14,6 +13,7 @@ import Navbar from './components/navbar/Navbar'
 import Header from './components/header/Header'
 import Login from './components/login/Login'
 import Container from './components/container/Container'
+
 
 function App() {
   const [sideToggle, setSideToggle] = useState(false)
@@ -40,6 +40,7 @@ function App() {
   useEffect(() => {
     dispatch(checkLogged)
   }, [dispatch])
+ 
 
   return (
     <Router>
