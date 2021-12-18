@@ -39,7 +39,7 @@ function App() {
 
   useEffect(() => {
     dispatch(checkLogged)
-  }, [])
+  }, [dispatch])
 
   return (
     <Router>
