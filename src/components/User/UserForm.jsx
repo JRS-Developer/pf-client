@@ -22,7 +22,7 @@ import {
 import { getRoles as listRoles } from '../../actions/role'
 import { useSelector, useDispatch } from 'react-redux'
 
-const currencies = [
+/* const currencies = [
   {
     value: 'Admin',
     label: 'Admin',
@@ -35,7 +35,7 @@ const currencies = [
     value: 'Estudiante',
     label: 'Estudiante',
   },
-]
+] */
 
 export default function UserForm({
   open,
@@ -95,6 +95,7 @@ export default function UserForm({
   // Si no hay roles en el stado, entonces los obtengo
   useEffect(() => {
     if (!roles.length) dispatch(listRoles())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roles])
 
   return (

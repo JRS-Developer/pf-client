@@ -36,27 +36,27 @@ function PaperComponent(props) {
 
 export default function AccessForm({openAccess, handleCloseAccess, dataForm, listData, handleClickMessage}) {
   const dispatch = useDispatch();
-  const initialStatee = [
+/*   const initialStatee = [
     "d544b900-a077-483e-b335-8a52c2fde399_4c8f8e25-63e5-46b4-b11d-309ff6666e11_318caf13-5c64-4aec-91fb-26abca03c348",
     "d544b900-a077-483e-b335-8a52c2fde399_4c8f8e25-63e5-46b4-b11d-309ff6666e11_30fe307d-363c-46d3-8cf5-184254e45198",
     "d544b900-a077-483e-b335-8a52c2fde399_4c8f8e25-63e5-46b4-b11d-309ff6666e11_f33c5435-9cb2-4d18-8530-e37f28fd231d"
-  ];
+  ]; */
   const initialState = [];
   let user_id = dataForm.id;
   const [checked, setChecked] = useState(initialState);
-  const [dataAccess, setDataAccess] = useState([])
+  const [dataAccess, /* setDataAccess */] = useState([])
 
   const getModulesAll = useSelector(state => state.accessUserReducer);
   const { modulesUser, loadingAccess, errorAccess } = getModulesAll;
 
-  const addAccess = useSelector(state => state.addAccessUserReducer);
-  const { message, loadingSave, error } = getModulesAll;
+  // const addAccess = useSelector(state => state.addAccessUserReducer);
+  // const { message, loadingSave, error } = getModulesAll;
 
     if(!loadingAccess){
       modulesUser.map(padre => {
-        padre.sub_data.map(hijo => {
-          hijo.actions.map(action => {
-            if(action.action_id !== null){
+        return padre.sub_data.map(hijo => {
+          return hijo.actions.map(action => {
+              if(action.action_id !== null){
               let value = `${padre.id}_${hijo.id}_${action.id}`
               const currentIndex = checked.indexOf(value);
               if (currentIndex === -1) {
