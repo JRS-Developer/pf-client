@@ -15,7 +15,7 @@ import { Close, Save } from '@mui/icons-material';
 import LoadingButton from "@mui/lab/LoadingButton";
 import {AutocompleteDiv} from './ModuleStyles';
 import { getModules as listModules, createModule, modifiedModule } from "../../actions/module";
-import {getActions as listaActions} from "../../actions/action";
+import { getActions as listaActions } from "../../actions/action";
 
 
 const ModuleForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage}) => {
@@ -32,6 +32,7 @@ const ModuleForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage
     defaultValue.push(ob);
     dataForm.action_id.push(ac.id)
   });
+
   const [rowModule, setRowModule] = useState(dataForm);
 
   const dispatch = useDispatch();
@@ -178,13 +179,12 @@ const ModuleForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage
                       sx={{ width: '100%' }}
                       renderInput={(params) => <TextField {...params} label="Module" />}
                     />
-                </AutocompleteDiv>
+                  </AutocompleteDiv>
                 </Grid>
 
                 <Grid item xs={12}>
                   <AutocompleteDiv>
                     <Autocomplete
-
                       multiple
                       id="actions"
                       options={arrayActions.filter((option) => option.name)}

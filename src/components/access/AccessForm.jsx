@@ -53,7 +53,7 @@ export default function AccessForm({openAccess, handleCloseAccess, dataForm, lis
   const { message, loadingSave, error } = getModulesAll;
 
     if(!loadingAccess){
-      modulesUser.map(padre => {
+      modulesUser?.map(padre => {
         padre.sub_data.map(hijo => {
           hijo.actions.map(action => {
             if(action.action_id !== null){
@@ -105,21 +105,6 @@ export default function AccessForm({openAccess, handleCloseAccess, dataForm, lis
     console.log(access)
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    dataForm.status === true ? dataForm.status = false : dataForm.status = true;
-    let dataStatus = {
-      id: dataForm.id,
-      status: dataForm.status
-    }
-
-    handleCloseAccess();
-    //Iniciamos el mensaje respuesta
-    handleClickMessage()
-    //Listamos la data
-    dispatch(listData());
-  }
-
   return (
     <div>
       <Dialog
@@ -131,13 +116,14 @@ export default function AccessForm({openAccess, handleCloseAccess, dataForm, lis
         fullWidth={`lg`}
         scroll='paper'
       >
-        <form onSubmit={handleSubmit}>
+        <form>
           <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
             ASIGNAR ACCESOS
           </DialogTitle>
           <DialogContent>
 
-            { loadingAccess ? <h2>Loading...</h2> : errorAccess ? <h3>{errorAccess}</h3> : modulesUser.map(dt => (
+            { loadingAccess ? <h2>Loading...</h2> : errorAccess ? <h3>{errorAccess}</h3> :
+              modulesUser.map(dt => (
               <Accordion key={dt.id}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
