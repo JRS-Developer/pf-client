@@ -1,42 +1,41 @@
-import * as actionTypes from '../../actions/module/types';
+import * as actionTypes from '../../actions/matricula/types';
 let initialState = {
-  modules: [],
+  matriculas: [],
   dataEdit:{},
   message: {}
 }
-export const getModulesReducer = (state = initialState, action) => {
+export const getMatriculaReducer = (state = initialState, action) => {
   switch (action.type){
-    case actionTypes.GET_MODULES_REQUEST:
+    case actionTypes.GET_MATRICULAS_REQUEST:
       return {
         ...state,
         loading : true
       }
-    case actionTypes.GET_MODULES:
+    case actionTypes.GET_MATRICULAS:
       return {
         ...state,
         loading: false,
-        modules: action.payload
+        matriculas: action.payload
       }
-    case actionTypes.GET_MODULE:
+    case actionTypes.GET_MATRICULA:
       return {
         ...state,
         loading: false,
         dataEdit: action.payload
       }
-    case actionTypes.ADD_MODULE:
+    case actionTypes.ADD_MATRICULA:
       return {
         loading: false,
-        modules: action.payload,
+        matriculas: action.payload,
         message: action.payload
       }
-    case actionTypes.EDIT_MODULE:
+    case actionTypes.EDIT_MATRICULA:
       return {
-        ...state,
         loading: false,
-        //modules: action.payload,
+        matriculas: action.payload,
         message: action.payload
       }
-    case actionTypes.MODULE_FAIL:
+    case actionTypes.MATRICULA_FAIL:
       return {
         ...state,
         loading: false,
