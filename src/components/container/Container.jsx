@@ -8,6 +8,7 @@ import ModuleIndex from '../module/ModuleIndex'
 import ClassRoom from '../classroom/classroom'
 import Homework from '../classroom/Homework'
 import NotasAlumnos from '..//notas/NotasAlumno'
+import NotasProfesor from '../notas/NotasProfesor'
 import Account from '../account/Account'
 
 const Content = ({ show }) => {
@@ -35,3 +36,4 @@ const Content = ({ show }) => {
 }
 
 export default Content
+//
