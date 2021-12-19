@@ -1,0 +1,7 @@
+export const GET_CLASES_REQUEST = "GET_CLASES_REQUEST"
+export const GET_CLASE = "GET_CLASE"
+export const GET_CLASES = "GET_CLASES"
+export const ADD_CLASE = "ADD_CLASE"
+export const DELETE_CLASE = "DELETE_CLASE"
+export const EDIT_CLASE = "EDIT_CLASE"
+export const CLASE_FAIL = "CLASE_FAIL"
