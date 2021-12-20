@@ -1,27 +1,52 @@
-import React from "react";
-import Box from '@mui/material/Box'
-import Paper from '@mui/material/Paper'
+import {
+  Card,
+  CardActions,
+  CardHeader,
+  CardContent,
+  CardMedia,
+  IconButton,
+} from '@mui/material/'
 import Grid from '@mui/material/Grid'
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar'
+import Typography from '@mui/material/Typography'
+import { Favorite } from '@mui/icons-material/'
+import { pink } from '@mui/material/colors'
+import { format } from 'date-fns'
 
-export default function Post({avatar, title, description, name, img}){
+export default function Post({
+  avatar,
+  title,
+  description,
+  name,
+  img,
+  date,
+  likes,
+  madeLike,
+}) {
+  const favoriteProps = {}
+  madeLike && (favoriteProps.sx = { color: pink[200] })
 
-  return(
+  return (
     <Grid item xs={12}>
-            <Box sx={{ width: '95%' }}>
-              <Paper display="flex" align="center" sx={{p: 1, border: 1, borderColor: 'primary.main', borderRadius: 2, flexDirection: "column"}}>
-                <Box display="flex" sx={{alignItems: 'center', pb: 1}}>
-                  <Avatar alt={name} src={avatar} sx={{ width: 24, height: 24, mr: 1 }}/>
-                  <Typography variant="subtitle1">{name}</Typography>
-                </Box>
-                <Box sx={{width: "50%", pb: 1,}}>
-                  <img src={img} alt={title} styles={{objectFit: "cover"}} />
-                </Box>
-                <Typography variant="h6">{title}</Typography>
-                <Typography variant="body2">{description}</Typography>
-              </Paper>
-            </Box>
-          </Grid>
+      <Card sx={{ width: '95%' }}>
+        <CardHeader
+          avatar={<Avatar alt={name} src={avatar} />}
+          title={name}
+          subheader={format(new Date(date), 'MMMM, d, yyyy')}
+        />
+        {img?.length && (
+          <CardMedia component="img" image={img[0]} alt={title} />
+        )}
+        <CardContent>
+          <Typography variant="body2">{description}</Typography>
+        </CardContent>
+        <CardActions>
+          <IconButton aria-label="add to favorites">
+            <Favorite {...favoriteProps} />
+          </IconButton>
+          {likes.length}
+        </CardActions>
+      </Card>
+    </Grid>
   )
 }
