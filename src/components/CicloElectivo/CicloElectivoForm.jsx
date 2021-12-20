@@ -19,7 +19,7 @@ const CicloElectivoForm =  ({open, handleClose, titleForm, dataForm, handleClick
   const dispatch = useDispatch();
 
   const getStatusReducer = useSelector(state => state.cicloElectivoReducer);
-  const { loading, message, error } = getStatusReducer;
+  const { loading, /* message, error */ } = getStatusReducer;
 
   const handleChange = (e) => {
     setRowCicloElectivo({

@@ -29,13 +29,13 @@ const MatriculaForm =  ({open, handleClose, titleForm, dataForm, handleClickMess
   const { loading } = getStatusReducer;
 
   const getStudents = useSelector( state => state.studentReducer )
-  const { students, loadingStudent } = getStudents;
+  const { students/* , loadingStudent */ } = getStudents;
 
   const getClases = useSelector( state => state.clasesReducer )
-  const { clases, loadingClases } = getClases
+  const { clases/* , loadingClases  */} = getClases
 
   const getCicloElectivos = useSelector( state => state.cicloElectivoReducer );
-  const {cicloElectivos, loadingElectivo } = getCicloElectivos
+  const {cicloElectivos/* , loadingElectivo */ } = getCicloElectivos
 
   useEffect( () => {
     const role = {role_id: '5d3709ba-3a27-48cc-8a75-256338684cee'};
@@ -43,12 +43,13 @@ const MatriculaForm =  ({open, handleClose, titleForm, dataForm, handleClickMess
     dispatch(listStudents(role))
     dispatch(listClases(school_id))
     dispatch(listCicloElectivos())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Listamos Los estudiantes
   let listaStudents = [];
   students?.map(student => {
-    listaStudents.push({
+    return listaStudents.push({
       id: student.id,
       label: `${student.identification} - ${student.firstName} ${student.lastName}`
     });
@@ -62,7 +63,7 @@ const MatriculaForm =  ({open, handleClose, titleForm, dataForm, handleClickMess
   // Listamos Las clases
   let listaClases = [];
   clases?.map(clase => {
-    listaClases.push({
+    return listaClases.push({
       id: clase.id,
       label: clase.name
     });
@@ -77,7 +78,7 @@ const MatriculaForm =  ({open, handleClose, titleForm, dataForm, handleClickMess
   // Listamos Los ciclos electivos
   let listaElectivos = [];
   cicloElectivos?.map(electivo => {
-    listaElectivos.push({
+    return listaElectivos.push({
       id: electivo.id,
       label: electivo.name
     });
@@ -152,7 +153,7 @@ const MatriculaForm =  ({open, handleClose, titleForm, dataForm, handleClickMess
                       onChange={(event, newValue) => {
                         setValueStudent(newValue);
                         setRowMatricula({
-                          ...rowMatricula, ['student_id']: newValue?.id
+                          ...rowMatricula, 'student_id': newValue?.id
                         })
                       }}
                       inputValue={valueStudent?.label}
@@ -170,7 +171,7 @@ const MatriculaForm =  ({open, handleClose, titleForm, dataForm, handleClickMess
                       onChange={(event, newValue) => {
                         setValueClase(newValue);
                         setRowMatricula({
-                          ...rowMatricula, ['clase_id']: newValue?.id
+                          ...rowMatricula, 'clase_id': newValue?.id
                         })
                       }}
                       inputValue={valueClase?.label}
@@ -188,7 +189,7 @@ const MatriculaForm =  ({open, handleClose, titleForm, dataForm, handleClickMess
                       onChange={(event, newValue) => {
                         setValueElectivo(newValue);
                         setRowMatricula({
-                          ...rowMatricula, ['ciclo_electivo_id']: newValue?.id
+                          ...rowMatricula, 'ciclo_electivo_id': newValue?.id
                         })
                       }}
                       inputValue={valueElectivo?.label}

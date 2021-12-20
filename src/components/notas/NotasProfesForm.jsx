@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import TextField from '@mui/material/TextField'
-import MenuItem from '@mui/material/MenuItem'
+// import MenuItem from '@mui/material/MenuItem'
 import Button from '@mui/material/Button'
 import LoadingButton from '@mui/lab/LoadingButton'
 import Stack from '@mui/material/Stack'
@@ -9,9 +9,9 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import AdapterDateFns from '@mui/lab/AdapterDateFns'
-import LocalizationProvider from '@mui/lab/LocalizationProvider'
-import DatePicker from '@mui/lab/DatePicker'
+// import AdapterDateFns from '@mui/lab/AdapterDateFns'
+// import LocalizationProvider from '@mui/lab/LocalizationProvider'
+// import DatePicker from '@mui/lab/DatePicker'
 import { Close, Save } from '@mui/icons-material'
 import validate from './validate'
 import {
@@ -22,20 +22,20 @@ import {
 import { getRoles as listRoles } from '../../actions/role'
 import { useSelector, useDispatch } from 'react-redux'
 
-const currencies = [
-  {
-    value: 'Admin',
-    label: 'Admin',
-  },
-  {
-    value: 'Profesor',
-    label: 'Profesor',
-  },
-  {
-    value: 'Estudiante',
-    label: 'Estudiante',
-  },
-]
+// const currencies = [
+//   {
+//     value: 'Admin',
+//     label: 'Admin',
+//   },
+//   {
+//     value: 'Profesor',
+//     label: 'Profesor',
+//   },
+//   {
+//     value: 'Estudiante',
+//     label: 'Estudiante',
+//   },
+// ]
 
 export default function NotasProfesor({
   open,
@@ -89,6 +89,7 @@ export default function NotasProfesor({
   // Si no hay roles en el stado, entonces los obtengo
   useEffect(() => {
     if (!roles.length) dispatch(listRoles())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roles])
 
   return (

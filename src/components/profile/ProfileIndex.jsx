@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect/* , useState */} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import ProfileForm from './ProfileForm'
 import Table from '../Table/Table.jsx'
@@ -16,7 +16,7 @@ export default function ProfileIndex() {
   const dispatch = useDispatch();
 
   const getRoles = useSelector(state => state.rolesReducer);
-  const { roles, loading, error, message } = getRoles;
+  const { roles, /* loading, error, message */ } = getRoles;
 
   const data = {
     columns,

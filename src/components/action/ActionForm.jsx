@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
+// import Alert from '@mui/material/Alert';
+// import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
+// import IconButton from '@mui/material/IconButton';
 import LoadingButton from '@mui/lab/LoadingButton';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -23,7 +23,7 @@ const ActionForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage
   const dispatch = useDispatch();
 
   const getActions = useSelector(state => state.actionsReducer);
-  const { loading, message, error } = getActions;
+  const { loading, /* message, error */ } = getActions;
 
   const handleChange = (e) => {
     setRowAction({

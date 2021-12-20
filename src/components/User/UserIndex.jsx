@@ -82,6 +82,7 @@ export default function UserIndex() {
 
   useEffect(() => {
     dispatch(listUsers())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
