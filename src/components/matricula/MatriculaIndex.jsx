@@ -5,10 +5,13 @@ import Table from "../Table/Table"
 
 //importamos los métodos
 import { getMatriculas as listMatriculas, getDataById, modifiedMatricula } from "../../actions/matricula";
+import {format} from "date-fns";
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 350 },
-  { field: 'fecha', headerName: 'Fecha', width: 200},
+  { field: 'fecha', headerName: 'Fecha', width: 200, valueFormatter: (params) => {
+      return format(new Date(params.value), 'dd/MM/yyyy')
+    }},
   { field: 'student', headerName: 'Estudiante', width: 300},
   { field: 'identification', headerName: 'Identification', width: 300},
   { field: 'class', headerName: 'Clase', width: 300},

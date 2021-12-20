@@ -3,13 +3,13 @@ import axios from "axios";
 
 const {REACT_APP_SERVER} = process.env
 
-export const getClases = (school_id) => async (dispatch) => {
+export const getClases = () => async (dispatch) => {
   try {
     dispatch({
       type: actionType.GET_CLASES_REQUEST
     })
 
-    const { data } = await axios.get(`${REACT_APP_SERVER}/classes/${school_id}`);
+    const { data } = await axios.get(`${REACT_APP_SERVER}/classes`);
     //console.log(data);
     dispatch({
       type: actionType.GET_CLASES,
