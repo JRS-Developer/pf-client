@@ -19,7 +19,7 @@ export default function ClassIndex() {
   const dispatch = useDispatch();
 
   const getStatusReducer = useSelector(state => state.clasesReducer);
-  const { clases, loading, error } = getStatusReducer;
+  const { clases, /* loading, error */ } = getStatusReducer;
 
   const data = {
     columns,
@@ -29,6 +29,7 @@ export default function ClassIndex() {
   useEffect(() => {
     const school_id = "b3ea8d8a-36f3-4c6c-8937-c37641aaa005"
     dispatch(listClass(school_id))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

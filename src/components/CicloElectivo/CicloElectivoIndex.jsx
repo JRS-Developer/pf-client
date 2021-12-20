@@ -19,7 +19,7 @@ export default function CicloElectivoIndex() {
   const dispatch = useDispatch();
 
   const getStatusReducer = useSelector(state => state.cicloElectivoReducer);
-  const { cicloElectivos, loading, error } = getStatusReducer;
+  const { cicloElectivos, /* loading, error */ } = getStatusReducer;
 
   const data = {
     columns,
@@ -28,6 +28,7 @@ export default function CicloElectivoIndex() {
 
   useEffect(() => {
     dispatch(listCicloElectivos())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField'
 import MenuItem from '@mui/material/MenuItem'
 import Button from '@mui/material/Button'
 import LoadingButton from '@mui/lab/LoadingButton'
-import Stack from '@mui/material/Stack'
+// import Stack from '@mui/material/Stack'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
@@ -25,20 +25,20 @@ import { getRoles as listRoles } from '../../actions/role'
 import { useSelector, useDispatch } from 'react-redux'
 
 
-const currencies = [
-  {
-    value: 'Admin',
-    label: 'Admin',
-  },
-  {
-    value: 'Profesor',
-    label: 'Profesor',
-  },
-  {
-    value: 'Estudiante',
-    label: 'Estudiante',
-  },
-]
+// const currencies = [
+//   {
+//     value: 'Admin',
+//     label: 'Admin',
+//   },
+//   {
+//     value: 'Profesor',
+//     label: 'Profesor',
+//   },
+//   {
+//     value: 'Estudiante',
+//     label: 'Estudiante',
+//   },
+// ]
 
 export default function UserForm({
   open,
@@ -275,7 +275,6 @@ export default function UserForm({
                           label="Birthdate"
                           type="date"
                           helperText={errors.birthdate}
-                          sx={{ width: '100%' }}
                           InputLabelProps={{
                             shrink: true,
                           }}

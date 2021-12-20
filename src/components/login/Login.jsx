@@ -7,7 +7,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle'
 import IconButton from '@mui/material/IconButton'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
-import { Button, Typography, Snackbar, Alert } from '@mui/material'
+import { Button, /* Typography, */ Snackbar, Alert } from '@mui/material'
 import validate from './validate'
 import { useHistory } from 'react-router-dom'
 import { setLogged, checkLogged } from '../../actions/auth/'
@@ -93,6 +93,7 @@ export default function SignInSide() {
   useEffect(() => {
     dispatch(getLoginPhoto())
     dispatch(checkLogged())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

@@ -73,13 +73,14 @@ export default function StudentIndex() {
   const dispatch = useDispatch()
 
   const getStudentsState = useSelector(state => state.studentReducer)
-  const { loading, error, message, students } = getStudentsState;
+  const { /* loading, error, message, */ students } = getStudentsState;
 
   const data = { columns, rows: students }
 
   useEffect(() => {
     const role = {role_id: '5d3709ba-3a27-48cc-8a75-256338684cee'};
     dispatch(listStudents(role))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

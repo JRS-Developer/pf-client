@@ -55,8 +55,8 @@ export default function AccessForm({openAccess, handleCloseAccess, dataForm, lis
     if(!loadingAccess){
 
       modulesUser?.map(padre => {
-        padre.sub_data.map(hijo => {
-          hijo.actions.map(action => {
+        return padre.sub_data.map(hijo => {
+          return hijo.actions.map(action => {
             if(action.action_id !== null){
               let value = `${padre.id}_${hijo.id}_${action.id}`
               const currentIndex = checked.indexOf(value);
@@ -69,6 +69,7 @@ export default function AccessForm({openAccess, handleCloseAccess, dataForm, lis
                 })
               }
             }
+            return checked //Le hago que retorne checked para que no me tire warning de que hace falta un return
           })
         })
       })
@@ -76,6 +77,7 @@ export default function AccessForm({openAccess, handleCloseAccess, dataForm, lis
 
   useEffect(() => {
     dispatch(getAccessByUser(dataForm.id))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch])
 
   const handleToggle = (padre_id, hijo_id, action_id) => () => {

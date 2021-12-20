@@ -1,6 +1,6 @@
 import NotasProfesForm from './NotasProfesForm.jsx'
 import Table from '../Table/Table.jsx'
-import { TableHead, TableRow, TableCell } from '@mui/material'
+// import { TableHead, TableRow, TableCell } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import {
@@ -8,8 +8,8 @@ import {
   getDataById,
   modifiedUser,
 } from '../../actions/user'
-import {format} from 'date-fns'
-import { TableContainer } from '@mui/material'
+// import {format} from 'date-fns'
+// import { TableContainer } from '@mui/material'
 
 const columns = [
   
@@ -94,6 +94,7 @@ export default function UserIndex() {
 
   useEffect(() => {
     dispatch(listUsers())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
