@@ -20,7 +20,7 @@ export default function ClassIndex() {
   const dispatch = useDispatch();
 
   const getStatusReducer = useSelector(state => state.clasesReducer);
-  const { clases, loading, error } = getStatusReducer;
+  const { clases, /* loading, error */ } = getStatusReducer;
 
   const data = {
     columns,

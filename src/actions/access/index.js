@@ -1,6 +1,6 @@
 import * as actionType from './types';
 import axios from "axios";
-import {ADD_ACCESS_BY_USER_SUCCESS} from "./types";
+// import {ADD_ACCESS_BY_USER_SUCCESS} from "./types";
 
 const {REACT_APP_SERVER} = process.env
 

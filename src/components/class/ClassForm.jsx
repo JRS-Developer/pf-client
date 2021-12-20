@@ -31,7 +31,7 @@ const ClassForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage}
       materia_id : materia.id
     });
 
-    dataForm.materia_ids.push(materia.id)
+    return dataForm.materia_ids.push(materia.id)
   });
 
   const [rowClass, setRowClass] = useState(dataForm);
@@ -42,7 +42,7 @@ const ClassForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage}
   const { loading } = getStatusReducer;
 
   const getMaterias = useSelector(state => state.materiasReducer);
-  const { loadingMaterias, materias } = getMaterias;
+  const { /* loadingMaterias, */ materias } = getMaterias;
 
   const getSchools = useSelector(state => state.schoolReducer);
   const { loadingSchool, schools } = getSchools;
@@ -55,7 +55,9 @@ const ClassForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage}
 
   useEffect(() => {
     dispatch(listMaterias())
+
     dispatch(listSchools())
+
   }, []);
 
 
@@ -65,7 +67,7 @@ const ClassForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage}
     let obj = {}
     obj.name = materia.name
     obj.materia_id = materia.id
-    arrayMaterias.push(obj)
+    return arrayMaterias.push(obj)
   })
 
   // Listamos Los colegios
@@ -169,11 +171,11 @@ const ClassForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage}
                         console.log(newValue);
                         let materiasIds = []
                         newValue.map((opt) => {
-                          materiasIds.push(opt.materia_id)
+                          return materiasIds.push(opt.materia_id)
                         })
 
                         setRowClass({
-                          ...rowClass, ['materia_ids']: materiasIds
+                          ...rowClass, 'materia_ids': materiasIds
                         })
                       }}
                       renderInput={(params) => (

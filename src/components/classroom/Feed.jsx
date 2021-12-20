@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Post from './Post'
 import { useSelector, useDispatch } from 'react-redux'
-import { getPosts, createPost, updatePost, deletePost, likePost, getPost } from '../../actions/post'
+import { getPosts, /* createPost, updatePost, deletePost, likePost, getPost */ } from '../../actions/post'
 
 export default function Feed() {
   const posts = useSelector((store) => store.postsReducer).posts
@@ -22,6 +22,7 @@ export default function Feed() {
     /* dispatch(likePost("a446b611-1ef0-4290-86f1-d0054655a31a")) */
     //dispatch(getPost("93a1fcac-7b9e-47d3-86c1-9442ceaee3c0"))
     dispatch(getPosts())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   /* const data = [

@@ -24,7 +24,7 @@ export default function MatriculaIndex() {
   const dispatch = useDispatch();
 
   const getStatusReducer = useSelector(state => state.matriculaReducer);
-  const { matriculas, loading, error } = getStatusReducer;
+  const { matriculas, /* loading, error  */} = getStatusReducer;
 
   const data = {
     columns,
@@ -33,6 +33,7 @@ export default function MatriculaIndex() {
 
   useEffect(() => {
     dispatch(listMatriculas())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

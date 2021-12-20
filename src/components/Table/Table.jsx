@@ -112,7 +112,7 @@ const Table = ({
 }) => {
   const dispatch = useDispatch()
 
-  const { dataEdit, loading, error, message } = getActions
+  const { dataEdit, /* loading, */ error, message } = getActions
   const [openMessage, setOpenMessage] = React.useState(false)
   const [pageSize, setPageSize] = React.useState(25)
   const [searchText, setSearchText] = React.useState('')

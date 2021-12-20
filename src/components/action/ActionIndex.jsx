@@ -20,7 +20,7 @@ export default function ActionIndex() {
   const dispatch = useDispatch();
 
   const getActions = useSelector(state => state.actionsReducer);
-  const { actions, loading, error } = getActions;
+  const { actions, /* loading, error */ } = getActions;
 
   const data = {
     columns,
@@ -29,6 +29,7 @@ export default function ActionIndex() {
 
   useEffect(() => {
     dispatch(listActions())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
