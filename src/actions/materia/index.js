@@ -49,7 +49,7 @@ export const getDataById = (id) => async (dispatch) => {
   }
 };
 
-export const createMaterias = (body) => async (dispatch) => {
+export const createMateria = (body) => async (dispatch) => {
 
   try {
     dispatch({
@@ -73,7 +73,7 @@ export const createMaterias = (body) => async (dispatch) => {
   }
 };
 
-export const modifiedMaterias = (body) => async (dispatch) => {
+export const modifiedMateria = (body) => async (dispatch) => {
   let id = body.id;
   try {
     dispatch({

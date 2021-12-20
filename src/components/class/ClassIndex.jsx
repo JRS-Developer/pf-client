@@ -9,7 +9,8 @@ import { getClases as listClass, getDataById, modifiedClase } from "../../action
 const columns = [
   { field: 'id', headerName: 'ID', width: 350 },
   { field: 'name', headerName: 'Name', width: 300},
-  { field: 'status', headerName: 'Status', width: 300},
+  { field: 'school', headerName: 'School', width: 300},
+  { field: 'status', headerName: 'Status Clase', width: 300},
 
 ];
 
@@ -27,8 +28,7 @@ export default function ClassIndex() {
   }
 
   useEffect(() => {
-    const school_id = "b3ea8d8a-36f3-4c6c-8937-c37641aaa005"
-    dispatch(listClass(school_id))
+    dispatch(listClass())
   }, [])
 
   return (
@@ -36,7 +36,7 @@ export default function ClassIndex() {
       { <Table
         data={data}
         DialogForm={form}
-        title="CICLO ELECTIVO"
+        title="CLASES"
         getDataById={getDataById}
         getActions={getStatusReducer}
         modifiedAction={modifiedClase}

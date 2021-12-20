@@ -15,6 +15,7 @@ import { getCicloElectivoReducer } from './cicloElectivo'
 import { getMatriculaReducer } from './matricula'
 import { getClasesReducer } from './clase'
 import { getMateriasReducer } from './materia'
+import { getSchoolReducer } from './school'
 
 export default combineReducers({
   usersReducer: getUsersReducer,
@@ -34,4 +35,5 @@ export default combineReducers({
   matriculaReducer: getMatriculaReducer,
   clasesReducer: getClasesReducer,
   materiasReducer: getMateriasReducer,
+  schoolReducer: getSchoolReducer,
 })
