@@ -1,0 +1,7 @@
+export const GET_SCHOOLS_REQUEST = "GET_SCHOOLS_REQUEST"
+export const GET_SCHOOL = "GET_SCHOOL"
+export const GET_SCHOOLS = "GET_SCHOOLS"
+export const ADD_SCHOOL = "ADD_SCHOOL"
+export const DELETE_SCHOOL = "DELETE_SCHOOL"
+export const EDIT_SCHOOL = "EDIT_SCHOOL"
+export const SCHOOL_FAIL = "SCHOOL_FAIL"

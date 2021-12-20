@@ -16,11 +16,11 @@ import Autocomplete from "@mui/material/Autocomplete";
 
 import { getClases as listClases, createClase, modifiedClase } from "../../actions/clase";
 import { getMaterias as listMaterias } from "../../actions/materia"
+import { getSchools as listSchools } from "../../actions/school"
 
 const ClassForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage}) => {
   if(dataForm){
     dataForm.materia_ids = [];
-    dataForm.school_id = "b3ea8d8a-36f3-4c6c-8937-c37641aaa005"
   }
 
   let defaultMaterias = [];
@@ -44,6 +44,9 @@ const ClassForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage}
   const getMaterias = useSelector(state => state.materiasReducer);
   const { /* loadingMaterias, */ materias } = getMaterias;
 
+  const getSchools = useSelector(state => state.schoolReducer);
+  const { loadingSchool, schools } = getSchools;
+
   const handleChange = (e) => {
     setRowClass({
       ...rowClass, [e.target.name]: e.target.value
@@ -52,7 +55,9 @@ const ClassForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage}
 
   useEffect(() => {
     dispatch(listMaterias())
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    dispatch(listSchools())
+
   }, []);
 
 
@@ -64,6 +69,25 @@ const ClassForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage}
     obj.materia_id = materia.id
     return arrayMaterias.push(obj)
   })
+
+  // Listamos Los colegios
+  let listaSchools = [];
+  let initialSchool = '';
+  schools?.map(school => {
+    listaSchools.push({
+      id: school.id,
+      label: school.name
+    });
+
+    if( dataForm?.school_id ===  school.id){
+      initialSchool = {
+        id: school.id,
+        label: school.name
+      }
+    }
+  })
+
+  const [valueSchool, setValueSchool] = useState(dataForm?.id && initialSchool);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -77,8 +101,7 @@ const ClassForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage}
     //Iniciamos la alerta de la respuesta
     handleClickMessage();
     //Listamos las clases actualizados o nuevos
-    const school_id = "b3ea8d8a-36f3-4c6c-8937-c37641aaa005"
-    dispatch(listClases(school_id));
+    dispatch(listClases());
     //Cerramos el modal del formulario
     handleClose();
 
@@ -102,6 +125,24 @@ const ClassForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage}
             <Box sx={{ flexGrow: 1 }}>
               <TextField id="outlined-basic" name="id" variant="standard" type="hidden" value={rowClass.id}/>
               <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <AutocompleteDiv>
+                    <Autocomplete
+                      value={valueSchool}
+                      onChange={(event, newValue) => {
+                        setValueSchool(newValue);
+                        setRowClass({
+                          ...rowClass, ['school_id']: newValue?.id
+                        })
+                      }}
+                      inputValue={valueSchool?.label}
+                      id="school_id"
+                      options={listaSchools}
+                      sx={{ width: '100%' }}
+                      renderInput={(params) => <TextField {...params} label="School" />}
+                    />
+                  </AutocompleteDiv>
+                </Grid>
                 <Grid item xs={12}>
                   <TextField
                     name="name"
