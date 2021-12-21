@@ -27,16 +27,16 @@ const Content = ({ show }) => {
           <Route exact path="/actions" component={ActionIndex} />
           <Route exact path="/modules" component={ModuleIndex} />
           <Route exact path="/users" component={UserIndex} />
-          <Route exact path="/classroom" component={ClassroomIndex} />
+          <Route exact path="/classroom" component={ClassroomIndex} />{/* AULA virtual */}
           <Route exact path="/tareas/:id" component={Homework} />
           <Route exact path="/notasalumnos" component={NotasAlumnos} />
           <Route exact path="/account" component={Account} />
-          <Route exact path="/students" component={StudentIndex} />
-          <Route exact path="/ciclo-electivo" component={CicloElectivoIndex} />
-          <Route exact path="/matriculas" component={MatriculaIndex} />
-          <Route exact path="/class" component={ClassIndex} />
+          <Route exact path="/students" component={StudentIndex} />{/* ADMINISTRACION */}
+          <Route exact path="/ciclo-lectivo" component={CicloElectivoIndex} />{/* ADMINISTRACION */}
+          <Route exact path="/matriculas" component={MatriculaIndex} />{/* ADMINISTRACION */}
+          <Route exact path="/class" component={ClassIndex} />{/* ADMINISTRACION */}
           <Route exact path="/schools" component={SchoolIndex} />
-          <Route exact path="/materias" component={MateriaIndex} />
+          <Route exact path="/materias" component={MateriaIndex} />{/* AULA virtual */}
           <Route exact path="/materias/details/:claseId/:materiaId" component={ClassRoom} />
         </Switch>
       </Box>
