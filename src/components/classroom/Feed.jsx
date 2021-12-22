@@ -8,6 +8,7 @@ import {
   getPosts /* createPost, updatePost, deletePost, likePost, getPost */,
 } from '../../actions/post'
 import { useParams } from 'react-router-dom'
+import CreatePost from './CreatePost'
 
 export default function Feed() {
   const [open, setOpen] = useState(false)
@@ -31,6 +32,7 @@ export default function Feed() {
   return (
     <Box sx={{ overflow: 'auto' }}>
       <Grid container spacing={2}>
+        <CreatePost/>
         {posts?.length ? (
           posts.map((e) => (
             <Post
