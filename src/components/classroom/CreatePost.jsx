@@ -54,6 +54,12 @@ export default function CreatePost() {
     setImages(arr)
   }
 
+  function handleClickFile(e) {
+    let arr = [...files]
+    arr.splice(e.currentTarget.name, 1)
+    setFiles(arr)
+  }
+
   return (
     <Grid item xs={12}>
       <Paper
@@ -185,7 +191,7 @@ export default function CreatePost() {
                         name={i}
                         size="small"
                         sx={{ p: 0, m: 0 }}
-                        onClick={(e) => handleClickImage(e)}
+                        onClick={(e) => handleClickFile(e)}
                       >
                         <Clear
                           sx={{
