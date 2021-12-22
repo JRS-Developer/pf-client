@@ -1,4 +1,10 @@
-import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+  useLocation,
+} from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkLogged } from './actions/auth'
@@ -14,33 +20,34 @@ import Header from './components/header/Header'
 import Login from './components/login/Login'
 import Container from './components/container/Container'
 
-
 function App() {
   const [sideToggle, setSideToggle] = useState(false)
   const { isLogged } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
+  const location = useLocation()
 
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'GaiaTheme')
-  const [mode, setMode] = useState(localStorage.getItem('mode') === "0" ? 0 : 1)
-  
+  const [theme, setTheme] = useState(
+    localStorage.getItem('theme') || 'GaiaTheme'
+  )
+  const [mode, setMode] = useState(localStorage.getItem('mode') === '0' ? 0 : 1)
+
   const actualTheme = themes[theme]
   const selectedTheme = createTheme(
     mode
       ? themes[theme]
       : {
-        ...actualTheme,
-        palette: {
-          ...actualTheme.palette,
-          mode: 'light',
-          background: { paper: '#e6e6e6' },
-        },
-      }
+          ...actualTheme,
+          palette: {
+            ...actualTheme.palette,
+            mode: 'light',
+            background: { paper: '#e6e6e6' },
+          },
+        }
   )
 
   useEffect(() => {
     dispatch(checkLogged)
   }, [dispatch])
- 
 
   return (
     <Router>
@@ -63,7 +70,15 @@ function App() {
                 <Container show={sideToggle} />
               </>
             ) : (
-              <Redirect to="/login" />
+              <Redirect
+                push
+                to={{
+                  pathname: '/login',
+                  state: {
+                    location: location.pathname,
+                  },
+                }}
+              />
             )}
           </Route>
         </Switch>
