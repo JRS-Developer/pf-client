@@ -1,4 +1,4 @@
-import Messages from "./Messages";
+import Chat from "./chat/Chat";
 import Feed from "./Feed";
 import Homeworks from "./Homeworks";
 import * as React from 'react';
@@ -38,7 +38,7 @@ export default function ClassRoom() {
         </Box>
         <Paper elevation={24}>
           <TabPanel value="1"><Feed /></TabPanel>
-          <TabPanel value="2"><Messages materia={materia}/></TabPanel>
+          <TabPanel value="2"><Chat materia={materia}/></TabPanel>
           <TabPanel value="3"><Homeworks /></TabPanel>
           <TabPanel value="4"><NotasProfesor /></TabPanel>
         </Paper>

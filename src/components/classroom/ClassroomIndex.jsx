@@ -55,7 +55,8 @@ export default function ClassroomIndex() {
             </CardContent>
             <CardActions>
               <ButtonLink>
-                <Link class="btnLink" to="/materias/details/1/5" cursor="pointer"  >Ir a la materia</Link>
+                <Link class="btnLink" to="/materias/details/21cbc102-7e36-48fd-81b4-e1c09f64d5ed/10910772-1b07-4622-833c-633bcaddbe91', name: 'Biologia' },
+  { id: 'a3d2aa7e-8938-482c-aee1-b923ec136b0e" cursor="pointer"  >Ir a la materia</Link>
               </ButtonLink>
             </CardActions>
           </Card>
