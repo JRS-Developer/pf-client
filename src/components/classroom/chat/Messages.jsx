@@ -18,9 +18,16 @@ import Avatar from '@mui/material/Avatar';
 // import AddIcon from '@mui/icons-material/Add';
 // import SearchIcon from '@mui/icons-material/Search';
 // import MoreIcon from '@mui/icons-material/MoreVert';
+import NewMessage from "./newMessage";
 // import Container from "@mui/material/Container"
-import {  useState,  useEffect } from 'react';
-import socket from '../../socket';
+import { /* useState, */ useEffect } from 'react';
+
+import socket from '../socket'
+
+
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 const mensajes = [
   {
@@ -124,11 +131,19 @@ const mensajes = [
 
 
 export default function Messages({materia}) {
-   const [messages, setMessages] = useState([mensajes])
+  // const [messages, setMessages] = useState([mensajes])
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-    // useEffect(() => {
-      // socket.emit('conectado');
-    // }, []);
+    useEffect(() => {
+      socket.emit('conectado');
+    }, []);
 
   return (
     <Box sx={{overflow: 'auto', height: 'calc(100vh - 180px)'}}>
@@ -144,13 +159,36 @@ export default function Messages({materia}) {
                   <ListItemAvatar>
                     <Avatar alt="Profile Picture" />
                   </ListItemAvatar>
-                  <ListItemText primary={name} secondary={message} />
+                  <ListItemText primary={<Button
+                  id="basic-button"
+                  aria-controls="basic-menu"
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                  onClick={handleClick}
+      >
+        {name}
+      </Button>
+     }  secondary={message} />
+                  
                 </ListItem>
               
             ))}
           </List>
+          <Menu
+     id="basic-menu"
+     anchorEl={anchorEl}
+     open={open}
+     onClose={handleClose}
+     MenuListProps={{
+       'aria-labelledby': 'basic-button',
+     }}
+   >
+     <MenuItem onClick={handleClose}>Send private message</MenuItem>
+     
+   </Menu>
         </Paper>
       </Box>
+      <NewMessage />
     </Box>
   );
 }

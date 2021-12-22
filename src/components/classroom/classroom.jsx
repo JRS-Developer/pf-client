@@ -1,3 +1,4 @@
+import Messages from "./chat/PrivateChat";
 import Chat from "./chat/Chat";
 import Feed from "./Feed";
 import Homeworks from "./Homeworks";

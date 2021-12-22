@@ -16,6 +16,10 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import PrivateChat from './PrivateChat'
 
+
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+
 import { useEffect } from 'react';
 import socket from '../../socket';
 import { useParams } from 'react-router-dom';
@@ -125,25 +129,33 @@ const NewMessage = () => {
   
   const [message, setMessage] = useState('');
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-  const chatMessages = useSelector(state => state.chatReducer.getChatReducer).messages;
-  const userInfo = useSelector(state => state.chatReducer.getChatUserReducer).user;
+ //const chatMessages = useSelector(state => state.chatReducer.getChatReducer).messages;
+  //const userInfo = useSelector(state => state.chatReducer.getChatUserReducer).user;
 
   const user = window.localStorage.getItem('user');
 
-  const { class_id, materia_id } = useParams()
-  const dispatch = useDispatch();
+  //const { class_id, materia_id } = useParams()
+  //const dispatch = useDispatch();
 
-  
+ 
  
   // useEffect(() => {
   //   dispatch(getMessages({class_id, materia_id}));
   //   dispatch(getUser(user));
   // });
 
-  useEffect(() => {
-    socket.emit('conectado', userInfo);
-  }, [userInfo]);
+ // useEffect(() => {
+ //   socket.emit('conectado', userInfo);
+  //}, [userInfo]);
 
   // useEffect(() => {
   //   socket.on()
@@ -156,8 +168,8 @@ const NewMessage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createMessages(message));
-    socket.emit('message', userInfo.fullname, message);
+    //dispatch(createMessages(message));
+    //socket.emit('message', userInfo.fullname, message);
     setMessage('');
   };
 
@@ -176,25 +188,42 @@ const NewMessage = () => {
               Inbox
             </Typography>
             <List sx={{ mb: 2 }}>
-              {mensajes.map(({ id, name, message, avatar }, i) => (
-                <ListItem
-                  key={`m${i}`}
-                  button
-                  sx={{
-                    color: name === 'juan' ? 'primary.main' : 'secondary.main'
-                  }}
-                >
+            {mensajes.map(({ id, name, message, person }, i) => (
+                <ListItem key={`m${i}`}button sx={{color: name === 'Juan' ? 'primary.main' : 'secondary.main'}}>
                   <ListItemAvatar>
-                    <Avatar src={avatar} alt="Profile Picture" />
+                    <Avatar alt="Profile Picture" />
                   </ListItemAvatar>
-                  <ListItemText primary={name} secondary={message} />
+                  <ListItemText primary={<Button
+                  id="basic-button"
+                  aria-controls="basic-menu"
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                  onClick={handleClick}
+      >
+        {name}
+      </Button>
+     }  secondary={message} />
+                  
                 </ListItem>
-              ))};
-            </List>
+              
+            ))}
+          </List>
+          <Menu
+     id="basic-menu"
+     anchorEl={anchorEl}
+     open={open}
+     onClose={handleClose}
+     MenuListProps={{
+       'aria-labelledby': 'basic-button',
+     }}
+   >
+     <MenuItem onClick={handleClose}>Send private message</MenuItem>
+     
+   </Menu>
 
           </Paper>
         </Box>
-        <PrivateChat />
+        
       </Box>
       <Box
         sx={{ top: 'auto', bottom: 0, bgColor: 'primary.main', width: '100%' }}
