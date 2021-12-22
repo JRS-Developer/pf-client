@@ -6,7 +6,7 @@ const initialState = {
   post: {},
   message: {},
   dataEdit: {},
-  like:{}
+  like: {},
 }
 
 export const getPostsReducer = (state = initialState, action) => {
@@ -27,7 +27,7 @@ export const getPostsReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         message: action.payload,
-        }
+      }
     case actionTypes.UPDATE_POST:
       return {
         loading: false,
@@ -38,10 +38,26 @@ export const getPostsReducer = (state = initialState, action) => {
         loading: false,
         message: action.payload,
       }
-    case actionTypes.LIKE_POST: {
+    case actionTypes.CHANGE_LIKE: {
+      const { postId, userId } = action.payload
+      const { posts } = state
+
+      // Obtengo el post y le cambio el madeLike y el array likes
+      const newPosts = posts.map((post) => {
+        if (post.id === postId)
+          return {
+            ...post,
+            madeLike: !post.madeLike,
+            likes: post.madeLike
+              ? post.likes.filter((like) => like.user_id !== userId)
+              : [...post.likes, { user_id: userId }],
+          }
+        return post
+      })
+
       return {
         ...state,
-        message: action.payload
+        posts: newPosts,
       }
     }
     case actionTypes.GET_POST:
@@ -54,10 +70,9 @@ export const getPostsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: action.payload
+        error: action.payload,
       }
     }
-    
 
     default:
       return state
