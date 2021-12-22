@@ -18,11 +18,9 @@ import Avatar from '@mui/material/Avatar';
 // import AddIcon from '@mui/icons-material/Add';
 // import SearchIcon from '@mui/icons-material/Search';
 // import MoreIcon from '@mui/icons-material/MoreVert';
-import NewMessage from "./newMessage";
 // import Container from "@mui/material/Container"
 import { /* useState, */ useEffect } from 'react';
-
-import socket from '../socket'
+import socket from '../../socket';
 
 const mensajes = [
   {
@@ -128,9 +126,9 @@ const mensajes = [
 export default function Messages({materia}) {
   // const [messages, setMessages] = useState([mensajes])
 
-    useEffect(() => {
-      socket.emit('conectado');
-    }, []);
+    // useEffect(() => {
+    //   socket.emit('conectado');
+    // }, []);
 
   return (
     <Box sx={{overflow: 'auto', height: 'calc(100vh - 180px)'}}>
@@ -153,7 +151,6 @@ export default function Messages({materia}) {
           </List>
         </Paper>
       </Box>
-      <NewMessage />
     </Box>
   );
 }
