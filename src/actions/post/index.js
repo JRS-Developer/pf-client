@@ -130,20 +130,23 @@ export const deletePost = (postId) => async (dispatch) => {
 }
 
 export const likePost = (postId) => async (dispatch) => {
+  const userId = localStorage.getItem('user')
+  const payload = {
+    postId,
+    userId,
+  }
   try {
     dispatch({
-      type: actionType.GET_POSTS_REQUEST,
+      type: actionType.CHANGE_LIKE,
+      payload,
     })
 
-    const { data } = await axios.put(
-      `${REACT_APP_SERVER}/publications/${postId}/like`
-    )
-
-    dispatch({
-      type: actionType.LIKE_POST,
-      payload: data,
-    })
+    await axios.put(`${REACT_APP_SERVER}/publications/${postId}/like`)
   } catch (error) {
+    dispatch({
+      type: actionType.CHANGE_LIKE,
+      payload,
+    })
     dispatch({
       type: actionType.POST_FAIL,
       payload:

@@ -17,8 +17,11 @@ import Typography from '@mui/material/Typography'
 import { Favorite, Fullscreen, Article, Image } from '@mui/icons-material/'
 import { pink } from '@mui/material/colors'
 import { format } from 'date-fns'
+import { useDispatch } from 'react-redux'
+import { likePost } from '../../actions/post'
 
 export default function Post({
+  id,
   avatar,
   title,
   description,
@@ -30,12 +33,16 @@ export default function Post({
   madeLike,
   handleFull,
 }) {
+  const dispatch = useDispatch()
   const favoriteProps = {}
   madeLike && (favoriteProps.sx = { color: pink[200] })
 
-  // TODO: Eliminar esta linea:
-  imgs = [...imgs, ...imgs]
+  const handleLike = () => {
+    dispatch(likePost(id))
+  }
 
+  // Acorta el nombre de los archivos largos, y al final le añade la extension del archivo
+  // Ej: superlargoarchivo...jpg
   const shortName = (text) => {
     return text.substr(0, 15) + '...' + text.split('.').pop()
   }
@@ -132,7 +139,7 @@ export default function Post({
           {showFiles()}
         </CardContent>
         <CardActions>
-          <IconButton aria-label="add to favorites">
+          <IconButton aria-label="add to favorites" onClick={handleLike}>
             <Favorite {...favoriteProps} />
           </IconButton>
           <Typography variant="body2">{likes.length}</Typography>

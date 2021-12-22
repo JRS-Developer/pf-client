@@ -33,15 +33,16 @@ export default function Feed() {
     <Box sx={{ overflow: 'auto' }}>
       <Grid container spacing={2}>
         {posts?.length ? (
-          posts.map((e, i) => (
+          posts.map((e) => (
             <Post
-              key={`p${i}`}
+              key={e.id}
+              id={e.id}
               avatar={e.publisher.avatar}
               title={e.title}
               description={e.text}
               name={`${e.publisher.firstName} ${e.publisher.lastName}`}
               imgs={e.images}
-							docs={e.documents}
+              docs={e.documents}
               date={e.createdAt}
               likes={e.likes}
               madeLike={e.madeLike}
