@@ -27,7 +27,6 @@ export default function Feed() {
   useEffect(() => {
     dispatch(getPosts(claseId, materiaId))
   }, [claseId, materiaId, dispatch])
-  console.log(posts)
 
   return (
     <Box sx={{ overflow: 'auto' }}>
