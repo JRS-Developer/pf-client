@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid'
 import Post from './Post'
 import { useSelector, useDispatch } from 'react-redux'
 import { getPosts, /* createPost, updatePost, deletePost, likePost, getPost */ } from '../../actions/post'
+import CreatePost from './CreatePost'
 
 export default function Feed() {
   const posts = useSelector((store) => store.postsReducer).posts
@@ -75,7 +76,8 @@ export default function Feed() {
 
   return (
     <Box sx={{ overflow: 'auto' }}>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} align="center">
+        <CreatePost/>   
         {posts && posts.map((e, i) => (
           <Post key={`p${i}`} avatar={e.publisher.avatar} title={e.title} description={e.text} name={`${e.publisher.firstName} ${e.publisher.lastName}`} img={e.images}/>
         ))}

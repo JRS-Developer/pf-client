@@ -10,7 +10,7 @@ export const getPosts = () => async (dispatch) => {
     })
 
     const { data } = await axios.get(`${REACT_APP_SERVER}/publications`);
-    console.log(data);
+    
     dispatch({
       type: actionType.GET_POSTS,
       payload: data

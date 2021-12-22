@@ -55,7 +55,7 @@ export default function ClassroomIndex() {
             </CardContent>
             <CardActions>
               <ButtonLink>
-                <Link class="btnLink" to="/materias/details/1/5" cursor="pointer"  >Ir a la materia</Link>
+                <Link className="btnLink" to="/materias/details/1/5" cursor="pointer"  >Ir a la materia</Link>
               </ButtonLink>
             </CardActions>
           </Card>
@@ -93,7 +93,7 @@ export default function ClassroomIndex() {
             </CardContent>
             <CardActions>
               <ButtonLink>
-                <Link class="btnLink" to="/materias/details/1/5" cursor="pointer"  >Ir a la materia</Link>
+                <Link className="btnLink" to="/materias/details/1/5" cursor="pointer"  >Ir a la materia</Link>
               </ButtonLink>
             </CardActions>
           </Card>
@@ -131,7 +131,7 @@ export default function ClassroomIndex() {
             </CardContent>
             <CardActions>
               <ButtonLink>
-                <Link class="btnLink" to="/materias/details/1/5" cursor="pointer"  >Ir a la materia</Link>
+                <Link className="btnLink" to="/materias/details/1/5" cursor="pointer"  >Ir a la materia</Link>
               </ButtonLink>
             </CardActions>
           </Card>
@@ -169,7 +169,7 @@ export default function ClassroomIndex() {
             </CardContent>
             <CardActions>
               <ButtonLink>
-                <Link class="btnLink" to="/materias/details/1/5" cursor="pointer"  >Ir a la materia</Link>
+                <Link className="btnLink" to="/materias/details/1/5" cursor="pointer"  >Ir a la materia</Link>
               </ButtonLink>
             </CardActions>
           </Card>

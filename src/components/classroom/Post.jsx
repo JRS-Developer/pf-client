@@ -9,8 +9,7 @@ export default function Post({avatar, title, description, name, img}){
 
   return(
     <Grid item xs={12}>
-            <Box sx={{ width: '95%' }}>
-              <Paper display="flex" align="center" sx={{p: 1, border: 1, borderColor: 'primary.main', borderRadius: 2, flexDirection: "column"}}>
+              <Paper display="flex" align="center" sx={{p: 1, border: 1, borderColor: 'primary.main', borderRadius: 2, flexDirection: "column", maxWidth: 700}}>
                 <Box display="flex" sx={{alignItems: 'center', pb: 1}}>
                   <Avatar alt={name} src={avatar} sx={{ width: 24, height: 24, mr: 1 }}/>
                   <Typography variant="subtitle1">{name}</Typography>
@@ -21,7 +20,6 @@ export default function Post({avatar, title, description, name, img}){
                 <Typography variant="h6">{title}</Typography>
                 <Typography variant="body2">{description}</Typography>
               </Paper>
-            </Box>
           </Grid>
   )
 }
