@@ -30,6 +30,7 @@ import { pink } from '@mui/material/colors'
 import { format } from 'date-fns'
 import { useDispatch } from 'react-redux'
 import { likePost } from '../../actions/post'
+import { shortName } from './utils'
 
 export default function Post({
   id,
@@ -44,7 +45,7 @@ export default function Post({
   madeLike,
   handleFull,
   handleDelete,
-	handleEdit,
+  handleEdit,
   publisherId,
 }) {
   const dispatch = useDispatch()
@@ -68,12 +69,6 @@ export default function Post({
   const handleCloseMenu = () => {
     setAnchorNav(null)
     setOpenMenu(false)
-  }
-
-  // Acorta el nombre de los archivos largos, y al final le añade la extension del archivo
-  // Ej: superlargoarchivo...jpg
-  const shortName = (text) => {
-    return text.substr(0, 15) + '...' + text.split('.').pop()
   }
 
   const menuItems = [

@@ -78,7 +78,7 @@ export const createPost = (body) => async (dispatch) => {
   }
 }
 
-export const updatePost = (body, postId) => async (dispatch) => {
+export const updatePost =  async (body, postId) => async (dispatch) => {
   try {
     dispatch({
       type: actionType.GET_POSTS_REQUEST,
