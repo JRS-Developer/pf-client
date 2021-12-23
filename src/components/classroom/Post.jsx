@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   Box,
   Card,
@@ -10,11 +11,21 @@ import {
   ImageListItem,
   ImageListItemBar,
   Chip,
+  Menu,
+  MenuItem,
 } from '@mui/material/'
 import Grid from '@mui/material/Grid'
 import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
-import { Favorite, Fullscreen, Article, Image } from '@mui/icons-material/'
+import {
+  Favorite,
+  Fullscreen,
+  Article,
+  Image,
+  MoreVert,
+  Edit,
+  Delete,
+} from '@mui/icons-material/'
 import { pink } from '@mui/material/colors'
 import { format } from 'date-fns'
 import { useDispatch } from 'react-redux'
@@ -32,13 +43,31 @@ export default function Post({
   likes,
   madeLike,
   handleFull,
+  handleDelete,
+	handleEdit,
+  publisherId,
 }) {
   const dispatch = useDispatch()
+  const [openMenu, setOpenMenu] = useState(false)
+  const [anchorNav, setAnchorNav] = useState(null)
+
   const favoriteProps = {}
   madeLike && (favoriteProps.sx = { color: pink[200] })
 
+  const isMyPost = publisherId === localStorage.getItem('user')
+
   const handleLike = () => {
     dispatch(likePost(id))
+  }
+
+  const handleOpenMenu = (e) => {
+    setAnchorNav(e.currentTarget)
+    setOpenMenu(true)
+  }
+
+  const handleCloseMenu = () => {
+    setAnchorNav(null)
+    setOpenMenu(false)
   }
 
   // Acorta el nombre de los archivos largos, y al final le añade la extension del archivo
@@ -46,6 +75,15 @@ export default function Post({
   const shortName = (text) => {
     return text.substr(0, 15) + '...' + text.split('.').pop()
   }
+
+  const menuItems = [
+    {
+      text: 'Editar',
+      icon: Edit,
+      onClick: handleEdit,
+    },
+    { text: 'Eliminar', icon: Delete, onClick: handleDelete },
+  ]
 
   const showImgs = () =>
     imgs.length && !docs.length ? (
@@ -126,11 +164,50 @@ export default function Post({
 
   return (
     <Grid item xs={12}>
-      <Card sx={{ width: '95%' }}>
+      <Card>
         <CardHeader
           avatar={<Avatar alt={name} src={avatar} />}
           title={name}
           subheader={format(new Date(date), 'MMMM, d, yyyy')}
+          action={
+            isMyPost ? (
+              <>
+                <IconButton onClick={handleOpenMenu}>
+                  <MoreVert />
+                </IconButton>
+                <Menu
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={openMenu}
+                  onClose={handleCloseMenu}
+                  anchorEl={anchorNav}
+                >
+                  {menuItems.map((item) => (
+                    <MenuItem
+                      disableRipple
+                      key={`${id}-${item.text}`}
+                      onClick={item.onClick}
+                    >
+                      <item.icon
+                        sx={{
+                          marginRight: '5px',
+                        }}
+                      />
+                      <Typography>{item.text}</Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </>
+            ) : (
+              false
+            )
+          }
         />
         {showImgs()}
         <CardContent>
