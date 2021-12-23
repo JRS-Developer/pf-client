@@ -68,13 +68,19 @@ export default function CreatePost() {
   }
 
   function handleSubmit(e) {
+    e.preventDefault()
     const form = new FormData()
 
     for (let key in post) {
       form.append(key, post[key])
     }
-    
-    form.append("myFile", [...images, ...files])
+
+    for (let key in images) {
+      form.append('myFile', images[key], images[key].name)
+    }
+    for (let key in files) {
+      form.append('myFile', files[key], files[key].name)
+    }
 
     dispatch(createPost(form))
   }
