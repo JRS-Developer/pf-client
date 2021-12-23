@@ -7,13 +7,16 @@ import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
 import Clear from '@mui/icons-material/Clear'
 import IconButton from '@mui/material/IconButton'
+import Button from '@mui/material/Button'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import { getDataById } from '../../actions/user'
+import { createPost } from '../../actions/post'
 import FileUpload from './FileUpload'
 import CardMedia from '@mui/material/CardMedia'
 import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
+import { formatMuiErrorMessage } from '@mui/utils'
 
 export default function CreatePost() {
   const dispatch = useDispatch()
@@ -21,10 +24,14 @@ export default function CreatePost() {
     (state) => state.usersReducer.dataEdit
   )
 
+  const { claseId, materiaId } = useParams()
+
   const [post, setPost] = useState({
     title: '',
     text: '',
     publisher_id: localStorage.getItem('user'),
+    classId: claseId,
+    materiaId: materiaId,
   })
 
   const [files, setFiles] = useState([])
@@ -58,6 +65,18 @@ export default function CreatePost() {
     let arr = [...files]
     arr.splice(e.currentTarget.name, 1)
     setFiles(arr)
+  }
+
+  function handleSubmit(e) {
+    const form = new FormData()
+
+    for (let key in post) {
+      form.append(key, post[key])
+    }
+    
+    form.append("myFile", [...images, ...files])
+
+    dispatch(createPost(form))
   }
 
   return (
@@ -214,6 +233,9 @@ export default function CreatePost() {
               )
             })}
         </Grid>
+        <Button variant="contained" size="small" onClick={handleSubmit}>
+          Publicar
+        </Button>
       </Paper>
     </Grid>
   )
