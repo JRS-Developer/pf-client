@@ -1,6 +1,7 @@
 import {
   Dialog,
   DialogContent,
+  DialogContentText,
   DialogTitle,
   DialogActions,
   TextField,
@@ -16,14 +17,30 @@ import { Image, Article, AttachFile } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
 import { useState } from 'react'
 import { shortName } from './utils'
-import { updatePost } from '../../actions/post'
+import { updatePost, getPosts } from '../../actions/post'
 import { useDispatch, useSelector } from 'react-redux'
 
-const getFilesIds = (files) => files.map((file) => file.id)
+// Esta funcion separa los archivos viejos de los nuevos, los nuevos seran subidos por el parametro de multer para subir archivos.
+// INFO: El parametro es myFile
+const getOldAndNewFiles = (files) => {
+  const oldFiles = []
+  const newFiles = []
+  // Para los viejos archiovos le coloco solo el ID, que es lo que pide la api, y para los nuevos le coloco el archivo tal cual
+  files.forEach((file) =>
+    file?.id ? oldFiles.push(file.id) : newFiles.push(file)
+  )
+
+  return [oldFiles, newFiles]
+}
 
 const isFileImage = (file) => {
   const isImage = file['type'].split('/')[0] === 'image'
-  const acceptedImageTypes = ['image/svg', 'image/jpeg', 'image/png']
+  const acceptedImageTypes = [
+    'image/svg',
+    'image/jpeg',
+    'image/png',
+    'image/jpg',
+  ]
   const isAceptedType = acceptedImageTypes.includes(file['type'])
 
   return {
@@ -32,46 +49,105 @@ const isFileImage = (file) => {
   }
 }
 
+const filterFiles = (files, fileToCompare) =>
+  files.filter((file) => file.name !== fileToCompare.name)
+
+const separateImgsAndDocs = (files) => {
+  const newImages = []
+  const newDocs = []
+
+  Array.from(files).forEach((file) => {
+    const { isImage, isValid } = isFileImage(file)
+    // Si es una imagen y es valido (png, jpeg, svg) entonces lo añado a imagenes
+    isImage && isValid && newImages.push(file)
+    // Si no es una imagen, lo pongo en newDocs
+    !isImage && newDocs.push(file)
+  })
+
+  return [newImages, newDocs]
+}
+
+const removeRepeatedFiles = (files, oldFiles) => {
+  const result = Array.from(files).filter(
+    (file) =>
+      !Array.from(oldFiles).some((old) => {
+        return old.name === file.name
+      })
+  )
+
+  return result
+}
+
 const EditPostForm = ({ open, handleClose, post }) => {
   const [imgs, setImgs] = useState(post.images)
   const [docs, setDocs] = useState(post.documents)
-  const [newFiles, setNewFiles] = useState([])
+
+  const [inputs, setInputs] = useState({
+    title: post.title,
+    text: post.text,
+  })
 
   const { loading } = useSelector((state) => state.postsReducer)
   const dispatch = useDispatch()
 
-  const handleUploadFile = (files) => {
-    const newImages = []
-    const newDocs = []
+  const handleChange = (e) => {
+    setInputs((inputs) => ({ ...inputs, [e.target.name]: e.target.value }))
+  }
 
-    files.forEach((file) => {
-      const { isImage, isValid } = isFileImage(file)
-      // Si es una imagen y es valido (png, jpeg, svg) entonces lo añado a imagenes
-      isImage && isValid && newImages.push(file)
-      // Si no es una imagen, lo pongo en newDocs
-      !isImage && newDocs.push(file)
-    })
+  const handleUploadFile = (e) => {
+    const files = e.target.files
 
+    // Separo las imagenes y los documentos
+    let [newImages, newDocs] = separateImgsAndDocs(files)
+    // Remuevo los repetidos
+    newImages = removeRepeatedFiles(newImages, imgs)
+    newDocs = removeRepeatedFiles(newDocs, docs)
+
+    // Coloco las nuevas imagenes y documentos
     newDocs.length && setDocs((docs) => [...docs, ...newDocs])
     newImages.length && setImgs((imgs) => [...imgs, ...newImages])
+
+    // Limpio el valor del input file
+    e.target.value = null
   }
 
   const handleDelImg = (imgToDelete) => {
-    setImgs((imgs) => imgs.filter((img) => img.id !== imgToDelete.id))
+    setImgs((imgs) => filterFiles(imgs, imgToDelete))
   }
 
   const handleDelDoc = (docToDelete) => {
-    setDocs((docs) => docs.filter((doc) => doc.id !== docToDelete.id))
+    setDocs((docs) => filterFiles(docs, docToDelete))
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const formData = new FormData()
-    formData.append('images', JSON.stringify(getFilesIds(imgs)))
-    formData.append('documents', JSON.stringify(getFilesIds(docs)))
+    const form = new FormData()
+    const [imagesReq, newImages] = getOldAndNewFiles(imgs)
+    const [docsReq, newDocs] = getOldAndNewFiles(docs)
 
-    dispatch(await updatePost(formData, post.id))
+    // Añado las imagenes y documentos viejos
+
+    for (let img of imagesReq) {
+      form.append('images', img)
+    }
+    for (let doc of docsReq) {
+      form.append('documents', doc)
+    }
+
+    // Obtengo los nuevos archivos y los uno en uno solo para ponerlo en el parametro myFile
+    const newFiles = [...newImages, ...newDocs]
+
+    for (let file of newFiles) {
+      form.append('myFile', file)
+    }
+
+    // Añado los valores de los inputs
+    Object.keys(inputs).forEach((key) => form.append(key, inputs[key]))
+
+    dispatch(await updatePost(form, post.id))
+    dispatch(getPosts(post.classId, post.materiaId))
+    handleClose()
   }
 
   return (
@@ -94,7 +170,9 @@ const EditPostForm = ({ open, handleClose, post }) => {
                   }}
                   margin="dense"
                   label="Titulo"
-                  value={post.title}
+                  defaultValue={post.title}
+                  name="title"
+                  onChange={handleChange}
                 />
                 <Tooltip title="Añadir archivos">
                   <label htmlFor="upload">
@@ -104,8 +182,9 @@ const EditPostForm = ({ open, handleClose, post }) => {
                       }}
                       type="file"
                       id="upload"
+                      onChange={handleUploadFile}
                     />
-                    <IconButton>
+                    <IconButton component="span">
                       <AttachFile />
                     </IconButton>
                   </label>
@@ -117,9 +196,11 @@ const EditPostForm = ({ open, handleClose, post }) => {
                 sx={{
                   width: '100%',
                 }}
+                name="text"
                 margin="dense"
                 label="Descripción"
-                value={post.text}
+                defaultValue={post.text}
+                onChange={handleChange}
                 multiline
                 rows={4}
               />
@@ -127,28 +208,50 @@ const EditPostForm = ({ open, handleClose, post }) => {
           </Grid>
           {imgs.length ? (
             <DialogContent>
-              {imgs.map((img) => (
-                <Chip
-                  key={`${img.id}-item`}
-                  icon={<Image />}
-                  label={shortName(img.name, 10)}
-                  color="primary"
-                  onDelete={() => handleDelImg(img)}
-                />
-              ))}
+              <DialogContentText>Imagenes</DialogContentText>
+              <Box
+                display="flex"
+                sx={{
+                  gap: 1,
+                  flexWrap: 'wrap',
+                }}
+              >
+                {imgs.map((img) => (
+                  <Chip
+                    key={`${img.id || img.name}-item`}
+                    icon={<Image />}
+                    label={shortName(img.name, 10)}
+                    color="primary"
+                    onDelete={() => handleDelImg(img)}
+                  />
+                ))}
+              </Box>
             </DialogContent>
           ) : null}
           {docs.length ? (
-            <DialogContent>
-              {docs.map((doc) => (
-                <Chip
-                  key={`${doc.id}-item`}
-                  icon={<Article />}
-                  label={shortName(doc.name, 10)}
-                  color="primary"
-                  onDelete={() => handleDelDoc(doc)}
-                />
-              ))}
+            <DialogContent
+              sx={{
+                paddingTop: 0,
+              }}
+            >
+              <DialogContentText>Documentos</DialogContentText>
+              <Box
+                display="flex"
+                sx={{
+                  gap: 1,
+                  flexWrap: 'wrap',
+                }}
+              >
+                {docs.map((doc) => (
+                  <Chip
+                    key={`${doc.id || doc.name}-item`}
+                    icon={<Article />}
+                    label={shortName(doc.name, 10)}
+                    color="primary"
+                    onDelete={() => handleDelDoc(doc)}
+                  />
+                ))}
+              </Box>
             </DialogContent>
           ) : null}
         </DialogContent>
