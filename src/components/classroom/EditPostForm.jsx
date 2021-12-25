@@ -67,6 +67,8 @@ const separateImgsAndDocs = (files) => {
   return [newImages, newDocs]
 }
 
+// removeRepeatedFiles a function that removes repeated files from an array of files
+// INFO: El parametro es myFile
 const removeRepeatedFiles = (files, oldFiles) => {
   const result = Array.from(files).filter(
     (file) =>
@@ -78,6 +80,22 @@ const removeRepeatedFiles = (files, oldFiles) => {
   return result
 }
 
+const validateInputs = (inputs, name, errors) => {
+  if (name === 'title') {
+    inputs[name] === ''
+      ? (errors[name] = 'El titulo no puede estar vacio')
+      : delete errors[name]
+  }
+
+  if (name === 'text') {
+    inputs[name] === ''
+      ? (errors[name] = 'La descripcion no puede estar vacio')
+      : delete errors[name]
+  }
+
+  return errors
+}
+
 const EditPostForm = ({ open, handleClose, post }) => {
   const [imgs, setImgs] = useState(post.images)
   const [docs, setDocs] = useState(post.documents)
@@ -87,11 +105,21 @@ const EditPostForm = ({ open, handleClose, post }) => {
     text: post.text,
   })
 
+  const [errors, setErrors] = useState({})
+
   const { loading } = useSelector((state) => state.postsReducer)
   const dispatch = useDispatch()
 
   const handleChange = (e) => {
     setInputs((inputs) => ({ ...inputs, [e.target.name]: e.target.value }))
+    console.log(inputs)
+    setErrors((errors) =>
+      validateInputs(
+        { ...inputs, [e.target.name]: e.target.value },
+        e.target.name,
+        errors
+      )
+    )
   }
 
   const handleUploadFile = (e) => {
@@ -173,6 +201,8 @@ const EditPostForm = ({ open, handleClose, post }) => {
                   defaultValue={post.title}
                   name="title"
                   onChange={handleChange}
+                  error={errors.title ? true : false}
+                  helperText={errors.title}
                 />
                 <Tooltip title="Añadir archivos">
                   <label htmlFor="upload">
@@ -203,6 +233,8 @@ const EditPostForm = ({ open, handleClose, post }) => {
                 onChange={handleChange}
                 multiline
                 rows={4}
+                error={errors.text ? true : false}
+                helperText={errors.text}
               />
             </Grid>
           </Grid>
@@ -256,7 +288,12 @@ const EditPostForm = ({ open, handleClose, post }) => {
           ) : null}
         </DialogContent>
         <DialogActions>
-          <LoadingButton variant="contained" type="submit" loading={loading}>
+          <LoadingButton
+            variant="contained"
+            type="submit"
+            loading={loading}
+            disabled={Object.keys(errors).length > 0}
+          >
             Guardar Cambios
           </LoadingButton>
           <Button variant="outlined" onClick={handleClose}>
