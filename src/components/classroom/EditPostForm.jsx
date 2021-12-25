@@ -17,7 +17,7 @@ import { Image, Article, AttachFile } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
 import { useState } from 'react'
 import { shortName } from './utils'
-import { updatePost, getPosts } from '../../actions/post'
+import { updatePost } from '../../actions/post'
 import { useDispatch, useSelector } from 'react-redux'
 
 // Esta funcion separa los archivos viejos de los nuevos, los nuevos seran subidos por el parametro de multer para subir archivos.
@@ -96,7 +96,7 @@ const validateInputs = (inputs, name, errors) => {
   return errors
 }
 
-const EditPostForm = ({ open, handleClose, post }) => {
+const EditPostForm = ({ open, handleClose, post, handleClickMessage, getPosts }) => {
   const [imgs, setImgs] = useState(post.images)
   const [docs, setDocs] = useState(post.documents)
 
@@ -112,7 +112,6 @@ const EditPostForm = ({ open, handleClose, post }) => {
 
   const handleChange = (e) => {
     setInputs((inputs) => ({ ...inputs, [e.target.name]: e.target.value }))
-    console.log(inputs)
     setErrors((errors) =>
       validateInputs(
         { ...inputs, [e.target.name]: e.target.value },
@@ -173,8 +172,16 @@ const EditPostForm = ({ open, handleClose, post }) => {
     // Añado los valores de los inputs
     Object.keys(inputs).forEach((key) => form.append(key, inputs[key]))
 
+    // Actualizo el post
     dispatch(await updatePost(form, post.id))
+
+    // Muestro el mensaje
+    handleClickMessage()
+
+    // Recarglo la lista de posts
     dispatch(getPosts(post.classId, post.materiaId))
+
+    // Cierro el form
     handleClose()
   }
 

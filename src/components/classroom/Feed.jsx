@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
-import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
-import { Dialog } from '@mui/material/'
+import { Dialog, Box, Grid, Snackbar, Alert } from '@mui/material/'
 import Post from './Post'
 import { useSelector, useDispatch } from 'react-redux'
 import { getPosts, deletePost } from '../../actions/post'
@@ -13,11 +11,13 @@ import EditPostForm from './EditPostForm'
 export default function Feed() {
   const [open, setOpen] = useState(false) //Este es para el Dialog que muestra la imagen de una publicacion
   const [openConfirm, setOpenConfirm] = useState(false) // Dialong Confirm, aqui muestra para eliminar la publicacion
-  const [openEdit, setOpenEdit] = useState()
+  const [openEdit, setOpenEdit] = useState() // Para mostrar el EditPostForm
+  const [openMessage, setOpenMessage] = useState(false) // Para mostrar el snackbar con un mensaje
+
   const [dataPost, setDataPost] = useState({})
   const [img, setImg] = useState(undefined)
 
-  const { posts, message } = useSelector((store) => store.postsReducer)
+  const { posts, message, error } = useSelector((store) => store.postsReducer)
 
   const dispatch = useDispatch()
   const { claseId, materiaId } = useParams()
@@ -43,6 +43,9 @@ export default function Feed() {
   }
 
   const handleCloseEdit = () => setOpenEdit(false)
+
+  const handleOpenMessage = () => setOpenMessage(true)
+  const handleCloseMessage = () => setOpenMessage(false)
 
   useEffect(() => {
     dispatch(getPosts(claseId, materiaId))
@@ -86,7 +89,7 @@ export default function Feed() {
             listData={() => getPosts(claseId, materiaId)}
             fnModifiedStatus={deletePost}
             dataForm={dataPost}
-            handleClickMessage={() => {}}
+            handleClickMessage={handleOpenMessage}
           />
         )}
         {openEdit && (
@@ -94,8 +97,23 @@ export default function Feed() {
             open={openEdit}
             handleClose={handleCloseEdit}
             post={dataPost}
+            handleClickMessage={handleOpenMessage}
+            getPosts={getPosts}
           />
         )}
+        <Snackbar
+          open={openMessage}
+          autoHideDuration={6000}
+          onClose={handleCloseMessage}
+        >
+          <Alert
+            onClose={handleCloseMessage}
+            severity={error ? 'error' : 'success'}
+            sx={{ width: '100%' }}
+          >
+            {error ? error : message.message}
+          </Alert>
+        </Snackbar>
       </Grid>
     </Box>
   )
