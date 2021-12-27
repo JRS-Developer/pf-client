@@ -55,7 +55,7 @@ export default function ClassroomIndex() {
             </CardContent>
             <CardActions>
               <ButtonLink>
-                <Link className="btnLink" to="/materias/details/1/5" cursor="pointer"  >Ir a la materia</Link>
+                <Link className="btnLink" to="/materias/details/a3d2aa7e-8938-482c-aee1-b923ec136b0e/a6dca1e0-2c97-412b-afcc-bd0c9e419a3c" cursor="pointer"  >Ir a la materia</Link>
               </ButtonLink>
             </CardActions>
           </Card>

@@ -10,28 +10,25 @@ export const USER_FAIL = 'USER_FAIL';
 export const CREATE_MESSAGES = 'CREATE_MESSAGES';
 export const UPDATE_MESSAGES = 'UPDATE_MESSAGES';
 
-export const getMessages = ({ materia_id, class_id }) => async (dispatch) => {
+export const getMessages = ({ materia_id, class_id, user }) => async (dispatch) => {
     try{
         dispatch({
             type: GET_MESSAGES_REQUEST
           })
 
-        const chat = await axios.get(`${REACT_APP_CHAT}/chat/${materia_id}/${class_id}`);
-        const users = await axios.get(`${REACT_APP_CHAT}/users/?chat_id=${chat.data._id}`);
+        const chat = await axios.get(`${REACT_APP_CHAT}/chat/${materia_id}/${class_id}/${user}`);
         const { data } = await axios.get(`${REACT_APP_CHAT}/messages/${chat.data._id}`);
           //console.log(data);
-        const message = data.map(msg => {
-            const user = users.find(e => e._id === msg.user_id)
-            return {
-                ...msg,
-                fullname: user.fullname
-            };
-        });
+        const show = {
+          msg: "no hay mensajes en este chat; se el primero en enviar un mensaje"
+        };
+        console.log(data)
+        const message = data && show
 
         dispatch({
           type: GET_MESSAGES,
           payload: message,
-        })
+        });
         
     } catch(error){
         dispatch({
@@ -40,9 +37,8 @@ export const getMessages = ({ materia_id, class_id }) => async (dispatch) => {
               error.response && error.response.data.message
                 ? error.response.data.message
                 : error.message
-          })
-    }
-   
+          });
+    };
 };
 
 export const getUser = (id) => async (dispatch) => {
@@ -78,14 +74,14 @@ export const createMessages = (body) => async (dispatch) => {
     try {
       dispatch({
         type: GET_MESSAGES_REQUEST
-      })
+      });
   
       const { data } = await axios.post(`${REACT_APP_CHAT}/messages`, body);
   
       dispatch({
         type: CREATE_MESSAGES,
         payload: data
-      })
+      });
     }catch (error) {
       dispatch({
         type: MESSAGES_FAIL,
@@ -94,14 +90,14 @@ export const createMessages = (body) => async (dispatch) => {
             ? error.response.data.message
             : error.message
       });
-    }
+    };
   };
   
   export const updateMessages = (body, message_id) => async (dispatch) => {
     try {
       dispatch({
         type: GET_MESSAGES_REQUEST
-      })
+      });
   
       const { data } = await axios.put(`${REACT_APP_CHAT}/messages/${message_id}`, body);
   
