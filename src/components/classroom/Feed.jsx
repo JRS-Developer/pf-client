@@ -17,7 +17,7 @@ export default function Feed() {
   const [dataPost, setDataPost] = useState({})
   const [img, setImg] = useState(undefined)
 
-  const { posts, message } = useSelector((store) => store.postsReducer)
+  const { posts, loading } = useSelector((store) => store.postsReducer)
 
   const dispatch = useDispatch()
   const { claseId, materiaId } = useParams()
@@ -51,7 +51,7 @@ export default function Feed() {
   return (
     <Box sx={{ overflow: 'auto' }}>
       <Grid container spacing={2}>
-        <CreatePost />
+        <CreatePost getPosts={getPosts} loading={loading} />
         {posts?.length ? (
           posts.map((e) => (
             <Post

@@ -16,9 +16,9 @@ import { createPost } from '../../actions/post'
 import FileUpload from './FileUpload'
 import CardMedia from '@mui/material/CardMedia'
 import Card from '@mui/material/Card'
-import { formatMuiErrorMessage } from '@mui/utils'
+import LinearProgress from '@mui/material/LinearProgress';
 
-export default function CreatePost() {
+export default function CreatePost({getPosts, loading}) {
   const dispatch = useDispatch()
   const { firstName, lastName, avatar } = useSelector(
     (state) => state.usersReducer.dataEdit
@@ -67,7 +67,7 @@ export default function CreatePost() {
     setFiles(arr)
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     const form = new FormData()
 
@@ -82,7 +82,19 @@ export default function CreatePost() {
       form.append('myFile', files[key], files[key].name)
     }
 
-    dispatch(createPost(form))
+    setPost({
+      title: '',
+      text: '',
+      publisher_id: localStorage.getItem('user'),
+      classId: claseId,
+      materiaId: materiaId,
+    })
+    setFiles([])
+    setImages([])
+
+    await dispatch(createPost(form))
+    await dispatch(getPosts(claseId, materiaId))
+
   }
 
   return (
@@ -94,9 +106,8 @@ export default function CreatePost() {
           p: 1,
           border: 1,
           borderColor: 'primary.main',
-          borderRadius: 2,
-          flexDirection: 'column',
-          maxWidth: 700,
+          borderRadius: 1,
+          flexDirection: 'column'
         }}
       >
         <Box>
@@ -117,6 +128,7 @@ export default function CreatePost() {
                 sx={{ mb: 1, mt: 1, width: '100%' }}
                 size="small"
                 onChange={handleChange}
+                value={post.title}
               />
             </Grid>
             <FileUpload
@@ -136,6 +148,7 @@ export default function CreatePost() {
                 size="small"
                 sx={{ mb: 1, mt: 1, width: '100%' }}
                 onChange={handleChange}
+                value={post.text}
               />
             </Grid>
           </Grid>
@@ -239,10 +252,11 @@ export default function CreatePost() {
               )
             })}
         </Grid>
-        <Button variant="contained" size="small" onClick={handleSubmit}>
+        <Button variant="contained" size="small" onClick={handleSubmit} sx={{mb: 1}}>
           Publicar
         </Button>
       </Paper>
+      {loading && <LinearProgress sx={{borderRadius: 1}} />}
     </Grid>
   )
 }
