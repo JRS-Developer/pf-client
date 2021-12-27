@@ -11,6 +11,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Paper from '@mui/material/Paper';
 import NotasProfesor from '../notas/NotasProfesor'
+import FullScreenDialog from './chat/ListUser'
 
 export default function ClassRoom() {
   const [value, setValue] = useState('1');
@@ -35,6 +36,7 @@ export default function ClassRoom() {
             <Tab label="Chat" value="2" />
             <Tab label="Tareas" value="3" />
             <Tab label="Notas" value="4" />
+            <Tab label="Lista" value="5" />
           </TabList>
         </Box>
         <Paper elevation={24}>
@@ -42,6 +44,7 @@ export default function ClassRoom() {
           <TabPanel value="2"><Chat materia={materia}/></TabPanel>
           <TabPanel value="3"><Homeworks /></TabPanel>
           <TabPanel value="4"><NotasProfesor /></TabPanel>
+          <TabPanel value="5"><FullScreenDialog /></TabPanel>
         </Paper>
       </TabContext>
     </Box>
