@@ -280,8 +280,8 @@ const Table = ({
           {loadingActions ?
             <Box sx={{ display: 'flex' }}>
               <CircularProgress />
-            </Box> : errorActions ? <h4>{errorActions}</h4> : actionsModule.map(act => (
-            <Tooltip title={act.name}>
+            </Box> : errorActions ? <h4>{errorActions}</h4> : actionsModule.map((act, i) => (
+            <Tooltip title={act.name} key={`t${i}`}>
               <IconButton
                 aria-label={act.name}
                 size="large"

@@ -1,7 +1,7 @@
 import { Switch, Route } from 'react-router-dom'
 import Box from '@mui/material/Box'
 
-import ProfileIndex from "../profile/ProfileIndex";
+import RolesIndex from "../Roles/RolesIndex";
 import ActionIndex from "../action/ActionIndex";
 import UserIndex from "../User/UserIndex"
 import ModuleIndex from "../module/ModuleIndex";
@@ -23,7 +23,7 @@ const Content = ({ show }) => {
     
       <Box sx={{marginLeft: show ? 0 : "200px", p: 2, mt: 6, transition: "all 0.3s" }}>
         <Switch>
-          <Route exact path="/roles" component={ProfileIndex} />
+          <Route exact path="/roles" component={RolesIndex} />
           <Route exact path="/actions" component={ActionIndex} />
           <Route exact path="/modules" component={ModuleIndex} />
           <Route exact path="/users" component={UserIndex} />
