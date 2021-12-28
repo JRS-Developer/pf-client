@@ -18,7 +18,7 @@ import * as React from 'react'
 import Grid from '@mui/material/Grid'
 import Logo from '../../logo2.png'
 
-export default function SignInSide() {
+export default function SignInSide({ location }) {
   const [values, setValues] = useState({
     amount: '',
     password: '',
@@ -87,13 +87,17 @@ export default function SignInSide() {
   }
 
   useEffect(() => {
-    isLogged && history.push('/')
-  }, [isLogged, history])
+    if (isLogged) {
+      location?.state?.location
+        ? history.replace(location.state.location)
+        : history.push('/')
+    }
+  }, [isLogged, history, location])
 
   useEffect(() => {
     dispatch(getLoginPhoto())
     dispatch(checkLogged())
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

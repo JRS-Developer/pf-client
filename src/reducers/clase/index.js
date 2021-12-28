@@ -1,9 +1,13 @@
 import * as actionTypes from '../../actions/clase/types';
+
+
 let initialState = {
   clases: [],
   dataEdit:{},
   message: {}
-}
+};
+
+
 export const getClasesReducer = (state = initialState, action) => {
   switch (action.type){
     case actionTypes.GET_CLASES_REQUEST:
@@ -43,5 +47,5 @@ export const getClasesReducer = (state = initialState, action) => {
       }
     default:
       return state
-  }
-}
+  };
+};
