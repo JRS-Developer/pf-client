@@ -93,13 +93,13 @@ QuickSearchToolbar.propTypes = {
 }
 
 /*
- * data: "La data que se mostrará en la grilla" => data = {columns, rows}
- * DialogForm: "Formulario para registrar y editar el registro"
- * title: Es el título de la DaraGrid
- * getDataById: Es una función que nos traerá la data por Id,
- * getActions: Es el estado del componente
- * modifiedAction: Es una función que nos permite modificar el status del registro
- * listData: Es una función que nos permite traer la lista de registros
+ * data: "La data que se mostrará en la grilla" => data = {columns[array de objetos], rows[array de objetos]}
+ * DialogForm: "Formulario para registrar y editar el registro" [componente]
+ * title: Es el título de la DataGrid [array]
+ * getDataById: Es una función que nos traerá la data por Id [action],
+ * getActions: Es el estado del componente traido de la store. [useState]
+ * modifiedAction: Es una función que nos permite modificar el status del registro [action]
+ * listData: Es una función que nos permite traer la lista de registros [action]
  * */
 const Table = ({
   data,
