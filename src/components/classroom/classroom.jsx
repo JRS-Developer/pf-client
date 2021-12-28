@@ -11,6 +11,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Paper from '@mui/material/Paper';
 import NotasProfesor from '../notas/NotasProfesor'
+import Entregas from './homework/Entregas.jsx'
 import FullScreenDialog from './chat/ListUser'
 
 export default function ClassRoom() {
@@ -36,15 +37,17 @@ export default function ClassRoom() {
             <Tab label="Chat" value="2" />
             <Tab label="Tareas" value="3" />
             <Tab label="Notas" value="4" />
-            <Tab label="Lista" value="5" />
+            <Tab label="Entregas (pestaña para el profe)" value="5"/>
+            <Tab label="Lista" value="6" />
           </TabList>
         </Box>
         <Paper elevation={24}>
           <TabPanel value="1"><Feed /></TabPanel>
           <TabPanel value="2"><Chat materia={materia}/></TabPanel>
           <TabPanel value="3"><Homeworks /></TabPanel>
-          <TabPanel value="4"><NotasProfesor /></TabPanel>
-          <TabPanel value="5"><FullScreenDialog /></TabPanel>
+          <TabPanel value="4"><NotasProfesor /></TabPanel>  
+          <TabPanel value="5"><Entregas/></TabPanel>
+          <TabPanel value="6"><FullScreenDialog /></TabPanel>
         </Paper>
       </TabContext>
     </Box>
