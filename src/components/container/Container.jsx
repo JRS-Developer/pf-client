@@ -17,6 +17,9 @@ import MatriculaIndex from "../matricula/MatriculaIndex";
 import ClassIndex from "../class/ClassIndex"
 import SchoolIndex from "../school/SchoolIndex"
 import MateriaIndex from "../materia/MateriaIndex"
+
+import TeacherIndex from "../teacher/TeacherIndex"
+
 import TablaEntregas from '../classroom/homework/TablaEntregas';
 
 const Content = ({ show }) => {
@@ -37,8 +40,12 @@ const Content = ({ show }) => {
           <Route exact path="/matriculas" component={MatriculaIndex} />{/* ADMINISTRACION */}
           <Route exact path="/class" component={ClassIndex} />{/* ADMINISTRACION */}
           <Route exact path="/schools" component={SchoolIndex} />
+
+          <Route exact path="/materias/details/:schoolId/:claseId/:materiaId" component={ClassRoom} />
+          <Route exact path="/teachers" component={TeacherIndex} />
+
           <Route exact path="/materias" component={MateriaIndex} />{/* AULA virtual */}
-          <Route exact path="/materias/details/:claseId/:materiaId" component={ClassRoom} />
+       
           <Route exact path="/entregas/:tareaId" component={TablaEntregas} />
         </Switch>
       </Box>

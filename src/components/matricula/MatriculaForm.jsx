@@ -39,9 +39,8 @@ const MatriculaForm =  ({open, handleClose, titleForm, dataForm, handleClickMess
 
   useEffect( () => {
     const role = {role_id: '5d3709ba-3a27-48cc-8a75-256338684cee'};
-    const school_id = "b3ea8d8a-36f3-4c6c-8937-c37641aaa005"
     dispatch(listStudents(role))
-    dispatch(listClases(school_id))
+    dispatch(listClases())
     dispatch(listCicloElectivos())
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
