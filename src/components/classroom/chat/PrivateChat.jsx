@@ -14,13 +14,16 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 // import ListSubheader from '@mui/material/ListSubheader';
 import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
 // import MenuIcon from '@mui/icons-material/Menu';
 // import AddIcon from '@mui/icons-material/Add';
 // import SearchIcon from '@mui/icons-material/Search';
 // import MoreIcon from '@mui/icons-material/MoreVert';
 // import Container from "@mui/material/Container"
-import {  useState,  useEffect } from 'react';
-import socket from '../../socket';
+import {  useState,  useEffect, useContext } from 'react';
+// import socket from '../../socket';
+import Chat from './Chat';
+
 
 const mensajes = [
   {
@@ -120,21 +123,24 @@ const mensajes = [
     avatar: '/static/images/avatar/1.jpg',
   },
 ];
+export default function PrivateChat() {
+  const [messages, setMessages] = useState([mensajes])
+  const [isGeneral, setIsGeneral] = useState(false)
 
-
-
-export default function Messages({materia}) {
-   const [messages, setMessages] = useState([mensajes])
-
+const handleClick = () => {
+  setIsGeneral(!isGeneral);
+}
     // useEffect(() => {
       // socket.emit('conectado');
     // }, []);
-
   return (
-    <Box sx={{overflow: 'auto', height: 'calc(100vh - 180px)'}}>
+    <>
+    { !isGeneral ? (<Box sx={{overflow: 'auto', height: 'calc(100vh - 180px)'}}>
+      <Button
+      onClick={handleClick}
+      >Chat General</ Button>
       <Box sx={{overflow: 'auto', height: 'calc(100vh - 252px)'}}>
         <Paper sx={{ pb: '50px' }}>
-          
           <Typography variant="h5" gutterBottom component="div" sx={{ p: 2, pb: 0 }}>
             Inbox
           </Typography>
@@ -146,11 +152,11 @@ export default function Messages({materia}) {
                   </ListItemAvatar>
                   <ListItemText primary={name} secondary={message} />
                 </ListItem>
-              
             ))}
           </List>
         </Paper>
       </Box>
-    </Box>
+    </Box>) : (<Chat />)}
+    </>
   );
 }
