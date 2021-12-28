@@ -22,136 +22,143 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMessages, getUser, createMessages } from '../../../actions/chat';
 
-const mensajes = [
-  {
-    id: 1,
-    name: 'Juan',
-    message: "Hola como andan?",
-    avatar: '/static/images/avatar/5.jpg',
-  },
-  {
-    id: 2,
-    name: 'Lean',
-    message: `Cansado`,
-    avatar: '/static/images/avatar/1.jpg',
-  },
-  {
-    id: 1,
-    name: 'Juan',
-    message: 'Mal yo tambien',
-    avatar: '/static/images/avatar/2.jpg',
-  },
-  {
-    id: 2,
-    name: 'Lean',
-    message: 'Esta para un sandwich de milanesa',
-    avatar: '/static/images/avatar/3.jpg',
-  },
-  {
-    id: 1,
-    name: "Juan",
-    message: 'Siii con una buena birra',
-    avatar: '/static/images/avatar/4.jpg',
-  },
-  {
-    id: 2,
-    name: 'Lean',
-    message: `Venite`,
-    avatar: '/static/images/avatar/5.jpg',
-  },
-  {
-    id: 1,
-    name: 'Juan',
-    message: `Yendo`,
-    avatar: '/static/images/avatar/1.jpg',
-  },
-  {
-    id: 7,
-    name: 'Juan',
-    message: `Yendo`,
-    avatar: '/static/images/avatar/1.jpg',
-  },
-  {
-    id: 7,
-    name: 'Juan',
-    message: `Yendo`,
-    avatar: '/static/images/avatar/1.jpg',
-  },
-  {
-    id: 7,
-    name: 'Juan',
-    message: `Yendo`,
-    avatar: '/static/images/avatar/1.jpg',
-  },
-  {
-    id: 7,
-    name: 'Juan',
-    message: `Yendo`,
-    avatar: '/static/images/avatar/1.jpg',
-  },
-  {
-    id: 7,
-    name: 'Juan',
-    message: `Yendo`,
-    avatar: '/static/images/avatar/1.jpg',
-  },
-  {
-    id: 7,
-    name: 'Juan',
-    message: `Yendo`,
-    avatar: '/static/images/avatar/1.jpg',
-  },
-  {
-    id: 7,
-    name: 'Juan',
-    message: `Yendo`,
-    avatar: '/static/images/avatar/1.jpg',
-  },
-  {
-    id: 7,
-    name: 'Juan',
-    message: `Yendo`,
-    avatar: '/static/images/avatar/1.jpg',
-  },
-  {
-    id: 7,
-    name: 'Juan',
-    message: `Yendo`,
-    avatar: '/static/images/avatar/1.jpg',
-  },
-];
+// const mensajes = [
+//   {
+//     id: 1,
+//     name: 'Juan',
+//     message: "Hola como andan?",
+//     avatar: '/static/images/avatar/5.jpg',
+//   },
+//   {
+//     id: 2,
+//     name: 'Lean',
+//     message: `Cansado`,
+//     avatar: '/static/images/avatar/1.jpg',
+//   },
+//   {
+//     id: 1,
+//     name: 'Juan',
+//     message: 'Mal yo tambien',
+//     avatar: '/static/images/avatar/2.jpg',
+//   },
+//   {
+//     id: 2,
+//     name: 'Lean',
+//     message: 'Esta para un sandwich de milanesa',
+//     avatar: '/static/images/avatar/3.jpg',
+//   },
+//   {
+//     id: 1,
+//     name: "Juan",
+//     message: 'Siii con una buena birra',
+//     avatar: '/static/images/avatar/4.jpg',
+//   },
+//   {
+//     id: 2,
+//     name: 'Lean',
+//     message: `Venite`,
+//     avatar: '/static/images/avatar/5.jpg',
+//   },
+//   {
+//     id: 1,
+//     name: 'Juan',
+//     message: `Yendo`,
+//     avatar: '/static/images/avatar/1.jpg',
+//   },
+//   {
+//     id: 7,
+//     name: 'Juan',
+//     message: `Yendo`,
+//     avatar: '/static/images/avatar/1.jpg',
+//   },
+//   {
+//     id: 7,
+//     name: 'Juan',
+//     message: `Yendo`,
+//     avatar: '/static/images/avatar/1.jpg',
+//   },
+//   {
+//     id: 7,
+//     name: 'Juan',
+//     message: `Yendo`,
+//     avatar: '/static/images/avatar/1.jpg',
+//   },
+//   {
+//     id: 7,
+//     name: 'Juan',
+//     message: `Yendo`,
+//     avatar: '/static/images/avatar/1.jpg',
+//   },
+//   {
+//     id: 7,
+//     name: 'Juan',
+//     message: `Yendo`,
+//     avatar: '/static/images/avatar/1.jpg',
+//   },
+//   {
+//     id: 7,
+//     name: 'Juan',
+//     message: `Yendo`,
+//     avatar: '/static/images/avatar/1.jpg',
+//   },
+//   {
+//     id: 7,
+//     name: 'Juan',
+//     message: `Yendo`,
+//     avatar: '/static/images/avatar/1.jpg',
+//   },
+//   {
+//     id: 7,
+//     name: 'Juan',
+//     message: `Yendo`,
+//     avatar: '/static/images/avatar/1.jpg',
+//   },
+//   {
+//     id: 7,
+//     name: 'Juan',
+//     message: `Yendo`,
+//     avatar: '/static/images/avatar/1.jpg',
+//   },
+// ];
 
-const NewMessage = () => {
+const Chat = () => {
   
   const [message, setMessage] = useState('');
+  const [typing, setTyping] = useState('');
+  const [isPrivate, setIsPrivate] = useState(false);
 
-
-  const chatMessages = useSelector(state => state.chatReducer.getChatReducer).messages;
-  const userInfo = useSelector(state => state.chatReducer.getChatUserReducer).user;
+  const chatMessages = useSelector(state => state.chatReducer).messages;
+  const userInfo = useSelector(state => state.chatReducer).user;
+  console.log(chatMessages)
+  console.log(userInfo)
 
   const user = window.localStorage.getItem('user');
 
-  const { class_id, materia_id } = useParams()
+  const { claseId, materiaId } = useParams();
   const dispatch = useDispatch();
-
-  
  
-  // useEffect(() => {
-  //   dispatch(getMessages({class_id, materia_id}));
-  //   dispatch(getUser(user));
-  // });
+   useEffect(() => {
+    dispatch(getMessages({claseId, materiaId, user}));
+    dispatch(getUser(user));
+   }, [dispatch, materiaId, claseId, user]);
 
   useEffect(() => {
+    socket.on('connect', () => {
+
+    })
     socket.emit('conectado', userInfo);
   }, [userInfo]);
 
-  // useEffect(() => {
-  //   socket.on()
-  // })
+   useEffect(() => {
+     socket.on('typing', (data) => {
+      setTyping(data);
+     });
+   }, [])
 
   const handleChange = (e) => {
     e.prevent.default();
     setMessage(e.target.value);
+    socket.emit('typing', userInfo);
   }
 
   const handleSubmit = (e) => {
@@ -160,7 +167,6 @@ const NewMessage = () => {
     socket.emit('message', userInfo.fullname, message);
     setMessage('');
   };
-
 
   return (
     <>
@@ -176,18 +182,18 @@ const NewMessage = () => {
               Inbox
             </Typography>
             <List sx={{ mb: 2 }}>
-              {mensajes.map(({ id, name, message, avatar }, i) => (
+              {chatMessages.map(({ id, fullname, message, avatar }, i) => (
                 <ListItem
                   key={`m${i}`}
                   button
                   sx={{
-                    color: name === 'juan' ? 'primary.main' : 'secondary.main'
+                    color: fullname === 'juan' ? 'primary.main' : 'secondary.main'
                   }}
                 >
                   <ListItemAvatar>
                     <Avatar src={avatar} alt="Profile Picture" />
                   </ListItemAvatar>
-                  <ListItemText primary={name} secondary={message} />
+                  <ListItemText primary={fullname} secondary={message} />
                 </ListItem>
               ))};
             </List>
@@ -226,4 +232,4 @@ const NewMessage = () => {
   )
 };
 
-export default NewMessage;
+export default Chat;

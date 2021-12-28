@@ -47,16 +47,6 @@ export const getChatReducer = (state = initialState, action) => {
                 loadingClases: false,
                 error: action.payload
             };
-
-        default:
-            return state;
-
-    };
-};
-
-export const getChatUserReducer = (state = initialState, action) => {
-    switch(action.type){
-
         case GET_USER_REQUEST: 
             return ({
                 ...state,
@@ -79,5 +69,6 @@ export const getChatUserReducer = (state = initialState, action) => {
 
         default:
             return state;
+
     };
 };
