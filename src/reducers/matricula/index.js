@@ -1,6 +1,8 @@
 import * as actionTypes from '../../actions/matricula/types';
+import {GET_DATOS_MATRICULAS} from "../../actions/matricula/types";
 let initialState = {
   matriculas: [],
+  datosMatricula: {},
   dataEdit:{},
   message: {}
 }
@@ -22,6 +24,12 @@ export const getMatriculaReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         dataEdit: action.payload
+      }
+    case actionTypes.GET_DATOS_MATRICULAS:
+      return {
+        ...state,
+        loading: false,
+        datosMatricula: action.payload
       }
     case actionTypes.ADD_MATRICULA:
       return {

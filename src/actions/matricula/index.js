@@ -1,5 +1,6 @@
 import * as actionType from './types';
 import axios from "axios";
+import {GET_DATOS_MATRICULAS} from "./types";
 
 const {REACT_APP_SERVER} = process.env
 
@@ -84,6 +85,29 @@ export const modifiedMatricula = (body) => async (dispatch) => {
 
     dispatch({
       type: actionType.EDIT_MATRICULA,
+      payload: data
+    })
+  }catch (error) {
+    dispatch({
+      type: actionType.MATRICULA_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+    });
+  }
+};
+
+export const getDatosMatricula = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: actionType.GET_MATRICULAS_REQUEST
+    })
+
+    const { data } = await axios.get(`${REACT_APP_SERVER}/matriculas/datos/matricula`);
+    //console.log(data);
+    dispatch({
+      type: actionType.GET_DATOS_MATRICULAS,
       payload: data
     })
   }catch (error) {

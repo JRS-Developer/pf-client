@@ -17,6 +17,7 @@ import MatriculaIndex from "../matricula/MatriculaIndex";
 import ClassIndex from "../class/ClassIndex"
 import SchoolIndex from "../school/SchoolIndex"
 import MateriaIndex from "../materia/MateriaIndex"
+import TeacherIndex from "../teacher/TeacherIndex"
 
 const Content = ({ show }) => {
   return (
@@ -37,7 +38,8 @@ const Content = ({ show }) => {
           <Route exact path="/class" component={ClassIndex} />
           <Route exact path="/schools" component={SchoolIndex} />
           <Route exact path="/materias" component={MateriaIndex} />
-          <Route exact path="/materias/details/:claseId/:materiaId" component={ClassRoom} />
+          <Route exact path="/materias/details/:schoolId/:claseId/:materiaId" component={ClassRoom} />
+          <Route exact path="/teachers" component={TeacherIndex} />
         </Switch>
       </Box>
   )
