@@ -62,12 +62,11 @@ function App() {
                   click={() => setSideToggle(false)}
                   clickClose={() => setSideToggle(true)}
                   show={sideToggle}
-                  setTheme={setTheme}
                   setMode={setMode}
                   mode={mode}
                 />
                 <Navbar show={sideToggle} click={() => setSideToggle(false)} />
-                <Container show={sideToggle} />
+                <Container show={sideToggle} setTheme={setTheme} />
               </>
             ) : (
               <Redirect
