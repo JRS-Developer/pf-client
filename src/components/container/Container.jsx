@@ -18,8 +18,11 @@ import ClassIndex from "../class/ClassIndex"
 import SchoolIndex from "../school/SchoolIndex"
 import MateriaIndex from "../materia/MateriaIndex"
 import Profile from "../Profile/Profile"
+import TeacherIndex from "../teacher/TeacherIndex"
+import TablaEntregas from '../classroom/homework/TablaEntregas';
 
 const Content = ({ show, setTheme }) => {
+
   return (
     
       <Box sx={{marginLeft: show ? 0 : "200px", p: 2, mt: 6, transition: "all 0.3s" }}>
@@ -35,8 +38,11 @@ const Content = ({ show, setTheme }) => {
           <Route exact path="/matriculas" component={MatriculaIndex} />{/* ADMINISTRACION */}
           <Route exact path="/class" component={ClassIndex} />{/* ADMINISTRACION */}
           <Route exact path="/schools" component={SchoolIndex} />
+          <Route exact path="/materias/details/:schoolId/:claseId/:materiaId" component={ClassRoom} />
+          <Route exact path="/teachers" component={TeacherIndex} />
           <Route exact path="/materias" component={MateriaIndex} />{/* AULA virtual */}
           <Route exact path="/materias/details/:claseId/:materiaId" component={ClassRoom} />
+          <Route exact path="/entregas/:tareaId" component={TablaEntregas} />
           <Route exact path="/profile">
             <Profile setTheme={setTheme}/>
           </Route>
