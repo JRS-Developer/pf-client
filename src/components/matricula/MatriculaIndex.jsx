@@ -14,6 +14,7 @@ const columns = [
     }},
   { field: 'student', headerName: 'Estudiante', width: 300},
   { field: 'identification', headerName: 'Identification', width: 300},
+  { field: 'school', headerName: 'Escuela', width: 300},
   { field: 'class', headerName: 'Clase', width: 300},
   { field: 'ciclo_electivo', headerName: 'Ciclo Electivo', width: 200},
 ];

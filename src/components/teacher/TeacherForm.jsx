@@ -23,6 +23,7 @@ import Divider from '@mui/material/Divider';
 
 import { getTeachers as listTeachers, modifiedTeacher, createTeacher, getTeacherMaterias } from "../../actions/teacher";
 import { getClases as listClases } from "../../actions/clase"
+import { getCicloElectivos as listCicloElectivos } from "../../actions/cicloElectivo";
 import {AutocompleteDiv} from "../matricula/MatriculaStyles";
 import Autocomplete from "@mui/material/Autocomplete";
 
@@ -43,7 +44,8 @@ const TeacherForm =  ({open, handleClose, titleForm, dataForm, handleClickMessag
     teacher_id: dataForm.id,
     school_id: '',
     clase_id: '',
-    materia_id: ''
+    materia_id: '',
+    ciclo_lectivo_id: ''
   });
 
   const dispatch = useDispatch();
@@ -66,8 +68,12 @@ const TeacherForm =  ({open, handleClose, titleForm, dataForm, handleClickMessag
   const obtenerMateriasTeacher = useSelector( state => state.teacherReducer )
   const { teacherMaterias, loadingTeacher  } = obtenerMateriasTeacher
 
+  const obtenerCiclo = useSelector( state => state.cicloElectivoReducer )
+  const { cicloElectivos } = obtenerCiclo
+
   useEffect(() => {
-    dispatch(listClases())
+    dispatch(listClases());
+    dispatch(listCicloElectivos());
   }, []);
 
   // Listamos Las clases

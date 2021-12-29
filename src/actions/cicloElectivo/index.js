@@ -3,13 +3,13 @@ import axios from "axios";
 
 const {REACT_APP_SERVER} = process.env
 
-export const getCicloElectivos = () => async (dispatch) => {
+export const getCicloElectivos = (status=true) => async (dispatch) => {
   try {
     dispatch({
       type: actionType.GET_CICLO_ELECTIVOS_REQUEST
     })
 
-    const { data } = await axios.get(`${REACT_APP_SERVER}/cicloElectivos`);
+    const { data } = await axios.get(`${REACT_APP_SERVER}/cicloElectivos?status=${status}`);
     //console.log(data);
     dispatch({
       type: actionType.GET_CICLO_ELECTIVOS,
