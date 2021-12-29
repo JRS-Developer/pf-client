@@ -15,8 +15,12 @@ import { getMatriculas as listMatriculas, createMatricula, modifiedMatricula } f
 import { getStudents as listStudents } from "../../actions/student";
 import { getClases as listClases } from "../../actions/clase"
 import { getCicloElectivos as listCicloElectivos } from "../../actions/cicloElectivo"
+import { getSchools as listSchools } from "../../actions/school"
 import { AutocompleteDiv } from "./MatriculaStyles";
 import Autocomplete from "@mui/material/Autocomplete";
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import DatePicker from '@mui/lab/DatePicker'
 
 
 const MatriculaForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage}) => {
@@ -37,11 +41,15 @@ const MatriculaForm =  ({open, handleClose, titleForm, dataForm, handleClickMess
   const getCicloElectivos = useSelector( state => state.cicloElectivoReducer );
   const {cicloElectivos/* , loadingElectivo */ } = getCicloElectivos
 
+  const getSchools = useSelector(state => state.schoolReducer);
+  const { loadingSchool, schools } = getSchools;
+
   useEffect( () => {
     const role = {role_id: '5d3709ba-3a27-48cc-8a75-256338684cee'};
     dispatch(listStudents(role))
     dispatch(listClases())
     dispatch(listCicloElectivos())
+    dispatch(listSchools())
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -88,11 +96,29 @@ const MatriculaForm =  ({open, handleClose, titleForm, dataForm, handleClickMess
     label: dataForm?.ciclo_electivo?.name
   }
   const [valueElectivo, setValueElectivo] = useState(dataForm?.id && initialElectivo);
+  
+  // Listamos Los colegios
+  let listaSchools = [];
+  let initialSchool = '';
 
-  const handleChange = (e) => {
-    setRowMatricula({
-      ...rowMatricula, [e.target.name]: e.target.value
-    })
+  schools?.map(school => {
+    listaSchools.push({
+      id: school.id,
+      label: school.name
+    });
+
+    if( dataForm?.school_id ===  school.id){
+      initialSchool = {
+        id: school.id,
+        label: school.name
+      }
+    }
+  })
+
+  const [valueSchool, setValueSchool] = useState(dataForm?.id && initialSchool);
+
+  const handleDateChange = (value) => {
+    setRowMatricula((input) => ({ ...input, fecha: value }))
   }
 
   const handleSubmit = async (e) => {
@@ -132,19 +158,50 @@ const MatriculaForm =  ({open, handleClose, titleForm, dataForm, handleClickMess
               <TextField id="outlined-basic" name="id" variant="standard" type="hidden" value={rowMatricula.id}/>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <TextField
-                    name="fecha"
-                    autoFocus
-                    margin="dense"
-                    id="fecha"
-                    label="Fecha"
-                    type="text"
-                    value={rowMatricula.fecha}
-                    onChange={handleChange}
-                    fullWidth={true}
-                    variant="outlined"
-                  />
+
+                <LocalizationProvider dateAdapter={AdapterDateFns} >
+                    <DatePicker
+                      fullWidth
+                      sx={{ mr: 2, width: '100%' }}
+                      value={rowMatricula.fecha}
+                      onChange={handleDateChange}
+                      renderInput={(params) => (
+                        <TextField
+                          fullWidth
+                          sx={{ mr: 2, width: '100%' }}
+                          {...params}
+                          name="fecha"
+                          id="date"
+                          label="Fecha"
+                          type="date"
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                        />
+                      )}
+                    />
+                  </LocalizationProvider>
+
                 </Grid>
+                <Grid item xs={12}>
+                  <AutocompleteDiv>
+                    <Autocomplete
+                      value={valueSchool}
+                      onChange={(event, newValue) => {
+                        setValueSchool(newValue);
+                        setRowMatricula({
+                          ...rowMatricula, 'school_id': newValue?.id
+                        })
+                      }}
+                      inputValue={valueSchool?.label}
+                      id="school_id"
+                      options={listaSchools}
+                      sx={{ width: '100%' }}
+                      renderInput={(params) => <TextField {...params} label="Escuela" />}
+                    />
+                  </AutocompleteDiv>
+                </Grid>
+
                 <Grid item xs={12}>
                   <AutocompleteDiv>
                     <Autocomplete
@@ -188,14 +245,14 @@ const MatriculaForm =  ({open, handleClose, titleForm, dataForm, handleClickMess
                       onChange={(event, newValue) => {
                         setValueElectivo(newValue);
                         setRowMatricula({
-                          ...rowMatricula, 'ciclo_electivo_id': newValue?.id
+                          ...rowMatricula, 'ciclo_lectivo_id': newValue?.id
                         })
                       }}
                       inputValue={valueElectivo?.label}
-                      id="ciclo_electivo_id"
+                      id="ciclo_lectivo_id"
                       options={listaElectivos}
                       sx={{ width: '100%' }}
-                      renderInput={(params) => <TextField {...params} label="Ciclo Electivo" />}
+                      renderInput={(params) => <TextField {...params} label="Ciclo Lectivo" />}
                     />
                   </AutocompleteDiv>
                 </Grid>
