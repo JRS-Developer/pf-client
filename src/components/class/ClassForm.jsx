@@ -128,11 +128,16 @@ const ClassForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage}
                 <Grid item xs={12}>
                   <AutocompleteDiv>
                     <Autocomplete
+                      multiple
                       value={valueSchool}
                       onChange={(event, newValue) => {
-                        setValueSchool(newValue);
+                        console.log(newValue)
+                        let schoolsIds = []
+                        newValue.map((opt) => {
+                          return schoolsIds.push(opt.id)
+                        })
                         setRowClass({
-                          ...rowClass, ['school_id']: newValue?.id
+                          ...rowClass, 'school_ids': schoolsIds
                         })
                       }}
                       inputValue={valueSchool?.label}
