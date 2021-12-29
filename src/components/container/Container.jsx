@@ -1,7 +1,7 @@
 import { Switch, Route } from 'react-router-dom'
 import Box from '@mui/material/Box'
 
-import ProfileIndex from "../profile/ProfileIndex";
+import RolesIndex from "../Roles/RolesIndex";
 import ActionIndex from "../action/ActionIndex";
 import UserIndex from "../User/UserIndex"
 import ModuleIndex from "../module/ModuleIndex";
@@ -18,12 +18,16 @@ import ClassIndex from "../class/ClassIndex"
 import SchoolIndex from "../school/SchoolIndex"
 import MateriaIndex from "../materia/MateriaIndex"
 
+import TeacherIndex from "../teacher/TeacherIndex"
+
+import TablaEntregas from '../classroom/homework/TablaEntregas';
+
 const Content = ({ show }) => {
   return (
     
       <Box sx={{marginLeft: show ? 0 : "200px", p: 2, mt: 6, transition: "all 0.3s" }}>
         <Switch>
-          <Route exact path="/roles" component={ProfileIndex} />
+          <Route exact path="/roles" component={RolesIndex} />
           <Route exact path="/actions" component={ActionIndex} />
           <Route exact path="/modules" component={ModuleIndex} />
           <Route exact path="/users" component={UserIndex} />
@@ -36,8 +40,13 @@ const Content = ({ show }) => {
           <Route exact path="/matriculas" component={MatriculaIndex} />{/* ADMINISTRACION */}
           <Route exact path="/class" component={ClassIndex} />{/* ADMINISTRACION */}
           <Route exact path="/schools" component={SchoolIndex} />
+
+          <Route exact path="/materias/details/:schoolId/:claseId/:materiaId" component={ClassRoom} />
+          <Route exact path="/teachers" component={TeacherIndex} />
+
           <Route exact path="/materias" component={MateriaIndex} />{/* AULA virtual */}
-          <Route exact path="/materias/details/:claseId/:materiaId" component={ClassRoom} />
+       
+          <Route exact path="/entregas/:tareaId" component={TablaEntregas} />
         </Switch>
       </Box>
   )

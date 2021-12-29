@@ -1,143 +1,160 @@
-import * as actionType from './types';
-import axios from "axios";
+import * as actionType from './types'
+import axios from 'axios'
 
-const {REACT_APP_SERVER} = process.env
+const { REACT_APP_SERVER } = process.env
 
-export const getPosts = () => async (dispatch) => {
+export const getPosts = (classId, materiaId) => async (dispatch) => {
   try {
     dispatch({
-      type: actionType.GET_POSTS_REQUEST
+      type: actionType.GET_POSTS_REQUEST,
     })
 
-    const { data } = await axios.get(`${REACT_APP_SERVER}/publications`);
-    console.log(data);
+    let query = `${REACT_APP_SERVER}/publications`
+    classId && (query += `?classId=${classId}`)
+    materiaId && (query += `&materiaId=${materiaId}`)
+
+    const { data } = await axios.get(query)
+
     dispatch({
       type: actionType.GET_POSTS,
-      payload: data
+      payload: data,
     })
-  }catch (error) {
+  } catch (error) {
     dispatch({
       type: actionType.POST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
-          : error.message
-    });
+          : error.message,
+    })
   }
-};
+}
 
 export const getPost = (postId) => async (dispatch) => {
   try {
     dispatch({
-      type: actionType.GET_POSTS_REQUEST
+      type: actionType.GET_POSTS_REQUEST,
     })
 
-    const { data } = await axios.get(`${REACT_APP_SERVER}/publications/${postId}`);
+    const { data } = await axios.get(
+      `${REACT_APP_SERVER}/publications/${postId}`
+    )
 
     dispatch({
       type: actionType.GET_POST,
-      payload: data
+      payload: data,
     })
-  }catch (error) {
+  } catch (error) {
     dispatch({
       type: actionType.POST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
-          : error.message
-    });
+          : error.message,
+    })
   }
-};
+}
 
 export const createPost = (body) => async (dispatch) => {
-
   try {
     dispatch({
-      type: actionType.GET_POSTS_REQUEST
+      type: actionType.GET_POSTS_REQUEST,
     })
 
-    const { data } = await axios.post(`${REACT_APP_SERVER}/publications`, body);
+    const { data } = await axios.post(`${REACT_APP_SERVER}/publications`, body)
 
     dispatch({
       type: actionType.CREATE_POST,
-      payload: data
+      payload: data,
     })
-  }catch (error) {
+  } catch (error) {
     dispatch({
       type: actionType.POST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
-          : error.message
-    });
+          : error.message,
+    })
   }
-};
+}
 
 export const updatePost = (body, postId) => async (dispatch) => {
   try {
     dispatch({
-      type: actionType.GET_POSTS_REQUEST
+      type: actionType.GET_POSTS_REQUEST,
     })
 
-    const { data } = await axios.put(`${REACT_APP_SERVER}/publications/${postId}`, body);
+    const { data } = await axios.put(
+      `${REACT_APP_SERVER}/publications/${postId}`,
+      body
+    )
 
     dispatch({
       type: actionType.UPDATE_POST,
-      payload: data
+      payload: data,
     })
-  }catch (error) {
+  } catch (error) {
     dispatch({
       type: actionType.POST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
-          : error.message
-    });
+          : error.message,
+    })
   }
-};
+}
 
-export const deletePost = (postId) => async (dispatch) => {
+export const deletePost = (body) => async (dispatch) => {
   try {
+    const { id: postId } = body
+
     dispatch({
-      type: actionType.GET_POSTS_REQUEST
+      type: actionType.GET_POSTS_REQUEST,
     })
 
-    const { data } = await axios.delete(`${REACT_APP_SERVER}/publications/${postId}`);
+    const { data } = await axios.delete(
+      `${REACT_APP_SERVER}/publications/${postId}`
+    )
 
     dispatch({
       type: actionType.DELETE_POST,
-      payload: data
+      payload: data,
     })
-  }catch (error) {
+  } catch (error) {
     dispatch({
       type: actionType.POST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
-          : error.message
-    });
+          : error.message,
+    })
   }
-};
+}
 
 export const likePost = (postId) => async (dispatch) => {
+  const userId = localStorage.getItem('user')
+  const payload = {
+    postId,
+    userId,
+  }
   try {
     dispatch({
-      type: actionType.GET_POSTS_REQUEST
+      type: actionType.CHANGE_LIKE,
+      payload,
     })
 
-    const { data } = await axios.put(`${REACT_APP_SERVER}/publications/${postId}/like`);
-
+    await axios.put(`${REACT_APP_SERVER}/publications/${postId}/like`)
+  } catch (error) {
     dispatch({
-      type: actionType.LIKE_POST,
-      payload: data
+      type: actionType.CHANGE_LIKE,
+      payload,
     })
-  }catch (error) {
     dispatch({
       type: actionType.POST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
-          : error.message
-    });
+          : error.message,
+    })
   }
-};
+}

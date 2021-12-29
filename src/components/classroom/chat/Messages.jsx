@@ -14,16 +14,20 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 // import ListSubheader from '@mui/material/ListSubheader';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 // import MenuIcon from '@mui/icons-material/Menu';
 // import AddIcon from '@mui/icons-material/Add';
 // import SearchIcon from '@mui/icons-material/Search';
 // import MoreIcon from '@mui/icons-material/MoreVert';
+import NewMessage from "./newMessage";
 // import Container from "@mui/material/Container"
-import {  useState,  useEffect, useContext } from 'react';
-// import socket from '../../socket';
-import Chat from './Chat';
+import { /* useState, */ useEffect } from 'react';
 
+import socket from '../socket'
+
+
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 const mensajes = [
   {
@@ -123,24 +127,29 @@ const mensajes = [
     avatar: '/static/images/avatar/1.jpg',
   },
 ];
-export default function PrivateChat() {
-  const [messages, setMessages] = useState([mensajes])
-  const [isGeneral, setIsGeneral] = useState(false)
 
-const handleClick = () => {
-  setIsGeneral(!isGeneral);
-}
-    // useEffect(() => {
-      // socket.emit('conectado');
-    // }, []);
+
+
+export default function Messages({materia}) {
+  // const [messages, setMessages] = useState([mensajes])
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+    useEffect(() => {
+      socket.emit('conectado');
+    }, []);
+
   return (
-    <>
-    { !isGeneral ? (<Box sx={{overflow: 'auto', height: 'calc(100vh - 180px)'}}>
-      <Button
-      onClick={handleClick}
-      >Chat General</ Button>
+    <Box sx={{overflow: 'auto', height: 'calc(100vh - 180px)'}}>
       <Box sx={{overflow: 'auto', height: 'calc(100vh - 252px)'}}>
         <Paper sx={{ pb: '50px' }}>
+          
           <Typography variant="h5" gutterBottom component="div" sx={{ p: 2, pb: 0 }}>
             Inbox
           </Typography>
@@ -150,13 +159,36 @@ const handleClick = () => {
                   <ListItemAvatar>
                     <Avatar alt="Profile Picture" />
                   </ListItemAvatar>
-                  <ListItemText primary={name} secondary={message} />
+                  <ListItemText primary={<Button
+                  id="basic-button"
+                  aria-controls="basic-menu"
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                  onClick={handleClick}
+      >
+        {name}
+      </Button>
+     }  secondary={message} />
+                  
                 </ListItem>
+              
             ))}
           </List>
+          <Menu
+     id="basic-menu"
+     anchorEl={anchorEl}
+     open={open}
+     onClose={handleClose}
+     MenuListProps={{
+       'aria-labelledby': 'basic-button',
+     }}
+   >
+     <MenuItem onClick={handleClose}>Send private message</MenuItem>
+     
+   </Menu>
         </Paper>
       </Box>
-    </Box>) : (<Chat />)}
-    </>
+      <NewMessage />
+    </Box>
   );
 }

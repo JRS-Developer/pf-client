@@ -15,8 +15,9 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import PrivateChat from './PrivateChat'
-
-import { useEffect } from 'react';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { useEffect, createContext } from 'react';
 import socket from '../../socket';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -120,12 +121,13 @@ import { getMessages, getUser, createMessages } from '../../../actions/chat';
 //     avatar: '/static/images/avatar/1.jpg',
 //   },
 // ];
-
 const Chat = () => {
   
+  // const context = createContext()
   const [message, setMessage] = useState('');
   const [typing, setTyping] = useState('');
   const [isPrivate, setIsPrivate] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const chatMessages = useSelector(state => state.chatReducer).messages;
   const userInfo = useSelector(state => state.chatReducer).user;
@@ -155,12 +157,20 @@ const Chat = () => {
      });
    }, [])
 
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setIsPrivate(!isPrivate);
+    setAnchorEl(null);
+  };
+ 
   const handleChange = (e) => {
     e.prevent.default();
     setMessage(e.target.value);
     socket.emit('typing', userInfo);
   }
-
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createMessages(message));
@@ -170,66 +180,102 @@ const Chat = () => {
 
   return (
     <>
-      <Box sx={{ overflow: 'auto', height: 'calc(100vh - 180px)' }}>
-        <Box sx={{ overflow: 'auto', height: 'calc(100vh - 252px)' }}>
-          <Paper sx={{ pb: '50px' }}>
-            <Typography
-              variant="h5"
-              gutterBottom
-              component="div"
-              sx={{ p: 2, pb: 0 }}
-            >
-              Inbox
-            </Typography>
-            <List sx={{ mb: 2 }}>
-              {chatMessages.map(({ id, fullname, message, avatar }, i) => (
-                <ListItem
-                  key={`m${i}`}
-                  button
-                  sx={{
-                    color: fullname === 'juan' ? 'primary.main' : 'secondary.main'
+      {!isPrivate ? (
+        <>
+          <Box sx={{ overflow: 'auto', height: 'calc(100vh - 180px)' }}>
+            <Box sx={{ overflow: 'auto', height: 'calc(100vh - 252px)' }}>
+              <Paper sx={{ pb: '50px' }}>
+                <Typography
+                  variant="h5"
+                  gutterBottom
+                  component="div"
+                  sx={{ p: 2, pb: 0 }}
+                >
+                  Inbox
+                </Typography>
+                <List sx={{ mb: 2 }}>
+                  {chatMessages.map(({ id, name, message, person }, i) => (
+                    <ListItem
+                      key={`m${i}`}
+                      button
+                      sx={{
+                        color:
+                          name === 'Juan' ? 'primary.main' : 'secondary',
+                      }}
+                    >
+                      <ListItemAvatar>
+                        <Avatar alt="Profile Picture" />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={
+                          <Button
+                            id="basic-button"
+                            aria-controls="basic-menu"
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                            onClick={handleClick}
+                          >
+                            {name}
+                          </Button>
+                        }
+                        secondary={message}
+                      />
+                    </ListItem>
+                  ))}
+                </List>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    'aria-labelledby': 'basic-button',
                   }}
                 >
-                  <ListItemAvatar>
-                    <Avatar src={avatar} alt="Profile Picture" />
-                  </ListItemAvatar>
-                  <ListItemText primary={fullname} secondary={message} />
-                </ListItem>
-              ))};
-            </List>
-
-          </Paper>
-        </Box>
-        <PrivateChat />
-      </Box>
-      <Box
-        sx={{ top: 'auto', bottom: 0, bgColor: 'primary.main', width: '100%' }}
-      >
-        <form onSubmit={handleSubmit}>
-          <Box spacing={0} display="flex" direction="row" sx={{ mt: 2 }}>
-            <TextField
-              name="message"
-              required
-              fullWidth
-              id="message"
-              placeholder="Escribir nuevo mensaje..."
-              autoFocus
-              value={message}
-              onChange={handleChange}
-            />
-            <Button
-              variant="contained"
-              endIcon={<Icon>send</Icon>}
-              width="15%"
-              disabled={!message.length}
-            >
-              Enviar
-            </Button>
+                  <MenuItem onClick={handleClose}>
+                    Send private message
+                  </MenuItem>
+                </Menu>
+              </Paper>
+            </Box>
           </Box>
-        </form>
-      </Box>
+          <Box
+            sx={{
+              top: 'auto',
+              bottom: 0,
+              bgColor: 'primary.main',
+              width: '100%',
+            }}
+          >
+            <form onSubmit={handleSubmit}>
+              <Box spacing={0} display="flex" direction="row" sx={{ mt: 2 }}>
+                <TextField
+                  name="message"
+                  required
+                  fullWidth
+                  id="message"
+                  placeholder="Escribir nuevo mensaje..."
+                  autoFocus
+                  value={message}
+                  onChange={handleChange}
+                />
+                <Button
+                  variant="contained"
+                  endIcon={<Icon>send</Icon>}
+                  width="15%"
+                  disabled={!message.length}
+                >
+                  Enviar
+                </Button>
+              </Box>
+            </form>
+          </Box>
+        </>
+      ) : (
+        <PrivateChat onButton={handleClose}/>
+      )}
     </>
-  )
+  )     
 };
 
 export default Chat;

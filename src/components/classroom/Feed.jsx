@@ -1,84 +1,101 @@
-import React, { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
+import { Dialog } from '@mui/material/'
 import Post from './Post'
 import { useSelector, useDispatch } from 'react-redux'
-import { getPosts, /* createPost, updatePost, deletePost, likePost, getPost */ } from '../../actions/post'
+import { getPosts, deletePost } from '../../actions/post'
+import { useParams } from 'react-router-dom'
+import CreatePost from './CreatePost'
+import ConfirmDialog from '../alert/ConfirmDialog'
+import EditPostForm from './EditPostForm'
 
 export default function Feed() {
-  const posts = useSelector((store) => store.postsReducer).posts
-  const dispatch = useDispatch()
-  
-  useEffect(() => {
-   /*  dispatch(createPost({
-      "title": "Prueba Dispatch",
-      "text": "Bienvenidos todos al inicio a clases",
-      "publisher_id": "ab11729b-d0f1-4976-821d-8a30c3c178e7"
-    })) */
-    /* dispatch(updatePost({
-      "title": "Bienvenidos"
-    }, "a446b611-1ef0-4290-86f1-d0054655a31a")) */
-    /* dispatch(deletePost("a446b611-1ef0-4290-86f1-d0054655a31a")) */
-    /* dispatch(likePost("a446b611-1ef0-4290-86f1-d0054655a31a")) */
-    //dispatch(getPost("93a1fcac-7b9e-47d3-86c1-9442ceaee3c0"))
-    dispatch(getPosts())
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const [open, setOpen] = useState(false) //Este es para el Dialog que muestra la imagen de una publicacion
+  const [openConfirm, setOpenConfirm] = useState(false) // Dialong Confirm, aqui muestra para eliminar la publicacion
+  const [openEdit, setOpenEdit] = useState()
+  const [dataPost, setDataPost] = useState({})
+  const [img, setImg] = useState(undefined)
 
-  /* const data = [
-    {
-      id: 1,
-      name: 'Juan',
-      avatar: '',
-      img: photo,
-      title: 'Biología Modulo 1',
-      description: `Hola alumnos!
-      Les dejo el material que vamos a usar todo este módulo`,
-    },
-    {
-      id: 1,
-      name: 'Juan',
-      avatar: '',
-      img: photo,
-      title: 'Biología Modulo 1',
-      description: `Hola alumnos!
-      Les dejo el material que vamos a usar todo este módulo`,
-    },
-    {
-      id: 1,
-      name: 'Juan',
-      avatar: '',
-      img: photo,
-      title: 'Biología Modulo 1',
-      description: `Hola alumnos!
-      Les dejo el material que vamos a usar todo este módulo`,
-    },
-    {
-      id: 1,
-      name: 'Juan',
-      avatar: '',
-      img: photo,
-      title: 'Biología Modulo 1',
-      description: `Hola alumnos!
-      Les dejo el material que vamos a usar todo este módulo`,
-    },
-    {
-      id: 1,
-      name: 'Juan',
-      avatar: '',
-      img: photo,
-      title: 'Biología Modulo 1',
-      description: `Hola alumnos!
-      Les dejo el material que vamos a usar todo este módulo`,
-    },
-  ] */
+  const { posts, loading } = useSelector((store) => store.postsReducer)
+
+  const dispatch = useDispatch()
+  const { claseId, materiaId } = useParams()
+
+  const handleFull = (img) => {
+    setOpen(true)
+    setImg(img)
+  }
+
+  const handleClose = () => setOpen(false)
+
+  const handleOpenConfirm = () => setOpenConfirm(true)
+  const handleCloseConfirm = () => setOpenConfirm(false)
+
+  const handleDelete = (post) => {
+    setDataPost(post)
+    handleOpenConfirm(true)
+  }
+
+  const handleEdit = (post) => {
+    setDataPost(post)
+    setOpenEdit(true)
+  }
+
+  const handleCloseEdit = () => setOpenEdit(false)
+
+  useEffect(() => {
+    dispatch(getPosts(claseId, materiaId))
+  }, [claseId, materiaId, dispatch])
 
   return (
     <Box sx={{ overflow: 'auto' }}>
       <Grid container spacing={2}>
-        {posts && posts.map((e, i) => (
-          <Post key={`p${i}`} avatar={e.publisher.avatar} title={e.title} description={e.text} name={`${e.publisher.firstName} ${e.publisher.lastName}`} img={e.images}/>
-        ))}
+        <CreatePost getPosts={getPosts} loading={loading} />
+        {posts?.length ? (
+          posts.map((e) => (
+            <Post
+              key={e.id}
+              id={e.id}
+              avatar={e.publisher.avatar}
+              title={e.title}
+              description={e.text}
+              name={`${e.publisher.firstName} ${e.publisher.lastName}`}
+              imgs={e.images}
+              docs={e.documents}
+              date={e.createdAt}
+              likes={e.likes}
+              madeLike={e.madeLike}
+              handleFull={handleFull}
+              handleDelete={() => handleDelete(e)}
+              handleEdit={() => handleEdit(e)}
+              publisherId={e.publisher_id}
+            />
+          ))
+        ) : (
+          <Grid item>Sin publicaciones</Grid>
+        )}
+        <Dialog open={open} onClose={handleClose}>
+          <img src={img?.url} alt={img?.name} />
+        </Dialog>
+        {openConfirm && (
+          <ConfirmDialog
+            openConfirm={openConfirm}
+            handleCloseConfirm={handleCloseConfirm}
+            message="¿ Esta seguro de eliminar la publicacion ?"
+            listData={() => getPosts(claseId, materiaId)}
+            fnModifiedStatus={deletePost}
+            dataForm={dataPost}
+            handleClickMessage={() => {}}
+          />
+        )}
+        {openEdit && (
+          <EditPostForm
+            open={openEdit}
+            handleClose={handleCloseEdit}
+            post={dataPost}
+          />
+        )}
       </Grid>
     </Box>
   )

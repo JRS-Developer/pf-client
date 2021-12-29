@@ -1,6 +1,6 @@
 import React, {useEffect/* , useState */} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import ProfileForm from './ProfileForm'
+import RolesForm from './RolesForm'
 import Table from '../Table/Table.jsx'
 
 import {getRoles as listRoles, getDataById, modifiedRole } from "../../actions/role";
@@ -10,9 +10,9 @@ const columns = [
   {field: 'name', headerName: 'Roles', width: 400}
 ]
 
-const form = ProfileForm
+const form = RolesForm
 
-export default function ProfileIndex() {
+export default function RolesIndex() {
   const dispatch = useDispatch();
 
   const getRoles = useSelector(state => state.rolesReducer);

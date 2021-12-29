@@ -126,8 +126,7 @@ export default function Header({
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={() => handleMenuClose('/account')}>Mi Cuenta</MenuItem>
+      <MenuItem onClick={() => handleMenuClose('/account')}>Mi Perfil</MenuItem>
       <MenuItem onClick={() => handleMenuClose('/notasalumnos')}>
         Notas
       </MenuItem>
@@ -168,7 +167,7 @@ export default function Header({
             <MailIcon />
           </Badge>
         </IconButton>
-        <p>Messages</p>
+        <p>Mensajes</p>
       </MenuItem>
       <MenuItem>
         <IconButton
@@ -180,7 +179,7 @@ export default function Header({
             <NotificationsIcon />
           </Badge>
         </IconButton>
-        <p>Notifications</p>
+        <p>Notificaciones</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -192,7 +191,7 @@ export default function Header({
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p>Mi Perfil</p>
       </MenuItem>
     </Menu>
   )

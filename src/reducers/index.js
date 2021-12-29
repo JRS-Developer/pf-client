@@ -17,6 +17,9 @@ import { getClasesReducer } from './clase'
 import { getMateriasReducer } from './materia'
 import { getSchoolReducer } from './school'
 import { getChatReducer} from './chat'
+import { getTeacherReducer } from './teacher'
+
+
 
 export default combineReducers({
   usersReducer: getUsersReducer,
@@ -37,5 +40,6 @@ export default combineReducers({
   clasesReducer: getClasesReducer,
   materiasReducer: getMateriasReducer,
   schoolReducer: getSchoolReducer,
-  chatReducer:getChatReducer
+  chatReducer:getChatReducer,
+  teacherReducer: getTeacherReducer,
 })
