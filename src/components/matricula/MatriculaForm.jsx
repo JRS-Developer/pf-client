@@ -188,11 +188,11 @@ const MatriculaForm =  ({open, handleClose, titleForm, dataForm, handleClickMess
                       onChange={(event, newValue) => {
                         setValueElectivo(newValue);
                         setRowMatricula({
-                          ...rowMatricula, 'ciclo_electivo_id': newValue?.id
+                          ...rowMatricula, 'ciclo_lectivo_id': newValue?.id
                         })
                       }}
                       inputValue={valueElectivo?.label}
-                      id="ciclo_electivo_id"
+                      id="ciclo_lectivo_id"
                       options={listaElectivos}
                       sx={{ width: '100%' }}
                       renderInput={(params) => <TextField {...params} label="Ciclo Electivo" />}
