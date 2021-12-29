@@ -131,7 +131,6 @@ const ClassForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage}
                       multiple
                       value={valueSchool}
                       onChange={(event, newValue) => {
-                        console.log(newValue)
                         let schoolsIds = []
                         newValue.map((opt) => {
                           return schoolsIds.push(opt.id)
@@ -173,7 +172,6 @@ const ClassForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage}
                       defaultValue={defaultMaterias}
                       filterSelectedOptions
                       onChange={(event, newValue)=> {
-                        console.log(newValue);
                         let materiasIds = []
                         newValue.map((opt) => {
                           return materiasIds.push(opt.materia_id)
