@@ -19,7 +19,6 @@ import NotificationsIcon from '@mui/icons-material/Notifications'
 import MoreIcon from '@mui/icons-material/MoreVert'
 import { Close } from '@mui/icons-material'
 import Switch from '@mui/material/Switch'
-import ThemeChanger from './ThemeChanger'
 import { HeaderDiv } from './HeaderStyles'
 import { logout } from '../../actions/auth'
 import { useDispatch } from 'react-redux'
@@ -126,13 +125,7 @@ export default function Header({
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={() => handleMenuClose('/account')}>Mi Perfil</MenuItem>
-      <MenuItem onClick={() => handleMenuClose('/notasalumnos')}>
-        Notas
-      </MenuItem>
-      <MenuItem>
-        <ThemeChanger setTheme={setTheme} />
-      </MenuItem>
+      <MenuItem onClick={() => handleMenuClose('/profile')}>Mi Perfil</MenuItem>
       <MenuItem
         onClick={() => {
           handleMenuClose()

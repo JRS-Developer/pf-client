@@ -17,8 +17,9 @@ import MatriculaIndex from "../matricula/MatriculaIndex";
 import ClassIndex from "../class/ClassIndex"
 import SchoolIndex from "../school/SchoolIndex"
 import MateriaIndex from "../materia/MateriaIndex"
+import Profile from "../Profile/Profile"
 
-const Content = ({ show }) => {
+const Content = ({ show, setTheme }) => {
   return (
     
       <Box sx={{marginLeft: show ? 0 : "200px", p: 2, mt: 6, transition: "all 0.3s" }}>
@@ -29,8 +30,6 @@ const Content = ({ show }) => {
           <Route exact path="/users" component={UserIndex} />
           <Route exact path="/classroom" component={ClassroomIndex} />{/* AULA virtual */}
           <Route exact path="/tareas/:id" component={Homework} />
-          <Route exact path="/notasalumnos" component={NotasAlumnos} />
-          <Route exact path="/account" component={Account} />
           <Route exact path="/students" component={StudentIndex} />{/* ADMINISTRACION */}
           <Route exact path="/ciclo-lectivo" component={CicloElectivoIndex} />{/* ADMINISTRACION */}
           <Route exact path="/matriculas" component={MatriculaIndex} />{/* ADMINISTRACION */}
@@ -38,6 +37,9 @@ const Content = ({ show }) => {
           <Route exact path="/schools" component={SchoolIndex} />
           <Route exact path="/materias" component={MateriaIndex} />{/* AULA virtual */}
           <Route exact path="/materias/details/:claseId/:materiaId" component={ClassRoom} />
+          <Route exact path="/profile">
+            <Profile setTheme={setTheme}/>
+          </Route>
         </Switch>
       </Box>
   )
