@@ -21,7 +21,7 @@ import Profile from "../Profile/Profile"
 import TeacherIndex from "../teacher/TeacherIndex"
 import TablaEntregas from '../classroom/homework/TablaEntregas';
 
-const Content = ({ show, setTheme }) => {
+const Content = ({ show, setTheme, primary, setPrimary, secondary, setSecondary }) => {
 
   return (
     
@@ -44,7 +44,7 @@ const Content = ({ show, setTheme }) => {
           <Route exact path="/materias/details/:claseId/:materiaId" component={ClassRoom} />
           <Route exact path="/entregas/:tareaId" component={TablaEntregas} />
           <Route exact path="/profile">
-            <Profile setTheme={setTheme}/>
+            <Profile setTheme={setTheme} primary={primary} setPrimary={setPrimary} secondary={secondary} setSecondary={setSecondary}/>
           </Route>
         </Switch>
       </Box>
