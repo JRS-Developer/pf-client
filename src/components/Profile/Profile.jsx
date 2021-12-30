@@ -10,7 +10,7 @@ import Account from "../account/Account"
 import NotasAlumno from '../notas/NotasAlumno';
 import ThemeChanger from './ThemeChanger';
 
-export default function Profile({setTheme}){
+export default function Profile({setTheme, primary, setPrimary, secondary, setSecondary}){
   const [value, setValue] = useState('1');
 
   const handleChange = (event, newValue) => {
@@ -30,7 +30,7 @@ export default function Profile({setTheme}){
         <Paper elevation={24}>
           <TabPanel value="1"><Account /></TabPanel>
           <TabPanel value="2"><NotasAlumno /></TabPanel>
-          <TabPanel value="3"><ThemeChanger setTheme={setTheme}/></TabPanel>
+          <TabPanel value="3"><ThemeChanger setTheme={setTheme} primary={primary} setPrimary={setPrimary} secondary={secondary} setSecondary={setSecondary}/></TabPanel>
         </Paper>
       </TabContext>
     </Box>
