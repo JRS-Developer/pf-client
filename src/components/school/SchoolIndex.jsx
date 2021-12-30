@@ -4,7 +4,7 @@ import SchoolForm from "./SchoolForm";
 import Table from "../Table/Table"
 
 //importamos los métodos
-import { getSchools as listSchools, getDataById, modifiedSchool } from "../../actions/school";
+import { getSchools as listSchools, getDataById, modifiedSchool, deleteSchool } from "../../actions/school";
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 350 },
@@ -38,7 +38,7 @@ export default function SchoolIndex() {
         title="SCHOOLS"
         getDataById={getDataById}
         getActions={getStatusReducer}
-        modifiedAction={modifiedSchool}
+        modifiedAction={deleteSchool}
         listData={listSchools}
       /> }
     </>

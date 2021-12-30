@@ -35,6 +35,12 @@ export const getSchoolReducer = (state = initialState, action) => {
         schools: action.payload,
         message: action.payload
       }
+      case actionTypes.DELETE_SCHOOL:
+        return {
+          loadingSchool: false,
+          schools: action.payload,
+          message: action.payload
+        }
     case actionTypes.SCHOOL_FAIL:
       return {
         ...state,
