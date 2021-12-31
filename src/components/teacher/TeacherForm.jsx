@@ -216,11 +216,14 @@ const TeacherForm = ({
       clase_id: clase.id,
     }
 
-    // Obtengo las materias que el profesor es parte
-    dispatch(await getTeacherMaterias(body))
+    const body2 = { ...body }
+
     // Obtengo todas las materias, sin importar si el profesor es parte
     delete body.teacher_id
-    dispatch(await getTeacherMaterias(body, true))
+    dispatch(getTeacherMaterias(body, true))
+
+    // Obtengo las materias que el profesor es parte
+    dispatch(getTeacherMaterias(body2))
   }
 
   const handleSubmit = async (e) => {
@@ -250,20 +253,14 @@ const TeacherForm = ({
   useEffect(() => {
     if (schools?.length) {
       const school = schools[0]
-      const clase = school.classes[0]
 
       setValueSchool(school)
-      setValueClase(clase)
-
       // Guardo el id de la escuela y la clase en el estado de rowTeacher para enviarlo al server
       setRowTeacher((rowTeacher) => ({
         ...rowTeacher,
         school_id: school.id,
         clase_id: school.classes[0].id,
       }))
-
-      // Obtengo la data de las materias
-      // getMateriasData()
     }
   }, [schools])
 
@@ -279,29 +276,21 @@ const TeacherForm = ({
     }
   }, [cicloElectivos])
 
-  const removeRepeated = (a, b) => {
-    return a.filter((item) => !b.some((item2) => item.id === item2.id))
-  }
-
   // Al cambiar las materias que posee el profesor, entonces los muestro en el lado derecho
   useEffect(() => {
     const materias = teacherMaterias.map((t) => t.materia)
     const allMaterias = allTeacherMaterias
-    setRight(materias)
 
     setLeft((left) => {
-      // Elimino las materias repetidas de la izquierda
-      let result = removeRepeated(left, materias)
       // Elimino las materias de la izquierda que ya tengan un profesor asignado
-      result = result.filter((materia) => {
+      let result = left.filter((materia) => {
         const found = allMaterias.find((a) => a.materia_id === materia.id)
-        // Si encuentra una clase igual, compara el teacher_id, si son diferentes, entonces lo elimina, Sino contiene teacher_id, lo deja
-        if (!found?.teacher_id) return true
-
-        return found?.teacher_id !== rowTeacher?.teacher_id ? false : true
+        return !found
       })
       return result
     })
+
+    setRight(materias)
   }, [teacherMaterias, allTeacherMaterias, rowTeacher.teacher_id])
 
   // Cuando se cierra el component, reinicio la lista de teacherMaterias, y asi cuando vaya a editar otro profesor no muestre la lista de materias que tenia el anterior

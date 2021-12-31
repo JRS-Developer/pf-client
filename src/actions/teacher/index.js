@@ -88,8 +88,6 @@ export const modifiedTeacher = (body) => async (dispatch) => {
       type: actionType.GET_TEACHERS_REQUEST,
     })
 
-    console.log(body)
-
     const { data } = await axios.post(
       `${REACT_APP_SERVER}/teacherMaterias/`,
       body
