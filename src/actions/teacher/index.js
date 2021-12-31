@@ -1,28 +1,28 @@
-import * as actionType from './types';
-import axios from "axios";
+import * as actionType from './types'
+import axios from 'axios'
 
-const {REACT_APP_SERVER} = process.env
+const { REACT_APP_SERVER } = process.env
 
 export const getTeachers = (body) => async (dispatch) => {
   try {
     dispatch({
-      type: actionType.GET_TEACHERS_REQUEST
+      type: actionType.GET_TEACHERS_REQUEST,
     })
 
-    const { data } = await axios.post(`${REACT_APP_SERVER}/users/role`, body);
+    const { data } = await axios.post(`${REACT_APP_SERVER}/users/role`, body)
 
     dispatch({
       type: actionType.GET_TEACHERS_SUCCESS,
-      payload: data
+      payload: data,
     })
-  }catch (error) {
+  } catch (error) {
     dispatch({
       type: actionType.GET_TEACHERS_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
-          : error.message
-    });
+          : error.message,
+    })
   }
 }
 
@@ -47,14 +47,54 @@ export const getDataById = (id) => async (dispatch) => {
   }
 }
 
-export const getTeacherMaterias = (body) => async (dispatch) => {
+export const getTeacherMaterias =
+  (body, all = false) =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: actionType.GET_TEACHERS_REQUEST,
+      })
+
+      const { data } = await axios.post(
+        `${REACT_APP_SERVER}/teacherMaterias/materias`,
+        body
+      )
+
+      if (all) {
+        dispatch({
+          type: actionType.GET_ALL_TEACHER_MATERIAS,
+          payload: data,
+        })
+      } else {
+        dispatch({
+          type: actionType.GET_TEACHER_MATERIAS,
+          payload: data,
+        })
+      }
+    } catch (error) {
+      dispatch({
+        type: actionType.GET_TEACHERS_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }
+
+export const modifiedTeacher = (body) => async (dispatch) => {
   try {
     dispatch({
       type: actionType.GET_TEACHERS_REQUEST,
     })
-    const { data } = await axios.post(`${REACT_APP_SERVER}/teacherMaterias/materias`, body)
+
+    const { data } = await axios.post(
+      `${REACT_APP_SERVER}/teacherMaterias/`,
+      body
+    )
+
     dispatch({
-      type: actionType.GET_TEACHER_MATERIAS,
+      type: actionType.EDIT_TEACHER_SUCCESS,
       payload: data,
     })
   } catch (error) {
@@ -68,6 +108,8 @@ export const getTeacherMaterias = (body) => async (dispatch) => {
   }
 }
 
-export const modifiedTeacher = () => async (dispatch) => {}
+export const resetTeacherMaterias = () => ({
+  type: actionType.RESET_TEACHER_MATERIAS,
+})
 
-export const createTeacher = () => async => (dispatch) => {}
+export const createTeacher = () => (async) => (dispatch) => {}
