@@ -70,7 +70,7 @@ export default function ClassroomIndex() {
                 <ButtonLink>
                   <Link
                     class="btnLink"
-                    to={`/materias/details/${datosMatricula.class.school_id}/${datosMatricula.clase_id}/${materia.id}`} cursor="pointer" >
+                    to={`/materias/details/${datosMatricula.class.school_id}/${datosMatricula.clase_id}/${materia.id}`} cursor="pointer">
                     Ir a la materia
                   </Link>
                 </ButtonLink>

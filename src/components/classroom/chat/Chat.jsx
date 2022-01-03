@@ -17,7 +17,7 @@ import Paper from '@mui/material/Paper';
 import PrivateChat from './PrivateChat'
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { useEffect, createContext } from 'react';
+import { useEffect, /*createContext*/ } from 'react';
 import socket from '../../socket';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -151,16 +151,15 @@ const Chat = () => {
     socket.emit('conectado', userInfo);
   }, [userInfo]);
 
-   useEffect(() => {
      socket.on('typing', (data) => {
       setTyping(data);
      });
-   }, [])
-
+   
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setIsPrivate(!isPrivate);
     setAnchorEl(null);
@@ -238,6 +237,7 @@ const Chat = () => {
                 </Menu>
               </Paper>
             </Box>
+
           </Box>
           <Box
             sx={{
