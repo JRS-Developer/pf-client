@@ -459,29 +459,13 @@ const TeacherForm = ({
           </DialogContent>
 
           <DialogActions>
-            {!loading ? (
-              <>
-                <Button type="submit" variant="contained" endIcon={<Save />}>
-                  Save
-                </Button>
-                <Button
-                  variant="outlined"
-                  onClick={handleClose}
-                  startIcon={<Close />}
-                >
-                  Cancel
-                </Button>
-              </>
-            ) : (
-              <LoadingButton
-                loading
-                loadingPosition="start"
-                startIcon={<Save />}
-                variant="outlined"
-              >
-                Save
-              </LoadingButton>
-            )}
+            <Button
+              variant="outlined"
+              onClick={handleClose}
+              startIcon={<Close />}
+            >
+              Cancel
+            </Button>
           </DialogActions>
         </form>
       </Dialog>
