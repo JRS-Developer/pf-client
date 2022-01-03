@@ -1,6 +1,7 @@
 import * as actionTypes from '../../actions/tasks/types';
 let initialState = {
   tasks: [],
+  task: {},
   dataEdit:{},
   message: {}
 }
@@ -40,6 +41,24 @@ export const getTasksReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload
+      }
+    case actionTypes.ALUMNO_GET_TASKS_REQUEST:
+      return {
+        ...state,
+        loading: false,
+        tasks: action.payload,
+      }
+    case actionTypes.ALUMNO_GET_TASK_REQUEST:
+      return {
+        ...state,
+        loading: false,
+        task: action.payload,
+      }
+    case actionTypes.ALUMNO_MARK_DONE:
+      return {
+        ...state,
+        loading: false,
+        message: action.payload
       }
     default:
       return state
