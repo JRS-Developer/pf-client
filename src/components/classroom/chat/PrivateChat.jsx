@@ -20,7 +20,7 @@ import Button from '@mui/material/Button';
 // import SearchIcon from '@mui/icons-material/Search';
 // import MoreIcon from '@mui/icons-material/MoreVert';
 // import Container from "@mui/material/Container"
-import {  useState,  useEffect, useContext } from 'react';
+import {  useState/* ,  useEffect, useContext */ } from 'react';
 // import socket from '../../socket';
 import Chat from './Chat';
 
@@ -124,7 +124,7 @@ const mensajes = [
   },
 ];
 export default function PrivateChat() {
-  const [messages, setMessages] = useState([mensajes])
+  /* const [messages, setMessages] = useState([mensajes]) */
   const [isGeneral, setIsGeneral] = useState(false)
 
 const handleClick = () => {

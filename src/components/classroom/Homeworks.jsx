@@ -7,22 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { alumnoGetTasks } from "../../actions/tasks";
 
-const tareas =[
-  {id: 1, name: "Tarea 1", complete: false},
-  {id: 2, name: "Tarea 2", complete: true},
-  {id: 3, name: "Tarea 3", complete: true},
-  {id: 4, name: "Tarea 4", complete: false},
-  {id: 5, name: "Tarea 5", complete: true},
-  {id: 6, name: "Tarea 6", complete: true},
-  {id: 7, name: "Tarea 7", complete: true},
-  {id: 8, name: "Tarea 8", complete: false},
-  {id: 9, name: "Tarea 9", complete: true},
-  {id: 10, name: "Tarea 10", complete: true},
-  {id: 11, name: "Tarea 11", complete: true},
-  {id: 10, name: "Tarea 10", complete: false},
-  {id: 11, name: "Tarea 11", complete: true},
-]
-
 export default function Homeworks(){
   const dispatch = useDispatch()
   const tasks = useSelector(state=>state.tasksReducer.tasks)
@@ -33,7 +17,7 @@ export default function Homeworks(){
     //datos mockeados para mandar por body asi devuelve la tarea de la clase 4to año materia biología.
     /* let body = {class_id:"57e3dc00-da1f-4522-b71c-3a09af7b670b" , materia_id:"10910772-1b07-4622-833c-633bcaddbe91"} */
     dispatch(alumnoGetTasks({materia_id: materiaId, class_id: claseId, ciclo_lectivo_id: cicloLectivoId, school_id: schoolId}))
-  }, [dispatch])
+  }, [dispatch, materiaId, claseId, cicloLectivoId, schoolId])
 
   return(
     <Box sx={{ overflow: 'auto', height: 'calc(100vh - 180px)' }}>

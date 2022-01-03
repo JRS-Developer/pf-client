@@ -47,6 +47,11 @@ export default function UserForm({
   dataForm,
   handleClickMessage,
 }) {
+  
+  if (dataForm?.role?.id){
+    dataForm = {...dataForm, role: dataForm.role.id}
+  }
+
   const [input, setInput] = useState(dataForm)
   const dispatch = useDispatch()
 
@@ -107,7 +112,7 @@ export default function UserForm({
         open={open}
         onClose={handleClose}
         maxWidth={`md`}
-        fullWidth={`md`}
+        width={`md`}
         scroll="paper"
       >
         <form onSubmit={handleSubmit}>
@@ -243,7 +248,7 @@ export default function UserForm({
                     ))}
                   </TextField>
                 </Grid>
-                <Grid item xs={6}>
+                {/* <Grid item xs={6}>
                   <TextField
                     fullWidth
                     name="avatar"
@@ -256,7 +261,7 @@ export default function UserForm({
                     value={input.avatar}
                     defaultValue={''}
                   />
-                </Grid>
+                </Grid> */}
                 <Grid item xs={6} >
                   <LocalizationProvider dateAdapter={AdapterDateFns} >
                     <DatePicker

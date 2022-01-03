@@ -37,13 +37,13 @@ const SchoolForm = ({
   const { loadingSchool } = getStatusReducer
 
   const getClases = useSelector((state) => state.clasesReducer)
-  const { loadingClases, clases } = getClases
+  const { /* loadingClases, */ clases } = getClases
 
   let defaultClases = []
 
   React.useEffect(() => {
     dispatch(listClases())
-  }, [])
+  }, [dispatch])
 
   const handleChange = (e) => {
     setRowSchool({
@@ -84,7 +84,7 @@ const SchoolForm = ({
         open={open}
         onClose={handleClose}
         maxWidth={`sm`}
-        fullWidth={`sm`}
+        width={`sm`}
         scroll="paper"
       >
         <form onSubmit={handleSubmit}>

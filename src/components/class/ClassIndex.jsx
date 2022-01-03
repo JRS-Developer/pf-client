@@ -39,7 +39,7 @@ export default function ClassIndex() {
 
   useEffect(() => {
     dispatch(listClass())
-  }, [])
+  }, [dispatch])
 
   return (
     <>

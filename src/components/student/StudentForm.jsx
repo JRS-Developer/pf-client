@@ -54,7 +54,7 @@ const StudentForm =  ({open, handleClose, titleForm, dataForm, handleClickMessag
         open={open}
         onClose={handleClose}
         maxWidth={`sm`}
-        fullWidth={`sm`}
+        width={`sm`}
         scroll='paper'
       >
         <form onSubmit={handleSubmit}>

@@ -1,5 +1,4 @@
 import * as actionTypes from '../../actions/matricula/types';
-import {GET_DATOS_MATRICULAS} from "../../actions/matricula/types";
 let initialState = {
   matriculas: [],
   datosMatricula: {},

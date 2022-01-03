@@ -304,7 +304,7 @@ const TeacherForm = ({
         open={open}
         onClose={handleClose}
         maxWidth={`md`}
-        fullWidth={true}
+        width={"md"}
         scroll="paper"
       >
         <form onSubmit={handleSubmit}>
