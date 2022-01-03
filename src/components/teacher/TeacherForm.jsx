@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Button from '@mui/material/Button'
-import LoadingButton from '@mui/lab/LoadingButton'
+/* import LoadingButton from '@mui/lab/LoadingButton' */
 import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -9,7 +9,7 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
-import { Close, Save } from '@mui/icons-material'
+import { Close/* , Save  */} from '@mui/icons-material'
 
 import List from '@mui/material/List'
 import Card from '@mui/material/Card'
@@ -76,8 +76,8 @@ const TeacherForm = ({
   const dispatch = useDispatch()
 
   // useSelector
-  const getTeachers = useSelector((state) => state.teacherReducer)
-  const { loading } = getTeachers
+  /* const getTeachers = useSelector((state) => state.teacherReducer) */
+  /* const { loading } = getTeachers */
 
   const obtenerMateriasTeacher = useSelector((state) => state.teacherReducer)
   const { teacherMaterias, allTeacherMaterias } = obtenerMateriasTeacher
