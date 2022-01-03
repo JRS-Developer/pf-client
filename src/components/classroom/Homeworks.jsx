@@ -2,10 +2,10 @@ import React from "react";
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getTasks } from "../../actions/tasks";
+import { alumnoGetTasks } from "../../actions/tasks";
 
 const tareas =[
   {id: 1, name: "Tarea 1", complete: false},
@@ -26,12 +26,13 @@ const tareas =[
 export default function Homeworks(){
   const dispatch = useDispatch()
   const tasks = useSelector(state=>state.tasksReducer.tasks)
+  const {materiaId, claseId, cicloLectivoId, schoolId} = useParams()
   // console.log(tasks)
   
   useEffect(() => {
     //datos mockeados para mandar por body asi devuelve la tarea de la clase 4to año materia biología.
-    let body = {class_id:"57e3dc00-da1f-4522-b71c-3a09af7b670b" , materia_id:"10910772-1b07-4622-833c-633bcaddbe91"}
-    dispatch(getTasks(body))
+    /* let body = {class_id:"57e3dc00-da1f-4522-b71c-3a09af7b670b" , materia_id:"10910772-1b07-4622-833c-633bcaddbe91"} */
+    dispatch(alumnoGetTasks({materia_id: materiaId, class_id: claseId, ciclo_lectivo_id: cicloLectivoId, school_id: schoolId}))
   }, [dispatch])
 
   return(
@@ -42,7 +43,7 @@ export default function Homeworks(){
             Tareas sin entregar
             <Paper display="flex" sx={{flexDirection: "column"}}>
               {/* {tareas.filter(t => t.complete === false).map((t, i) => {return ( */}
-                {tasks.map((t, i) => {return (
+                {tasks && tasks.filter(t => t.matriculas[0].student_tasks.status === "pending").map((t, i) => {return (
                 <Link to={`/tareas/${t.id}`} key={`tp${i}`}>
                   <Box>{t.title}</Box>
                   <Box>{t.description}</Box>
@@ -53,11 +54,13 @@ export default function Homeworks(){
           <Grid item xs={6} display="flex" align="center" sx={{flexDirection: "column"}}>
             Tareas entregadas
             <Paper display="flex" sx={{flexDirection: "column"}}>
-              {tareas.filter(t => t.complete === true).map((t, i) => {return (
-                  <Link to={`/tareas/${t.id}`} key={`tc${i}`}>
-                    <Box>{t.name}</Box>
-                  </Link>
-                )})}
+              {/* {tareas.filter(t => t.complete === false).map((t, i) => {return ( */}
+                {tasks && tasks.filter(t => t.matriculas[0].student_tasks.status === "submitted").map((t, i) => {return (
+                <Link to={`/tareas/${t.id}`} key={`tp${i}`}>
+                  <Box>{t.title}</Box>
+                  <Box>{t.description}</Box>
+                </Link>
+              )})}
             </Paper>
           </Grid>
         </Grid>
