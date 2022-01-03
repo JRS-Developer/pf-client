@@ -96,3 +96,27 @@ export const modifiedSchool = (body) => async (dispatch) => {
     });
   }
 };
+
+export const deleteSchool = (body) => async (dispatch) => {
+  let id = body.id;
+  try {
+    dispatch({
+      type: actionType.GET_SCHOOLS_REQUEST
+    })
+
+    const { data } = await axios.patch(`${REACT_APP_SERVER}/schools/${id}`,body);
+
+    dispatch({
+      type: actionType.DELETE_SCHOOL,
+      payload: data
+    })
+  }catch (error) {
+    dispatch({
+      type: actionType.SCHOOL_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+    });
+  }
+};

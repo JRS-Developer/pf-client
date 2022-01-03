@@ -1,47 +1,60 @@
-import * as actionTypes from '../../actions/teacher/types';
+import * as actionTypes from '../../actions/teacher/types'
+
 const initialState = {
-  teachers : [],
+  teachers: [],
   dataEdit: {},
-  message : {},
-  teacherMaterias: []
+  message: {},
+  teacherMaterias: [],
+  allTeacherMaterias: [],
 }
 
 export const getTeacherReducer = (state = initialState, action) => {
-  switch (action.type){
+  switch (action.type) {
     case actionTypes.GET_TEACHERS_REQUEST:
       return {
         ...state,
-        loadingTeacher : true
+        loadingTeacher: true,
       }
     case actionTypes.GET_TEACHERS_SUCCESS:
       return {
         ...state,
         loadingTeacher: false,
-        teachers: action.payload
+        teachers: action.payload,
       }
     case actionTypes.GET_TEACHER_SUCCESS:
       return {
         ...state,
         loadingTeacher: false,
-        dataEdit: action.payload
+        dataEdit: action.payload,
       }
     case actionTypes.EDIT_TEACHER_SUCCESS:
       return {
+        ...state,
         loadingTeacher: false,
-        teachers: action.payload,
-        message: action.payload
+        message: action.payload,
       }
     case actionTypes.GET_TEACHER_MATERIAS:
       return {
         ...state,
         loadingTeacher: false,
-        teacherMaterias: action.payload
+        teacherMaterias: action.payload,
+      }
+    case actionTypes.GET_ALL_TEACHER_MATERIAS:
+      return {
+        ...state,
+        loadingTeacher: false,
+        allTeacherMaterias: action.payload,
+      }
+    case actionTypes.RESET_TEACHER_MATERIAS:
+      return {
+        ...state,
+        teacherMaterias: initialState.teacherMaterias,
       }
     case actionTypes.GET_TEACHERS_FAIL:
       return {
         ...state,
         loadingTeacher: false,
-        error: action.payload
+        error: action.payload,
       }
     default:
       return state

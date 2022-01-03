@@ -78,7 +78,7 @@ export default function AccessForm({openAccess, handleCloseAccess, dataForm, lis
   useEffect(() => {
     dispatch(getAccessByUser(dataForm.id))
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch])
+  }, [])
 
   const handleToggle = (padre_id, hijo_id, action_id) => () => {
 
@@ -116,7 +116,7 @@ export default function AccessForm({openAccess, handleCloseAccess, dataForm, lis
         PaperComponent={PaperComponent}
         aria-labelledby="draggable-dialog-title"
         maxWidth={`lg`}
-        fullWidth={`lg`}
+        width={`lg`}
         scroll='paper'
       >
         <form>
@@ -159,7 +159,7 @@ export default function AccessForm({openAccess, handleCloseAccess, dataForm, lis
                         </ListItemIcon>
                         <ListItemText id={`switch-list-label_${dt.id}_${ch.id}`} primary={ch.name} />
                         {ch.actions.map( act => (
-                          <>
+                          <div key={`${dt.id}_${ch.id}_${act.id}_a`}>
                             <Switch key={`${dt.id}_${ch.id}_${act.id}`}
                               edge="end"
                               onChange={handleToggle(dt.id, ch.id, act.id)}
@@ -168,7 +168,7 @@ export default function AccessForm({openAccess, handleCloseAccess, dataForm, lis
                                 'aria-labelledby': `switch-list-label_${dt.id}_${ch.id}_${act.id}`,
                               }}
                             /> { act.name }  &nbsp;&nbsp;
-                          </>
+                          </div>
                         ))}
                       </ListItem>
                     ) )}

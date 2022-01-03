@@ -22,8 +22,13 @@ import Button from '@mui/material/Button';
 // import SearchIcon from '@mui/icons-material/Search';
 // import MoreIcon from '@mui/icons-material/MoreVert';
 // import Container from "@mui/material/Container"
+<<<<<<< HEAD
 import {  useState,  useEffect, /*useContext*/ } from 'react';
 import { useSelector} from 'react-redux';
+=======
+import {  useState/* ,  useEffect, useContext */ } from 'react';
+// import socket from '../../socket';
+>>>>>>> dev
 import Chat from './Chat';
 import socket from '../../socket';
 
@@ -127,6 +132,7 @@ import socket from '../../socket';
 //   },
 // ];
 export default function PrivateChat() {
+<<<<<<< HEAD
   const [messages, setMessages] = useState('');
   const [isGeneral, setIsGeneral] = useState(false);
   const privateChat = useSelector(state => state.privateChat)
@@ -134,6 +140,10 @@ export default function PrivateChat() {
   useEffect(() => {
     socket.emit('conectado');
   }, []);
+=======
+  /* const [messages, setMessages] = useState([mensajes]) */
+  const [isGeneral, setIsGeneral] = useState(false)
+>>>>>>> dev
 
 const handleClick = () => {
   setIsGeneral(!isGeneral);

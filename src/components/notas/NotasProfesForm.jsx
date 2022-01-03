@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState/* , useEffect */ } from 'react'
 import TextField from '@mui/material/TextField'
 // import MenuItem from '@mui/material/MenuItem'
 import Button from '@mui/material/Button'
@@ -13,14 +13,14 @@ import DialogTitle from '@mui/material/DialogTitle'
 // import LocalizationProvider from '@mui/lab/LocalizationProvider'
 // import DatePicker from '@mui/lab/DatePicker'
 import { Close, Save } from '@mui/icons-material'
-import validate from './validate'
+/* import validate from './validate' */
 // import {
 //   getUsers as listUsers,
 //   createUser,
 //   modifiedUser,
 // } from '../../actions/user/'
 // import { getRoles as listRoles } from '../../actions/role'
-import { useSelector, useDispatch } from 'react-redux'
+import { /* useSelector, */ useDispatch } from 'react-redux'
 
 export default function NotasProfesor({
   open,
@@ -55,7 +55,7 @@ console.log(dataForm)
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const check = input
+    /* const check = input */
 
     await dispatch(/* funcion de update */)
     
@@ -85,7 +85,7 @@ console.log(dataForm)
         open={open}
         onClose={handleClose}
         maxWidth={`sm`}
-        fullWidth={`sm`}
+        width={`sm`}
         scroll="paper"
       >
         <form onSubmit={handleSubmit}>

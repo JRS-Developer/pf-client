@@ -27,7 +27,7 @@ export default function ClassroomIndex() {
 
   useEffect(() => {
     dispatch(listDatosMatricula());
-  }, [])
+  }, [dispatch])
 
   return (
     <Container sx={{ py: 4 }} maxWidth="xl">
@@ -69,8 +69,8 @@ export default function ClassroomIndex() {
               <CardActions>
                 <ButtonLink>
                   <Link
-                    class="btnLink"
-                    to={`/materias/details/${datosMatricula.class.school_id}/${datosMatricula.clase_id}/${materia.id}`} cursor="pointer">
+                    className="btnLink"
+                    to={`/materias/details/${datosMatricula.school_id}/${datosMatricula.ciclo_lectivo_id}/${datosMatricula.clase_id}/${materia.id}`} cursor="pointer" >
                     Ir a la materia
                   </Link>
                 </ButtonLink>

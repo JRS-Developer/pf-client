@@ -27,7 +27,7 @@ export default function CicloElectivoIndex() {
   }
 
   useEffect(() => {
-    dispatch(listCicloElectivos())
+    dispatch(listCicloElectivos('false'))
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

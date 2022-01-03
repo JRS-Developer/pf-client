@@ -24,7 +24,7 @@ const MateriaForm =  ({open, handleClose, titleForm, dataForm, handleClickMessag
 
   let defaultValue = [];
 
-  dataForm?.classes?.map(ac => {
+  dataForm?.classes?.forEach(ac => {
     let ob = {};
     ob.name = ac.name;
     ob.clase_id = ac.id;
@@ -38,18 +38,18 @@ const MateriaForm =  ({open, handleClose, titleForm, dataForm, handleClickMessag
   const dispatch = useDispatch();
 
   const getStatusReducer = useSelector(state => state.materiasReducer);
-  const { loadingMaterias, message, error } = getStatusReducer;
+  const { loadingMaterias/* , message, error */ } = getStatusReducer;
 
   const getClases = useSelector(state => state.clasesReducer);
   const { clases } = getClases;
 
   useEffect(() => {
     dispatch(listClases())
-  },[])
+  },[dispatch])
 
   //Listamos las clases
   let arrayClases = [];
-  clases?.map(clase => {
+  clases?.forEach(clase => {
     let obj = {}
     obj.name = clase.name
     obj.clase_id = clase.id
@@ -86,7 +86,7 @@ const MateriaForm =  ({open, handleClose, titleForm, dataForm, handleClickMessag
         open={open}
         onClose={handleClose}
         maxWidth={`md`}
-        fullWidth={`md`}
+        width={`md`}
         scroll='paper'
       >
         <form onSubmit={handleSubmit}>
@@ -138,12 +138,12 @@ const MateriaForm =  ({open, handleClose, titleForm, dataForm, handleClickMessag
                       onChange={(event, newValue)=> {
                         //console.log(newValue);
                         let clasesIds = []
-                        newValue.map((opt) => {
+                        newValue.forEach((opt) => {
                           clasesIds.push(opt.clase_id)
                         })
 
                         setRowMateria({
-                          ...rowMateria, ['clase_ids']: clasesIds
+                          ...rowMateria, clase_ids: clasesIds
                         })
                       }}
                       renderInput={(params) => (

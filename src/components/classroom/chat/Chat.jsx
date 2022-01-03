@@ -17,143 +17,142 @@ import Paper from '@mui/material/Paper';
 import PrivateChat from './PrivateChat'
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { useEffect, /*createContext*/ } from 'react';
-import socket from '../../socket';
+/*import { useEffect, createContext } from 'react'; */
+/* import socket from '../../socket';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMessages, getUser, createMessages } from '../../../actions/chat';
-
-// const mensajes = [
-//   {
-//     id: 1,
-//     name: 'Juan',
-//     message: "Hola como andan?",
-//     avatar: '/static/images/avatar/5.jpg',
-//   },
-//   {
-//     id: 2,
-//     name: 'Lean',
-//     message: `Cansado`,
-//     avatar: '/static/images/avatar/1.jpg',
-//   },
-//   {
-//     id: 1,
-//     name: 'Juan',
-//     message: 'Mal yo tambien',
-//     avatar: '/static/images/avatar/2.jpg',
-//   },
-//   {
-//     id: 2,
-//     name: 'Lean',
-//     message: 'Esta para un sandwich de milanesa',
-//     avatar: '/static/images/avatar/3.jpg',
-//   },
-//   {
-//     id: 1,
-//     name: "Juan",
-//     message: 'Siii con una buena birra',
-//     avatar: '/static/images/avatar/4.jpg',
-//   },
-//   {
-//     id: 2,
-//     name: 'Lean',
-//     message: `Venite`,
-//     avatar: '/static/images/avatar/5.jpg',
-//   },
-//   {
-//     id: 1,
-//     name: 'Juan',
-//     message: `Yendo`,
-//     avatar: '/static/images/avatar/1.jpg',
-//   },
-//   {
-//     id: 7,
-//     name: 'Juan',
-//     message: `Yendo`,
-//     avatar: '/static/images/avatar/1.jpg',
-//   },
-//   {
-//     id: 7,
-//     name: 'Juan',
-//     message: `Yendo`,
-//     avatar: '/static/images/avatar/1.jpg',
-//   },
-//   {
-//     id: 7,
-//     name: 'Juan',
-//     message: `Yendo`,
-//     avatar: '/static/images/avatar/1.jpg',
-//   },
-//   {
-//     id: 7,
-//     name: 'Juan',
-//     message: `Yendo`,
-//     avatar: '/static/images/avatar/1.jpg',
-//   },
-//   {
-//     id: 7,
-//     name: 'Juan',
-//     message: `Yendo`,
-//     avatar: '/static/images/avatar/1.jpg',
-//   },
-//   {
-//     id: 7,
-//     name: 'Juan',
-//     message: `Yendo`,
-//     avatar: '/static/images/avatar/1.jpg',
-//   },
-//   {
-//     id: 7,
-//     name: 'Juan',
-//     message: `Yendo`,
-//     avatar: '/static/images/avatar/1.jpg',
-//   },
-//   {
-//     id: 7,
-//     name: 'Juan',
-//     message: `Yendo`,
-//     avatar: '/static/images/avatar/1.jpg',
-//   },
-//   {
-//     id: 7,
-//     name: 'Juan',
-//     message: `Yendo`,
-//     avatar: '/static/images/avatar/1.jpg',
-//   },
-// ];
+import { getMessages, getUser, createMessages } from '../../../actions/chat'; */
+const mensajes = [
+  {
+    id: 1,
+    name: 'Juan',
+    message: "Hola como andan?",
+    avatar: '/static/images/avatar/5.jpg',
+  },
+  {
+    id: 2,
+    name: 'Lean',
+    message: `Cansado`,
+    avatar: '/static/images/avatar/1.jpg',
+  },
+  {
+    id: 1,
+    name: 'Juan',
+    message: 'Mal yo tambien',
+    avatar: '/static/images/avatar/2.jpg',
+  },
+  {
+    id: 2,
+    name: 'Lean',
+    message: 'Esta para un sandwich de milanesa',
+    avatar: '/static/images/avatar/3.jpg',
+  },
+  {
+    id: 1,
+    name: "Juan",
+    message: 'Siii con una buena birra',
+    avatar: '/static/images/avatar/4.jpg',
+  },
+  {
+    id: 2,
+    name: 'Lean',
+    message: `Venite`,
+    avatar: '/static/images/avatar/5.jpg',
+  },
+  {
+    id: 1,
+    name: 'Juan',
+    message: `Yendo`,
+    avatar: '/static/images/avatar/1.jpg',
+  },
+  {
+    id: 7,
+    name: 'Juan',
+    message: `Yendo`,
+    avatar: '/static/images/avatar/1.jpg',
+  },
+  {
+    id: 7,
+    name: 'Juan',
+    message: `Yendo`,
+    avatar: '/static/images/avatar/1.jpg',
+  },
+  {
+    id: 7,
+    name: 'Juan',
+    message: `Yendo`,
+    avatar: '/static/images/avatar/1.jpg',
+  },
+  {
+    id: 7,
+    name: 'Juan',
+    message: `Yendo`,
+    avatar: '/static/images/avatar/1.jpg',
+  },
+  {
+    id: 7,
+    name: 'Juan',
+    message: `Yendo`,
+    avatar: '/static/images/avatar/1.jpg',
+  },
+  {
+    id: 7,
+    name: 'Juan',
+    message: `Yendo`,
+    avatar: '/static/images/avatar/1.jpg',
+  },
+  {
+    id: 7,
+    name: 'Juan',
+    message: `Yendo`,
+    avatar: '/static/images/avatar/1.jpg',
+  },
+  {
+    id: 7,
+    name: 'Juan',
+    message: `Yendo`,
+    avatar: '/static/images/avatar/1.jpg',
+  },
+  {
+    id: 7,
+    name: 'Juan',
+    message: `Yendo`,
+    avatar: '/static/images/avatar/1.jpg',
+  },
+];
 const Chat = () => {
   
-  // const context = createContext()
+  //const context = createContext();
   const [message, setMessage] = useState('');
   const [typing, setTyping] = useState('');
   const [isPrivate, setIsPrivate] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const chatMessages = useSelector(state => state.chatReducer).messages;
-  const userInfo = useSelector(state => state.chatReducer).user;
-  console.log(chatMessages)
-  console.log(userInfo)
+  // const chatMessages = useSelector(state => state.chatReducer).messages;
+  // const userInfo = useSelector(state => state.chatReducer).user;
+  // console.log(chatMessages)
+  // console.log(userInfo)
 
-  const user = window.localStorage.getItem('user');
+  // const user = window.localStorage.getItem('user');
 
-  const { claseId, materiaId } = useParams();
-  const dispatch = useDispatch();
+  // const { claseId, materiaId } = useParams();
+  // const dispatch = useDispatch();
  
-   useEffect(() => {
-    dispatch(getMessages({claseId, materiaId, user}));
-    dispatch(getUser(user));
-   }, [dispatch, materiaId, claseId, user]);
+  //  useEffect(() => {
+  //   dispatch(getMessages({claseId, materiaId, user}));
+  //   dispatch(getUser(user));
+  //  }, [dispatch, materiaId, claseId, user]);
 
-  useEffect(() => {
-    socket.on('connect', () => {
+  // useEffect(() => {
+  //   socket.on('connect', () => {
 
-    })
-    socket.emit('conectado', userInfo);
-  }, [userInfo]);
+  //   })
+  //   socket.emit('conectado', userInfo);
+  // }, [userInfo]);
 
-     socket.on('typing', (data) => {
-      setTyping(data);
-     });
+  //    socket.on('typing', (data) => {
+  //     setTyping(data);
+  //    });
    
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -168,13 +167,13 @@ const Chat = () => {
   const handleChange = (e) => {
     e.prevent.default();
     setMessage(e.target.value);
-    socket.emit('typing', userInfo);
+    // socket.emit('typing', userInfo);
   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createMessages(message));
-    socket.emit('message', userInfo.fullname, message);
-    setMessage('');
+    // dispatch(createMessages(message));
+    // socket.emit('message', userInfo.fullname, message);
+    // setMessage('');
   };
 
   return (

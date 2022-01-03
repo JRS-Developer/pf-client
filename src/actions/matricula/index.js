@@ -1,6 +1,5 @@
 import * as actionType from './types';
 import axios from "axios";
-import {GET_DATOS_MATRICULAS} from "./types";
 
 const {REACT_APP_SERVER} = process.env
 
