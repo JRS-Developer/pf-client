@@ -20,7 +20,7 @@ export default function MateriaIndex() {
   const dispatch = useDispatch();
 
   const getStatusReducer = useSelector(state => state.materiasReducer);
-  const { materias, loadingMaterias, error } = getStatusReducer;
+  const { materias/* , loadingMaterias, error */ } = getStatusReducer;
 
   const data = {
     columns,
@@ -29,7 +29,7 @@ export default function MateriaIndex() {
 
   useEffect(() => {
     dispatch(listMaterias())
-  }, [])
+  }, [dispatch])
 
   return (
     <>

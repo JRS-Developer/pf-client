@@ -17,11 +17,11 @@ import Paper from '@mui/material/Paper';
 import PrivateChat from './PrivateChat'
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { useEffect, createContext } from 'react';
-import socket from '../../socket';
+/* import { useEffect, createContext } from 'react'; */
+/* import socket from '../../socket';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMessages, getUser, createMessages } from '../../../actions/chat';
+import { getMessages, getUser, createMessages } from '../../../actions/chat'; */
 const mensajes = [
   {
     id: 1,
@@ -122,7 +122,7 @@ const mensajes = [
 ];
 const Chat = () => {
   
-  const context = createContext()
+  //const context = createContext()
   const [message, setMessage] = useState('');
   const [isPrivate, setIsPrivate] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -137,7 +137,7 @@ const Chat = () => {
   
  //const chatMessages = useSelector(state => state.chatReducer.getChatReducer).messages;
   //const userInfo = useSelector(state => state.chatReducer.getChatUserReducer).user;
-  const user = window.localStorage.getItem('user');
+  //const user = window.localStorage.getItem('user');
   //const { class_id, materia_id } = useParams()
   //const dispatch = useDispatch();
  
