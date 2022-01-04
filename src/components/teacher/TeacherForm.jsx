@@ -461,15 +461,13 @@ const TeacherForm = ({
           <DialogActions>
             {!loading ? (
               <>
-                <Button type="submit" variant="contained" endIcon={<Save />}>
-                  Save
-                </Button>
+
                 <Button
                   variant="outlined"
                   onClick={handleClose}
                   startIcon={<Close />}
                 >
-                  Cancel
+                  Aceptar
                 </Button>
               </>
             ) : (
