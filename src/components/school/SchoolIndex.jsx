@@ -4,7 +4,7 @@ import SchoolForm from "./SchoolForm";
 import Table from "../Table/Table"
 
 //importamos los métodos
-import { getSchools as listSchools, getDataById, modifiedSchool, deleteSchool } from "../../actions/school";
+import { getSchools as listSchools, getDataById, /* modifiedSchool, */ deleteSchool } from "../../actions/school";
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 350 },
@@ -19,7 +19,7 @@ export default function SchoolIndex() {
   const dispatch = useDispatch();
 
   const getStatusReducer = useSelector(state => state.schoolReducer);
-  const { schools, loadingSchool, error } = getStatusReducer;
+  const { schools/* , loadingSchool, error  */} = getStatusReducer;
 
   const data = {
     columns,
@@ -28,7 +28,7 @@ export default function SchoolIndex() {
 
   useEffect(() => {
     dispatch(listSchools())
-  }, [])
+  }, [dispatch])
 
   return (
     <>
