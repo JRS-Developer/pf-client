@@ -80,7 +80,7 @@ export default function TeacherIndex() {
   useEffect(() => {
     const role = {role_id: '606c0802-5332-4531-9189-eac84e6fcceb'};
     dispatch(listTeachers(role))
-  }, [])
+  }, [dispatch])
 
   return (
     <Table

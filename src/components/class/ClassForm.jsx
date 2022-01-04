@@ -68,7 +68,7 @@ const ClassForm = ({
     dispatch(listMaterias())
 
     dispatch(listSchools())
-  }, [])
+  }, [dispatch])
 
   //Listamos las materias
   let arrayMaterias = []
@@ -98,7 +98,7 @@ const ClassForm = ({
     }
   })
 
-  const [valueSchool, setValueSchool] = useState(dataForm?.id && initialSchools)
+  const valueSchool = dataForm?.id && initialSchools
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -117,15 +117,13 @@ const ClassForm = ({
     handleClose()
   }
 
-  console.log(valueSchool)
-
   return (
     <div>
       <Dialog
         open={open}
         onClose={handleClose}
         maxWidth={`md`}
-        fullWidth={`md`}
+        width={`md`}
         scroll="paper"
       >
         <form onSubmit={handleSubmit}>

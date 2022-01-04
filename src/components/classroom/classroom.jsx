@@ -1,4 +1,4 @@
-import Messages from "./chat/PrivateChat";
+/* import Messages from "./chat/PrivateChat"; */
 import Chat from "./chat/Chat";
 import Feed from "./Feed";
 import Homeworks from "./Homeworks";
@@ -43,7 +43,7 @@ export default function ClassRoom() {
         </Box>
         <Paper elevation={24}>
           <TabPanel value="1"><Feed /></TabPanel>
-          <TabPanel value="2"><Chat materia={materia}/></TabPanel>
+          <TabPanel value="2"><Chat /></TabPanel>
           <TabPanel value="3"><Homeworks /></TabPanel>
           <TabPanel value="4"><NotasProfesor /></TabPanel>  
           <TabPanel value="5"><Entregas/></TabPanel>

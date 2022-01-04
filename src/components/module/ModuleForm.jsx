@@ -111,7 +111,7 @@ const ModuleForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage
         open={open}
         onClose={handleClose}
         maxWidth={`sm`}
-        fullWidth={`sm`}
+        width={`sm`}
         scroll='paper'
       >
         <form onSubmit={handleSubmit}>

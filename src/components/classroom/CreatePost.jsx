@@ -46,7 +46,7 @@ export default function CreatePost({getPosts, loading}) {
 
   useEffect(() => {
     dispatch(getDataById(localStorage.getItem('user')))
-  }, [])
+  }, [dispatch])
 
   function handleChange(e) {
     setPost({

@@ -42,7 +42,7 @@ const MatriculaForm =  ({open, handleClose, titleForm, dataForm, handleClickMess
   const {cicloElectivos/* , loadingElectivo */ } = getCicloElectivos
 
   const getSchools = useSelector(state => state.schoolReducer);
-  const { loadingSchool, schools } = getSchools;
+  const { /* loadingSchool, */ schools } = getSchools;
 
   useEffect( () => {
     const role = {role_id: '5d3709ba-3a27-48cc-8a75-256338684cee'};
@@ -101,7 +101,7 @@ const MatriculaForm =  ({open, handleClose, titleForm, dataForm, handleClickMess
   let listaSchools = [];
   let initialSchool = '';
 
-  schools?.map(school => {
+  schools?.forEach(school => {
     listaSchools.push({
       id: school.id,
       label: school.name
@@ -145,7 +145,7 @@ const MatriculaForm =  ({open, handleClose, titleForm, dataForm, handleClickMess
         open={open}
         onClose={handleClose}
         maxWidth={`sm`}
-        fullWidth={`sm`}
+        width={`sm`}
         scroll='paper'
       >
         <form onSubmit={handleSubmit}>
