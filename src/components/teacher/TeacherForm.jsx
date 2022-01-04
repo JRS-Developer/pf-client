@@ -459,12 +459,13 @@ const TeacherForm = ({
           </DialogContent>
 
           <DialogActions>
+
             <Button
               variant="outlined"
               onClick={handleClose}
               startIcon={<Close />}
             >
-              Cancel
+              Aceptar
             </Button>
           </DialogActions>
         </form>

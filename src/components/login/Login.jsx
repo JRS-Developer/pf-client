@@ -150,7 +150,7 @@ export default function SignInSide({ location }) {
               m: 5,
             }}
           >
-            <Box sx={{ minWidth: 100 }}>
+            <Box sx={{ minWidth: 100, transition: "transform 100ms ease-in-out", ':hover': { transform: "scale(1.2)" }, cursor: "pointer" }} onClick={() => history.push('/home')}>
               <img src={Logo} style={{ width: '100%' }} alt="Logo Gaia" />
             </Box>
           </Box>

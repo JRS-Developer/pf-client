@@ -17,16 +17,11 @@ export const getMessages = ({ materia_id, class_id }) => async (dispatch) => {
           })
 
         const chat = await axios.get(`${REACT_APP_CHAT}/chat/${materia_id}/${class_id}`);
-        const users = await axios.get(`${REACT_APP_CHAT}/users/?chat_id=${chat.data._id}`);
+      
         const { data } = await axios.get(`${REACT_APP_CHAT}/messages/${chat.data._id}`);
-          //console.log(data);
-        const message = data.map(msg => {
-            const user = users.find(e => e._id === msg.user_id)
-            return {
-                ...msg,
-                fullname: user.fullname
-            };
-        });
+          console.log(data);
+    
+        const message = data.length > 0 ? data : {message: "Este chat esta vacío, sé el primero en comenzar la conversación"}
 
         dispatch({
           type: GET_MESSAGES,
@@ -55,7 +50,7 @@ export const getUser = (id) => async (dispatch) => {
 
 
         const { data } = await axios.get(`${REACT_APP_CHAT}/users/${id}`);
-        //console.log(data);
+        console.log(data);
 
         dispatch({
         type: GET_USER,

@@ -20,6 +20,8 @@ import MateriaIndex from "../materia/MateriaIndex"
 import Profile from "../Profile/Profile"
 import TeacherIndex from "../teacher/TeacherIndex"
 import TablaEntregas from '../classroom/homework/TablaEntregas';
+import TeacherClassroom from '../teacher/TeacherClassroom'
+import ActionsMateria from '../teacher/ActionsMateria'
 
 const Content = ({ show, setTheme, primary, setPrimary, secondary, setSecondary }) => {
 
@@ -46,6 +48,8 @@ const Content = ({ show, setTheme, primary, setPrimary, secondary, setSecondary 
           <Route exact path="/profile">
             <Profile setTheme={setTheme} primary={primary} setPrimary={setPrimary} secondary={secondary} setSecondary={setSecondary}/>
           </Route>
+          <Route exact path="/classroom-teacher" component={TeacherClassroom} />
+          <Route exact path="/materia/:school_id/:clase_id/:ciclo_lectivo_id/:id" component={ActionsMateria} />
         </Switch>
       </Box>
   )
