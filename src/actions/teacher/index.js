@@ -80,7 +80,31 @@ export const getTeacherMaterias =
             : error.message,
       })
     }
+}
+
+export const teacherMaterias = (body) => async (dispatch) => {
+  try {
+    dispatch({
+      type: actionType.GET_TEACHERS_REQUEST,
+    })
+
+    const { data } = await axios.post(`${REACT_APP_SERVER}/teacherMaterias/getMaterias`, body)
+
+    dispatch({
+      type: actionType.GET_TEACHER_MATERIAS,
+      payload: data,
+    })
+
+  } catch (error) {
+    dispatch({
+      type: actionType.GET_TEACHERS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
   }
+}
 
 export const modifiedTeacher = (body) => async (dispatch) => {
   try {
