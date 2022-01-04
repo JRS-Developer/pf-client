@@ -192,7 +192,7 @@ const Chat = () => {
                   Inbox
                 </Typography>
                 <List sx={{ mb: 2 }}>
-                  {chatMessages.map(({ id, name, message, person }, i) => (
+                  {mensajes.map(({ id, name, message, person }, i) => (
                     <ListItem
                       key={`m${i}`}
                       button
