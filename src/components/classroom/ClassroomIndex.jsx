@@ -50,11 +50,11 @@ export default function ClassroomIndex() {
             console.log(clase.teachers_materias)
             const profesor = clase?.teachers_materias?.find(
               (teacher) => teacher.materia_id === materia.id
-            ).user
+            )?.user
             console.log(profesor)
 
             const fullName =
-              profesor.firstName && profesor.lastName
+              profesor?.firstName && profesor?.lastName
                 ? `${profesor.firstName} ${profesor.lastName}`
                 : ''
 
