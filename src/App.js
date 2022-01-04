@@ -19,6 +19,7 @@ import Navbar from './components/navbar/Navbar'
 import Header from './components/header/Header'
 import Login from './components/login/Login'
 import Container from './components/container/Container'
+import LandingPage from './components/LandingPage/LandingPage'
 
 function App() {
   const [sideToggle, setSideToggle] = useState(false)
@@ -99,6 +100,7 @@ function App() {
         <CssBaseline />
         <Switch>
           <Route exact path="/login" component={Login} />
+          <Route exact path="/home" component={LandingPage} />
           <Route path="/">
             {isLogged ? (
               <>
@@ -123,7 +125,7 @@ function App() {
               <Redirect
                 push
                 to={{
-                  pathname: '/login',
+                  pathname: '/home',
                   state: {
                     location: location.pathname,
                   },
