@@ -16,22 +16,24 @@ import { createPost } from '../../actions/post'
 import FileUpload from './FileUpload'
 import CardMedia from '@mui/material/CardMedia'
 import Card from '@mui/material/Card'
-import LinearProgress from '@mui/material/LinearProgress';
+import LinearProgress from '@mui/material/LinearProgress'
 
-export default function CreatePost({getPosts, loading}) {
+export default function CreatePost({ getPosts, loading }) {
   const dispatch = useDispatch()
   const { firstName, lastName, avatar } = useSelector(
     (state) => state.usersReducer.dataEdit
   )
 
-  const { claseId, materiaId } = useParams()
+  const { claseId, materiaId, schoolId, cicloLectivoId } = useParams()
 
   const [post, setPost] = useState({
     title: '',
     text: '',
     publisher_id: localStorage.getItem('user'),
     classId: claseId,
-    materiaId: materiaId,
+    materiaId,
+    schoolId,
+    cicloLectivoId,
   })
 
   const [files, setFiles] = useState([])
@@ -87,14 +89,16 @@ export default function CreatePost({getPosts, loading}) {
       text: '',
       publisher_id: localStorage.getItem('user'),
       classId: claseId,
-      materiaId: materiaId,
+      materiaId,
+      schoolId,
+      cicloLectivoId,
     })
+
     setFiles([])
     setImages([])
 
-    await dispatch(createPost(form))
-    await dispatch(getPosts(claseId, materiaId))
-
+    dispatch(await createPost(form))
+    dispatch(await getPosts(claseId, materiaId, schoolId, cicloLectivoId))
   }
 
   return (
@@ -107,7 +111,7 @@ export default function CreatePost({getPosts, loading}) {
           border: 1,
           borderColor: 'primary.main',
           borderRadius: 1,
-          flexDirection: 'column'
+          flexDirection: 'column',
         }}
       >
         <Box>
@@ -252,11 +256,16 @@ export default function CreatePost({getPosts, loading}) {
               )
             })}
         </Grid>
-        <Button variant="contained" size="small" onClick={handleSubmit} sx={{mb: 1}}>
+        <Button
+          variant="contained"
+          size="small"
+          onClick={handleSubmit}
+          sx={{ mb: 1 }}
+        >
           Publicar
         </Button>
       </Paper>
-      {loading && <LinearProgress sx={{borderRadius: 1}} />}
+      {loading && <LinearProgress sx={{ borderRadius: 1 }} />}
     </Grid>
   )
 }

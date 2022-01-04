@@ -174,7 +174,14 @@ const EditPostForm = ({ open, handleClose, post }) => {
     Object.keys(inputs).forEach((key) => form.append(key, inputs[key]))
 
     dispatch(await updatePost(form, post.id))
-    dispatch(getPosts(post.classId, post.materiaId))
+    dispatch(
+      await getPosts(
+        post.classId,
+        post.materiaId,
+        post.cicloLectivoId,
+        post.schoolId
+      )
+    )
     handleClose()
   }
 

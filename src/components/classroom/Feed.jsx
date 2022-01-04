@@ -20,7 +20,7 @@ export default function Feed() {
   const { posts, loading } = useSelector((store) => store.postsReducer)
 
   const dispatch = useDispatch()
-  const { claseId, materiaId } = useParams()
+  const { claseId, materiaId, cicloLectivoId, schoolId } = useParams()
 
   const handleFull = (img) => {
     setOpen(true)
@@ -45,8 +45,8 @@ export default function Feed() {
   const handleCloseEdit = () => setOpenEdit(false)
 
   useEffect(() => {
-    dispatch(getPosts(claseId, materiaId))
-  }, [claseId, materiaId, dispatch])
+    dispatch(getPosts(claseId, materiaId, cicloLectivoId, schoolId))
+  }, [claseId, materiaId, dispatch, cicloLectivoId, schoolId])
 
   return (
     <Box sx={{ overflow: 'auto' }}>
@@ -83,7 +83,9 @@ export default function Feed() {
             openConfirm={openConfirm}
             handleCloseConfirm={handleCloseConfirm}
             message="¿ Esta seguro de eliminar la publicacion ?"
-            listData={() => getPosts(claseId, materiaId)}
+            listData={() =>
+              getPosts(claseId, materiaId, cicloLectivoId, schoolId)
+            }
             fnModifiedStatus={deletePost}
             dataForm={dataPost}
             handleClickMessage={() => {}}
