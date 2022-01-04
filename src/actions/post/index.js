@@ -3,32 +3,37 @@ import axios from 'axios'
 
 const { REACT_APP_SERVER } = process.env
 
-export const getPosts = (classId, materiaId) => async (dispatch) => {
-  try {
-    dispatch({
-      type: actionType.GET_POSTS_REQUEST,
-    })
+export const getPosts =
+  (classId, materiaId, cicloLectivoId, schoolId) => async (dispatch) => {
+    try {
+      dispatch({
+        type: actionType.GET_POSTS_REQUEST,
+      })
 
-    let query = `${REACT_APP_SERVER}/publications`
-    classId && (query += `?classId=${classId}`)
-    materiaId && (query += `&materiaId=${materiaId}`)
+      let query = `${REACT_APP_SERVER}/publications?`
+      query += new URLSearchParams({
+        classId: classId,
+        cicloLectivoId: cicloLectivoId,
+        materiaId: materiaId,
+        schoolId: schoolId,
+      }).toString()
 
-    const { data } = await axios.get(query)
+      const { data } = await axios.get(query)
 
-    dispatch({
-      type: actionType.GET_POSTS,
-      payload: data,
-    })
-  } catch (error) {
-    dispatch({
-      type: actionType.POST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    })
+      dispatch({
+        type: actionType.GET_POSTS,
+        payload: data,
+      })
+    } catch (error) {
+      dispatch({
+        type: actionType.POST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
   }
-}
 
 export const getPost = (postId) => async (dispatch) => {
   try {
