@@ -260,3 +260,6 @@ export default function CreatePost({getPosts, loading}) {
     </Grid>
   )
 }
+
+
+
