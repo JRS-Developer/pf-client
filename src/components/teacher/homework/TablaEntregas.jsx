@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import { Box, Paper } from '@mui/material'
+import IconButton from '@mui/material/IconButton'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -23,9 +25,15 @@ const rows = [
   { id: 9, lastName: 'Roxie', firstName: 'Harvey', fechaDeEntrega: '28-12-21 17:20' , estado:'pendiente'},
 ]
 
-export default function TablaEntregas() {
+export default function TablaEntregas({tareaId,setTareaId}) {
+
+  const handleClick = () => setTareaId(null)
+
   return (
     <Box>
+      <IconButton aria-label="delete" onClick={handleClick}>
+                <ArrowBackIcon />
+              </IconButton>
       <Box>
         <h3>{`Entregas`}</h3>
       </Box>

@@ -10,7 +10,7 @@ export const getTasks = (params) => async (dispatch) => {
     })
 
     const { data } = await axios.get(
-      `${REACT_APP_SERVER}/tasks/?materia_id=${params.materia_id}&class_id=${params.class_id}`
+      `${REACT_APP_SERVER}/tasks/?school_id=${params.school_id}&clase_id=${params.class_id}&ciclo_lectivo_id=${params.ciclo_lectivo_id}&id=${params.materia_id}`
     )
     // console.log("data",data);
     // console.log("params",params)

@@ -19,7 +19,7 @@ import SchoolIndex from "../school/SchoolIndex"
 import MateriaIndex from "../materia/MateriaIndex"
 import Profile from "../Profile/Profile"
 import TeacherIndex from "../teacher/TeacherIndex"
-import TablaEntregas from '../classroom/homework/TablaEntregas';
+import TablaEntregas from '../teacher/homework/TablaEntregas.jsx'
 import TeacherClassroom from '../teacher/TeacherClassroom'
 import ActionsMateria from '../teacher/ActionsMateria'
 
@@ -44,7 +44,7 @@ const Content = ({ show, setTheme, primary, setPrimary, secondary, setSecondary 
           <Route exact path="/teachers" component={TeacherIndex} />
           <Route exact path="/materias" component={MateriaIndex} />{/* AULA virtual */}
           {/* <Route exact path="/materias/details/:claseId/:materiaId" component={ClassRoom} /> */}
-          <Route exact path="/entregas/:tareaId" component={TablaEntregas} />
+          <Route exact path="/homeworkslist/:tareaId" component={TablaEntregas} />
           <Route exact path="/profile">
             <Profile setTheme={setTheme} primary={primary} setPrimary={setPrimary} secondary={secondary} setSecondary={setSecondary}/>
           </Route>
