@@ -9,6 +9,11 @@ import { useParams } from 'react-router-dom'
 import CreatePost from './CreatePost'
 import ConfirmDialog from '../alert/ConfirmDialog'
 import EditPostForm from './EditPostForm'
+import Paper from '@mui/material/Paper'
+import TextField from '@mui/material/TextField'
+
+import Button from '@mui/material/Button' 
+
 
 export default function Feed() {
   const [open, setOpen] = useState(false) //Este es para el Dialog que muestra la imagen de una publicacion
@@ -16,6 +21,7 @@ export default function Feed() {
   const [openEdit, setOpenEdit] = useState()
   const [dataPost, setDataPost] = useState({})
   const [img, setImg] = useState(undefined)
+  
 
   const { posts, loading } = useSelector((store) => store.postsReducer)
 
@@ -42,6 +48,8 @@ export default function Feed() {
     setOpenEdit(true)
   }
 
+ 
+
   const handleCloseEdit = () => setOpenEdit(false)
 
   useEffect(() => {
@@ -51,6 +59,43 @@ export default function Feed() {
   return (
     <Box sx={{ overflow: 'auto' }}>
       <Grid container spacing={2}>
+      <Paper
+        display="grid"
+        align="center"
+        sx={{
+          p: 1,
+          border: 1,
+          borderColor: 'primary.main',
+          borderRadius: 1,
+          flexDirection: 'column',
+          width: '100%'
+        }}
+      >
+        <Box>
+          
+          <Grid container spacing={2} sx={{ width: '90%', marginTop: '1px' }}>
+            <Grid item xs={10}>
+              <TextField
+                label="Meet"
+                name="meet"
+                variant="outlined"
+                sx={{ mb: 1, mt: 1, width: '95%', height: '40px',}}
+                size="small"
+                //onChange={handleChange}
+                //value={post.title}
+              />
+            </Grid>
+            
+        <Button variant="contained" size="small"  sx={{ marginRight:'5px',mb: 1, mt: 2.5, width: '50px', height: '40px'}}>
+          Publicar
+        </Button>
+        <Button variant="contained" size="small" href='http://meet.google.com/new' target="_blank" rel="noopener" sx={{mb: 1, mt: 2.5, width: '50px', height: '40px'}}>
+         Nuevo Meet
+        </Button>
+        
+        </Grid>
+        </Box>
+      </Paper>
         <CreatePost getPosts={getPosts} loading={loading} />
         {posts?.length ? (
           posts.map((e) => (
