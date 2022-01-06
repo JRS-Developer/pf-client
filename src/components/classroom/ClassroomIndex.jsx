@@ -47,11 +47,9 @@ export default function ClassroomIndex() {
           <h1>{error}</h1>
         ) : (
           datosMatricula?.class?.materias?.map((materia) => {
-            console.log(clase.teachers_materias)
             const profesor = clase?.teachers_materias?.find(
               (teacher) => teacher.materia_id === materia.id
             )?.user
-            console.log(profesor)
 
             const fullName =
               profesor?.firstName && profesor?.lastName
