@@ -10,7 +10,7 @@ export const getTasks = (params) => async (dispatch) => {
     })
 
     const { data } = await axios.get(
-      `${REACT_APP_SERVER}/tasks/?school_id=${params.school_id}&clase_id=${params.class_id}&ciclo_lectivo_id=${params.ciclo_lectivo_id}&id=${params.materia_id}`
+      `${REACT_APP_SERVER}/tasks/?school_id=${params.school_id}&class_id=${params.clase_id}&ciclo_lectivo_id=${params.ciclo_lectivo_id}&materia_id=${params.materia_id}`
     )
     // console.log("data",data);
     // console.log("params",params)
@@ -108,7 +108,7 @@ export const removeTask = (id) => async (dispatch) => {
       type: actionType.GET_TASKS_REQUEST,
     })
 
-    const { data } = await axios.delete(`${REACT_APP_SERVER}/modules/${id}`)
+    const { data } = await axios.delete(`${REACT_APP_SERVER}/tasks/${id}`)
 
     dispatch({
       type: actionType.DELETE_TASK,

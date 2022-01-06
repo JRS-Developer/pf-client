@@ -49,7 +49,7 @@ const Content = ({ show, setTheme, primary, setPrimary, secondary, setSecondary 
             <Profile setTheme={setTheme} primary={primary} setPrimary={setPrimary} secondary={secondary} setSecondary={setSecondary}/>
           </Route>
           <Route exact path="/classroom-teacher" component={TeacherClassroom} />
-          <Route exact path="/materia/:school_id/:clase_id/:ciclo_lectivo_id/:id" component={ActionsMateria} />
+          <Route exact path="/materia/:school_id/:clase_id/:ciclo_lectivo_id/:materia_id" component={ActionsMateria} />
         </Switch>
       </Box>
   )

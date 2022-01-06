@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 //import GoogleFontLoader from 'react-google-font-loader';
-import NoSsr from '@material-ui/core/NoSsr';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import Box from '@material-ui/core/Box';
 import { Link } from 'react-router-dom'
-import Button from '@mui/material/Button';
+
 import Grid from '@material-ui/core/Grid';
 import { Column, Row, Item } from '@mui-treasury/components/flex';
 import { Info, InfoSubtitle, InfoTitle } from '@mui-treasury/components/info';
 import { useApexInfoStyles } from '@mui-treasury/styles/info/apex';
-import { useGraphicBtnStyles } from '@mui-treasury/styles/button/graphic';
+// import { useGraphicBtnStyles } from '@mui-treasury/styles/button/graphic';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
@@ -74,9 +74,9 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const CustomCard = ({thumbnail, title, subtitle, description, id, school_id, clase_id, ciclo_lectivo_id}) => {
+const CustomCard = ({thumbnail, title, subtitle, description, materia_id, school_id, clase_id, ciclo_lectivo_id}) => {
   const styles = useStyles();
-  const btnStyles = useGraphicBtnStyles();
+  // const btnStyles = useGraphicBtnStyles();
   return (
     <div className={styles.root}>
       <Column className={styles.card}>
@@ -114,7 +114,7 @@ const CustomCard = ({thumbnail, title, subtitle, description, id, school_id, cla
               className={styles.join}
               variant={'contained'}
               color={'primary'}
-              to={`materia/${school_id}/${clase_id}/${ciclo_lectivo_id}/${id}`}
+              to={`materia/${school_id}/${clase_id}/${ciclo_lectivo_id}/${materia_id}`}
             >
               Entrar
             </Link>
@@ -154,12 +154,12 @@ export const TeacherClassroom = React.memo(function TeamCard() {
         ciclo_lectivo_id: cicloElectivos[0].id
       }))
     }
-  }, [cicloElectivos])
+  }, [dispatch,cicloElectivos])
 
   useEffect(() => {
     if(teacherMaterias?.length > 0){
       let materias = [];
-      teacherMaterias?.map(sc => {
+      teacherMaterias?.forEach(sc => {
         materias.push({
           id: sc.school.id,
           label: sc.school.name
@@ -246,6 +246,7 @@ export const TeacherClassroom = React.memo(function TeamCard() {
               school_id={mt.school_id}
               clase_id={mt.clase_id}
               ciclo_lectivo_id={mt.ciclo_lectivo_id}
+              materia_id = {mt.materia_id}
             />
           </Grid>
         ))}

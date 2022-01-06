@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { styled } from '@mui/material/styles'
+import { useDispatch, useSelector } from 'react-redux'
 import Box from '@mui/material/Box'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
@@ -13,25 +14,8 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import AssignmentSharpIcon from '@mui/icons-material/AssignmentSharp'
 import ListItemButton from '@mui/material/ListItemButton'
 import TablaEntregas from './TablaEntregas.jsx'
-
-
-const tareas = [
-  {
-    id: '140fd1cd-b99f-4683-8c41-04ed84c62ce5',
-    name: 'Tarea 1',
-    description: 'Descripcion de tarea',
-  },
-  {
-    id: '5485d298-41d2-40d5-8b8b-9aaa18bca450',
-    name: 'Tarea 2',
-    description: 'Descripcion de tarea',
-  },
-  {
-    id: 'fd250d53-f74e-473b-a93a-e8a30212c243',
-    name: 'Tarea 3',
-    description: 'Descripcion de tarea',
-  },
-]
+import { getTasks, removeTask } from '../../../actions/tasks/index.js'
+import { useParams } from 'react-router-dom'
 
 const Demo = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -39,6 +23,20 @@ const Demo = styled('div')(({ theme }) => ({
 
 export default function Entregas() {
   const [tareaId, setTareaId] = React.useState(null)
+  const [deletedTask, setDeletedTask] = React.useState(0)
+  const tasks = useSelector((state) => state.tasksReducer.tasks)
+
+  let params = useParams()
+  const dispatch = useDispatch()
+
+  React.useEffect(() => {
+    dispatch(getTasks(params))
+  }, [dispatch, params, deletedTask])
+
+  const handleDeleteClick = async (arg) => {
+    await dispatch(removeTask(arg))
+    setDeletedTask(deletedTask + 1)
+  }
 
   return (
     <>
@@ -53,17 +51,21 @@ export default function Entregas() {
               </Typography>
               <Demo>
                 <List>
-                  {tareas.map((tarea, i) => {
+                  {tasks.map((tasks, i) => {
                     return (
                       <ListItem
-                        key={`${tarea.id + i}`}
+                        key={`${tasks.id + i}`}
                         secondaryAction={
-                          <IconButton edge="end" aria-label="delete">
+                          <IconButton
+                            edge="end"
+                            aria-label="delete"
+                            onClick={() => handleDeleteClick(tasks.id)}
+                          >
                             <DeleteIcon />
                           </IconButton>
                         }
                       >
-                        <ListItemButton onClick={() => setTareaId(tarea.id)}>
+                        <ListItemButton onClick={() => setTareaId(tasks.id)}>
                           <ListItemAvatar>
                             <Avatar>
                               <AssignmentSharpIcon />
@@ -71,8 +73,8 @@ export default function Entregas() {
                           </ListItemAvatar>
 
                           <ListItemText
-                            primary={tarea.name}
-                            secondary={tarea.description}
+                            primary={tasks.title}
+                            secondary={tasks.description}
                           />
                         </ListItemButton>
                       </ListItem>
