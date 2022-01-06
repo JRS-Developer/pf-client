@@ -63,6 +63,10 @@ const Account = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    // Reinicio los estados de axios
+    setSuccessAxios(false)
+    setErrorAxios(false)
+
     const form = new FormData()
     // Guardo la imagen y la nueva contraseña en un formdata
     if (inputs.password) form.append('password', inputs.password)
