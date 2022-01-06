@@ -1,33 +1,32 @@
-import * as React  from 'react';
+import * as React from 'react'
 // import { styled } from '@mui/material/styles';
 // import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
+import Box from '@mui/material/Box'
 // import CssBaseline from '@mui/material/CssBaseline';
 // import Toolbar from '@mui/material/Toolbar';
-import Icon from '@mui/material/Icon';
-import Typography from '@mui/material/Typography';
+import Icon from '@mui/material/Icon'
+import Typography from '@mui/material/Typography'
 // import IconButton from '@mui/material/IconButton';
-import Paper from '@mui/material/Paper';
+import Paper from '@mui/material/Paper'
 // import Fab from '@mui/material/Fab';
-import TextField from '@mui/material/TextField';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemText from '@mui/material/ListItemText';
+import TextField from '@mui/material/TextField'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemAvatar from '@mui/material/ListItemAvatar'
+import ListItemText from '@mui/material/ListItemText'
 // import ListSubheader from '@mui/material/ListSubheader';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
+import Avatar from '@mui/material/Avatar'
+import Button from '@mui/material/Button'
 // import MenuIcon from '@mui/icons-material/Menu';
 // import AddIcon from '@mui/icons-material/Add';
 // import SearchIcon from '@mui/icons-material/Search';
 // import MoreIcon from '@mui/icons-material/MoreVert';
 // import Container from "@mui/material/Container"
-import {  useState,  useEffect, /*useContext*/ } from 'react';
-import { useSelector} from 'react-redux';
+import { useState, useEffect /*useContext*/ } from 'react'
+import { useSelector } from 'react-redux'
 // import socket from '../../socket';
-import Chat from './Chat';
-import socket from '../../socket';
-
+import Chat from './Chat'
+import socket from '../../socket'
 
 // const mensajes = [
 //   {
@@ -128,53 +127,62 @@ import socket from '../../socket';
 //   },
 // ];
 export default function PrivateChat() {
-  const [messages, setMessages] = useState('');
-  const [isGeneral, setIsGeneral] = useState(false);
-  const privateChat = useSelector(state => state.privateChat)
-  
+  const [messages, setMessages] = useState('')
+  const [isGeneral, setIsGeneral] = useState(false)
+  const privateChat = useSelector((state) => state.privateChat)
+
   useEffect(() => {
-    socket.emit('conectado');
-  }, []);
+    socket.emit('conectado')
+  }, [])
 
-const handleClick = () => {
-  setIsGeneral(!isGeneral);
-};
+  const handleClick = () => {
+    setIsGeneral(!isGeneral)
+  }
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-  
-};
+  const handleSubmit = (e) => {
+    e.preventDefault()
+  }
 
-const handleChange = (e) => {
-  e.preventDefault();
-  setMessages(e.target.value)
-}
-
+  const handleChange = (e) => {
+    e.preventDefault()
+    setMessages(e.target.value)
+  }
 
   return (
     <>
-    { !isGeneral ? (<Box sx={{overflow: 'auto', height: 'calc(100vh - 180px)'}}>
-      <Button
-      onClick={handleClick}
-      >Chat General</ Button>
-      <Box sx={{overflow: 'auto', height: 'calc(100vh - 252px)'}}>
-        <Paper sx={{ pb: '50px' }}>
-          <Typography variant="h5" gutterBottom component="div" sx={{ p: 2, pb: 0 }}>
-            Inbox
-          </Typography>
-          <List sx={{ mb: 2 }}>
-            {privateChat.map(({ id, name, message, person }, i) => (
-                <ListItem key={`m${i}`}button sx={{color: name === 'Juan' ? 'primary.main' : 'secondary.main'}}>
-                  <ListItemAvatar>
-                    <Avatar alt="Profile Picture" />
-                  </ListItemAvatar>
-                  <ListItemText primary={name} secondary={message} />
-                </ListItem>
-            ))}
-          </List>
-        </Paper>
-      </Box>
-      <Box
+      {!isGeneral ? (
+        <Box sx={{ overflow: 'auto', height: 'calc(100vh - 180px)' }}>
+          <Button onClick={handleClick}>Chat General</Button>
+          <Box sx={{ overflow: 'auto', height: 'calc(100vh - 252px)' }}>
+            <Paper sx={{ pb: '50px' }}>
+              <Typography
+                variant="h5"
+                gutterBottom
+                component="div"
+                sx={{ p: 2, pb: 0 }}
+              >
+                Inbox
+              </Typography>
+              <List sx={{ mb: 2 }}>
+                {privateChat.map(({ id, name, message, person }, i) => (
+                  <ListItem
+                    key={`m${i}`}
+                    button
+                    sx={{
+                      color:
+                        name === 'Juan' ? 'primary.main' : 'secondary.main',
+                    }}
+                  >
+                    <ListItemAvatar>
+                      <Avatar alt="Profile Picture" />
+                    </ListItemAvatar>
+                    <ListItemText primary={name} secondary={message} />
+                  </ListItem>
+                ))}
+              </List>
+            </Paper>
+          </Box>
+          <Box
             sx={{
               top: 'auto',
               bottom: 0,
@@ -205,7 +213,10 @@ const handleChange = (e) => {
               </Box>
             </form>
           </Box>
-    </Box>) : (<Chat />)}
+        </Box>
+      ) : (
+        <Chat />
+      )}
     </>
-  );
+  )
 }
