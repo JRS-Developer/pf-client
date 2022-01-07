@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState } from 'react'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
@@ -23,22 +23,28 @@ export default function CreateTaskForm({
   titleForm,
   handleClickMessage,
 }) {
+  const params = useParams()
+  const dataparams = {
+    ...params,
+    class_id: params.clase_id,
+  }
 
-    const params = useParams()
-    const dataparams = {
-        ...params,
-        class_id: params.clase_id,
-    }
-    
   const [input, setInput] = useState(dataparams)
   const dispatch = useDispatch()
-  
 
   const [errorTitle, setErrorTitle] = useState(null)
 
   const handleChange = (event) => {
     setInput((input) => ({ ...input, [event.target.name]: event.target.value }))
-    setErrorTitle(event.target.name === "title" && event.target.value ? null : "Campo necesario")
+    setErrorTitle(
+      event.target.name === 'title' && event.target.value
+        ? null
+        : 'Campo necesario'
+    )
+  }
+
+  const handleDescriptionChange = (event) => {
+    setInput((input) => ({ ...input, [event.target.name]: event.target.value }))
   }
 
   /* const handleDateChange = (value) => {
@@ -96,6 +102,8 @@ export default function CreateTaskForm({
                     id="description"
                     label="Descripción"
                     placeholder="Descripción"
+                    onChange={handleDescriptionChange}
+                    onFocus={handleDescriptionChange}
                     value={input.description}
                   />
                 </Grid>
@@ -122,33 +130,28 @@ export default function CreateTaskForm({
                     />
                   </LocalizationProvider>
                 </Grid>
-                </Grid>       
+              </Grid>
             </Box>
           </DialogContent>
           <DialogActions>
-           
-              <>
-                <Button
-                  type="submit"
-                  disabled={
-                    input.title === undefined
-                      ? true
-                      : false
-                  }
-                  variant="contained"
-                  endIcon={<Save />}
-                >
-                  Guardar
-                </Button>
-                <Button
-                  type="button"
-                  variant="outlined"
-                  onClick={handleClose}
-                  startIcon={<Close />}
-                >
-                  Cancelar
-                </Button>
-              </>
+            <>
+              <Button
+                type="submit"
+                disabled={input.title === undefined ? true : false}
+                variant="contained"
+                endIcon={<Save />}
+              >
+                Guardar
+              </Button>
+              <Button
+                type="button"
+                variant="outlined"
+                onClick={handleClose}
+                startIcon={<Close />}
+              >
+                Cancelar
+              </Button>
+            </>
           </DialogActions>
         </form>
       </Dialog>
