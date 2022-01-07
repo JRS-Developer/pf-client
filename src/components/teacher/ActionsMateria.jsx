@@ -9,6 +9,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import CommentIcon from '@mui/icons-material/Comment';
 import Homeworks from './homework/Homeworks.jsx'
+import ExamenNotasIndex from "../examenNotas/ExamenNotasIndex";
 
 export default function ActionsMateria() {
   const [value, setValue] = useState('1');
@@ -31,7 +32,7 @@ export default function ActionsMateria() {
           <Homeworks/>
         </TabPanel>
         <TabPanel value="2">
-          Notas de Examen
+          <ExamenNotasIndex/>
         </TabPanel>
         <TabPanel value="3">
           Chat
