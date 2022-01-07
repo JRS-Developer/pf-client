@@ -1,19 +1,6 @@
 import { useState, useRef } from 'react'
-// import Paper from '@mui/material/Paper';
-// import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box'
-// import AppBar from '@mui/material/AppBar';
-// import Container from '@mui/material/Container';
-// import Dialog from '@mui/material/Dialog'
-// import Divider from '@mui/material/Divider'
-// import AppBar from '@mui/material/AppBar'
-// import Toolbar from '@mui/material/Toolbar'
-// import IconButton from '@mui/material/IconButton'
-// import CloseIcon from '@mui/icons-material/Close'
-// import Slide from '@mui/material/Slide'
 import List from '@mui/material/List'
-import ListSubheader from '@mui/material/ListSubheader'
-import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import PrivateChat from './PrivateChat'
 import Menu from '@mui/material/Menu'
@@ -32,14 +19,49 @@ import {
 import { getDataById as getUser } from '../../../actions/user'
 import UserMessage from './UserMessage'
 import ChatInput from './ChatInput'
+import Subheader from './ChatSubheader'
+import ListUser from './ListUser'
+import { makeStyles } from '@material-ui/core/styles'
+
+// Imports
 
 const user = window.localStorage.getItem('user')
+const drawerWidth = 240
+
+const useStyles = makeStyles((theme) => ({
+  box: {
+    scrollbarColor: '#6b6b6b #2b2b2b',
+    '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
+      backgroundColor: 'none',
+      width: 5,
+    },
+    '&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb': {
+      borderRadius: 8,
+      backgroundColor: '#6b6b6b',
+      minHeight: 24,
+    },
+    '&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus': {
+      backgroundColor: '#959595',
+    },
+    '&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active': {
+      backgroundColor: '#959595',
+    },
+    '&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover': {
+      backgroundColor: '#959595',
+    },
+    '&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner': {
+      backgroundColor: '#2b2b2b',
+    },
+  },
+}))
 
 const Chat = () => {
   const [typing, setTyping] = useState('')
-
+  const [openUsers, setOpenUsers] = useState(false)
   const [isPrivate, setIsPrivate] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null)
+
+  const classes = useStyles()
 
   const chatRef = useRef(null)
 
@@ -55,7 +77,7 @@ const Chat = () => {
 
   const fullName = `${userInfo.firstName} ${userInfo.lastName}`
 
-  const { claseId, materiaId, cicloLectivoId, schoolId } = useParams()
+  const params = useParams()
   const dispatch = useDispatch()
 
   const open = Boolean(anchorEl)
@@ -71,6 +93,10 @@ const Chat = () => {
   const handleClose = () => {
     setIsPrivate(!isPrivate)
     setAnchorEl(null)
+  }
+
+  const handleClickUsers = () => {
+    setOpenUsers((open) => !open)
   }
 
   const handleSubmit = (message) => {
@@ -118,10 +144,10 @@ const Chat = () => {
 
   useEffect(() => {
     const chat = {
-      materia_id: materiaId,
-      clase_id: claseId,
-      ciclo_lectivo_id: cicloLectivoId,
-      school_id: schoolId,
+      materia_id: params?.materiaId || params?.materia_id,
+      clase_id: params?.claseId || params?.clase_id,
+      ciclo_lectivo_id: params?.cicloLectivoId || params?.ciclo_lectivo_id,
+      school_id: params?.schoolId || params?.school_id,
     }
 
     dispatch(getMessages(chat))
@@ -132,7 +158,7 @@ const Chat = () => {
       dispatch(resetMessages())
       dispatch(resetChat())
     }
-  }, [dispatch, materiaId, claseId, cicloLectivoId, schoolId])
+  }, [dispatch, params])
 
   // Mostrar typing cuando otro usuario esta escribiendo
   useEffect(() => {
@@ -159,10 +185,23 @@ const Chat = () => {
   return (
     <>
       {!isPrivate ? (
-        <>
-          <Box sx={{ overflow: 'hidden', borderRadius: 3 }}>
+        <Box>
+          <Box
+            className={classes.box}
+            sx={{
+              overflow: 'hidden',
+              borderRadius: 3,
+              display: 'flex',
+            }}
+          >
             <Box
-              sx={{ overflow: 'auto', height: 'calc(100vh - 252px)' }}
+              sx={{
+                overflow: 'auto',
+                height: 'calc(100vh - 252px)',
+                position: 'relative',
+                transition: '.3s all',
+                width: openUsers ? '75%' : '100%',
+              }}
               ref={chatRef}
             >
               <Paper
@@ -173,63 +212,54 @@ const Chat = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  width: openUsers ? `calc(100% - ${drawerWidth}px` : '100%',
                 }}
               >
-                {(loadingChat || loadingUser) && user ? (
+                {loadingChat || loadingUser ? (
                   <CircularProgress />
                 ) : chatMessages.length ? (
-                  <List
-                    subheader={
-                      <ListSubheader>
-                        <Typography
-                          variant="h6"
-                          component="div"
-                          sx={{ p: 2, pl: 0 }}
-                        >
-                          Inbox
-                        </Typography>
-                        {typing && (
-                          <Typography
-                            variant="body2"
-                            sx={{ p: 1, pl: 0, pr: 2 }}
-                          >
-                            {typing}
-                          </Typography>
-                        )}
-                      </ListSubheader>
-                    }
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: 1,
-                      width: '100%',
-                    }}
-                  >
-                    {chatMessages.map(({ _id, message, user: userId }) => {
-                      const { users } = chat
-                      const { teachers, students } = users
+                  <>
+                    <List
+                      subheader={
+                        <Subheader
+                          typing={typing}
+                          handleClick={handleClickUsers}
+                          open={openUsers}
+                        />
+                      }
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 1,
+                        width: '100%',
+                      }}
+                    >
+                      {chatMessages.map(({ _id, message, user: userId }) => {
+                        const { users } = chat
+                        const { teachers, students } = users
 
-                      // Encuentro al usuario que coincide con el id del usuario que esta en el mensaje
-                      const { user: foundUser } = findUserData(
-                        [...teachers, ...students],
-                        userId
-                      )
-
-                      // Si lo encuentra significa que el suuario existe y es un usuario valido
-                      if (foundUser)
-                        return (
-                          <UserMessage
-                            key={_id}
-                            message={message}
-                            user={foundUser}
-                            isSender={foundUser.id === user}
-                            handleClick={handleClick}
-                            open={open}
-                          />
+                        // Encuentro al usuario que coincide con el id del usuario que esta en el mensaje
+                        const { user: foundUser } = findUserData(
+                          [...teachers, ...students],
+                          userId
                         )
-                      return null
-                    })}
-                  </List>
+
+                        // Si lo encuentra significa que el suuario existe y es un usuario valido
+                        if (foundUser)
+                          return (
+                            <UserMessage
+                              key={_id}
+                              message={message}
+                              user={foundUser}
+                              isSender={foundUser.id === user}
+                              handleClick={handleClick}
+                              open={open}
+                            />
+                          )
+                        return null
+                      })}
+                    </List>
+                  </>
                 ) : (
                   <>Este es el inicio del chat, envia el primer mensaje</>
                 )}
@@ -248,9 +278,18 @@ const Chat = () => {
                 </Menu>
               </Paper>
             </Box>
+            {loadingUser || loadingChat ? null : (
+              <ListUser open={openUsers} users={chat?.users} />
+            )}
           </Box>
-          <ChatInput handleSubmit={handleSubmit} />
-        </>
+          {loadingUser || loadingChat ? null : (
+            <ChatInput
+              handleSubmit={handleSubmit}
+              fullName={fullName}
+              chatId={chat?._id}
+            />
+          )}
+        </Box>
       ) : (
         <PrivateChat onButton={handleClose} />
       )}

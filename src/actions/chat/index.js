@@ -14,6 +14,10 @@ export const RESET_MESSAGES = 'RESET_MESSAGES'
 export const GET_CHAT = 'GET_CHAT'
 export const RESET_CHAT = 'RESET_CHAT'
 
+// Users
+export const ADD_ONLINE_USER = 'ADD_ONLINE_USER'
+export const REMOVE_ONLINE_USER = 'REMOVE_ONLINE_USER'
+
 export const getMessages =
   ({ materia_id, clase_id, school_id, ciclo_lectivo_id }) =>
   async (dispatch) => {
@@ -52,8 +56,19 @@ export const getMessages =
         usersRequest,
       ])
 
-      // Coloco los usuarios en el chat
-      chatData.users = users.data
+
+      // onlineUsers es un array de usuarios online
+      const onlineUsers = chatData.onlineUsers
+
+      // Coloco los usuarios en el chat y coloco si esta online o no
+      chatData.users = {}
+
+      Object.keys(users.data).forEach((key) => {
+        chatData.users[key] = users.data[key].map((user) => ({
+          ...user,
+          online: onlineUsers.includes(user.user.id),
+        }))
+      })
 
       dispatch({
         type: GET_CHAT,
@@ -88,6 +103,16 @@ export const resetMessages = () => ({
 
 export const resetChat = () => ({
   type: RESET_CHAT,
+})
+
+export const addOnlineUser = (userId) => ({
+  type: ADD_ONLINE_USER,
+  payload: userId,
+})
+
+export const removeOnlineUser = (userId) => ({
+  type: REMOVE_ONLINE_USER,
+  payload: userId,
 })
 
 export const getUser = (id) => async (dispatch) => {
