@@ -15,6 +15,8 @@ import AssignmentSharpIcon from '@mui/icons-material/AssignmentSharp'
 import ListItemButton from '@mui/material/ListItemButton'
 import TablaEntregas from './TablaEntregas.jsx'
 import { getTasks } from '../../../actions/tasks/index.js'
+import { getDataById } from '../../../actions/materia/index.js'
+import { getDataById as getDataByIdClase } from '../../../actions/clase/index.js'
 import { useParams } from 'react-router-dom'
 import CreateTaskForm from './forms/CreateTaskForm.jsx'
 import Stack from '@mui/material/Stack'
@@ -36,9 +38,20 @@ export default function Entregas() {
   const [tareaAborrar, setTareaAborrar] = React.useState()
   const tasks = useSelector((state) => state.tasksReducer.tasks)
   const message = useSelector((state) => state.tasksReducer.message)
+  const materia = useSelector((state) => state.materiasReducer.dataEdit)
+  const clase = useSelector((state) => state.clasesReducer.dataEdit)
 
   let params = useParams()
   const dispatch = useDispatch()
+  //console.log(params)
+
+  React.useEffect(() => {
+    dispatch(getDataById(params.materia_id))
+  }, [dispatch, params.materia_id])
+
+  React.useEffect(() => {
+    dispatch(getDataByIdClase(params.clase_id))
+  }, [dispatch, params.clase_id])
 
   React.useEffect(() => {
     dispatch(getTasks(params))
@@ -126,16 +139,20 @@ export default function Entregas() {
               Crear Tarea
             </Button>
           </div>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
-              <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
-                Tareas de (Nico va a hacer que esto quede lindo)
-              </Typography>
-              <Demo>
-                <List>
-                  {tasks?.map((tasks, i) => {
-                    return (
+
+          <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+            Tareas de {`${materia?.name ? materia.name : '-'}`} de la clase{' '}
+            {`${clase?.name ? clase.name : '-'}`}
+          </Typography>
+
+          <Demo>
+            <List>
+              <Grid container columns={2} spacing={2}>
+                {tasks?.map((tasks, i) => {
+                  return (
+                    <Grid item md={6}>
                       <ListItem
+                        sx={{ border: 1, borderColor: 'primary.main' }}
                         key={`${tasks.id + i}`}
                         secondaryAction={
                           <IconButton
@@ -160,12 +177,12 @@ export default function Entregas() {
                           />
                         </ListItemButton>
                       </ListItem>
-                    )
-                  })}
-                </List>
-              </Demo>
-            </Grid>
-          </Grid>
+                    </Grid>
+                  )
+                })}
+              </Grid>
+            </List>
+          </Demo>
         </Box>
       )}
     </>
