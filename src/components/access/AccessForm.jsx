@@ -180,7 +180,7 @@ export default function AccessForm({openAccess, handleCloseAccess, dataForm, lis
           </DialogContent>
           <DialogActions>
             <Button autoFocus onClick={handleCloseAccess}>
-              Cancelar
+              Aceptar
             </Button>
             {/*<Button type="submit">Save</Button>*/}
           </DialogActions>

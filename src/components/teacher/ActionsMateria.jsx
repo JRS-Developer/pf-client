@@ -8,7 +8,8 @@ import TabPanel from '@mui/lab/TabPanel'
 import AssignmentIcon from '@mui/icons-material/Assignment'
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
 import CommentIcon from '@mui/icons-material/Comment'
-import Homeworks from './homework/Homeworks'
+import Homeworks from './homework/Homeworks.jsx'
+import ExamenNotasIndex from '../examenNotas/ExamenNotasIndex'
 import Chat from '../classroom/chat/Chat'
 
 export default function ActionsMateria() {
@@ -39,7 +40,9 @@ export default function ActionsMateria() {
         <TabPanel value="1">
           <Homeworks />
         </TabPanel>
-        <TabPanel value="2">Notas de Examen</TabPanel>
+        <TabPanel value="2">
+          <ExamenNotasIndex />
+        </TabPanel>
         <TabPanel value="3">
           <Chat />
         </TabPanel>

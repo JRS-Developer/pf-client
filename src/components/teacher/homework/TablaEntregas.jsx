@@ -3,37 +3,55 @@ import { DataGrid } from '@mui/x-data-grid'
 import { Box, Paper } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { getTaskById } from '../../../actions/tasks'
+import { useDispatch, useSelector } from 'react-redux'
+import {format} from 'date-fns'
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
   { field: 'firstName', headerName: 'Nombre', width: 130 },
   { field: 'lastName', headerName: 'Apellido', width: 130 },
-  { field: 'fechaDeEntrega', headerName: 'fecha de entrega', width:130},
-  { field: 'estado', headerName:'estado', width:130}
-
+  { field: 'end_date', headerName: 'Plazo de entrega', width: 130, valueFormatter: (params) => {
+    return params.value ? format(new Date(params.value), 'dd/MM/yyyy'):"-"
+  } },
+  { field: 'fecha_entregada', headerName: 'Fecha de entrega', width: 130, valueFormatter: (params) => {
+    return params.value ? format(new Date(params.value), 'dd/MM/yyyy'): "-"
+  } },
+  { field: 'status', headerName: 'Estado', width: 130 },
+  { field: 'devolucion', headerName: 'Devolución', width: 130 },
+  { field: 'grade', headerName: 'Nota', width: 130 },
+  { field: 'observation', headerName: 'Observación', width: 130 },
 ]
 
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', fechaDeEntrega: '28-12-21 17:20', estado:'pendiente'},
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', fechaDeEntrega: '28-12-21 17:20' , estado:'aprobado'},
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', fechaDeEntrega: '28-12-21 17:20', estado:'rechazado' },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', fechaDeEntrega: '28-12-21 17:20', estado:'aprobado' },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', fechaDeEntrega: null , estado:'pendiente'},
-  { id: 6, lastName: 'Melisandre', firstName: null, fechaDeEntrega: null, estado:'pendiente' },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', fechaDeEntrega: '28-12-21 17:20', estado:'pendiente' },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', fechaDeEntrega: '28-12-21 17:20', estado:'pendiente' },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', fechaDeEntrega: '28-12-21 17:20' , estado:'pendiente'},
-]
+export default function TablaEntregas({ tareaId, setTareaId }) {
+  const handleClickGoBack = () => setTareaId(null)
 
-export default function TablaEntregas({tareaId,setTareaId}) {
+  const dispatch = useDispatch()
 
-  const handleClick = () => setTareaId(null)
+  React.useEffect(() => {
+    dispatch(getTaskById(tareaId))
+  }, [dispatch, tareaId])
+
+  const studentTasks =  useSelector((state) => state.tasksReducer.dataEdit)
+
+  const rows = studentTasks?.matriculas?.map((matricula) => {
+    return {
+      end_date: studentTasks.end_date,
+      id: matricula.id,
+      firstName: matricula.user.firstName,
+      lastName: matricula.user.lastName,
+      status: matricula.student_tasks.status,
+      devolucion: matricula.student_tasks.devolucion? matricula.student_tasks.devolucion:"-",
+      grade: matricula.student_tasks.grade? matricula.student_tasks.grade : "-",
+      observation: matricula.student_tasks.observation? matricula.student_tasks.observation:"-",
+      fecha_entregada: matricula.student_tasks.fecha_entregada
+    }
+  })
 
   return (
     <Box>
-      <IconButton aria-label="delete" onClick={handleClick}>
-                <ArrowBackIcon />
-              </IconButton>
+      <IconButton aria-label="delete" onClick={handleClickGoBack}>
+        <ArrowBackIcon />
+      </IconButton>
       <Box>
         <h3>{`Entregas`}</h3>
       </Box>
