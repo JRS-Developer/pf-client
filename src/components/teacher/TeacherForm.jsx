@@ -463,7 +463,6 @@ const TeacherForm = ({
             <Button
               variant="outlined"
               onClick={handleClose}
-              startIcon={<Close />}
             >
               Aceptar
             </Button>
