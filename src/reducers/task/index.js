@@ -1,46 +1,45 @@
-import * as actionTypes from '../../actions/tasks/types';
+import * as actionTypes from '../../actions/tasks/types'
 let initialState = {
   tasks: [],
   task: {},
-  dataEdit:{},
-  message: {}
+  dataEdit: {},
+  message: {},
 }
 export const getTasksReducer = (state = initialState, action) => {
-  switch (action.type){
+  switch (action.type) {
     case actionTypes.GET_TASKS_REQUEST:
       return {
         ...state,
-        loading : true
+        loading: true,
       }
     case actionTypes.GET_TASKS:
       return {
         ...state,
         loading: false,
-        tasks: action.payload
+        tasks: action.payload,
       }
     case actionTypes.GET_TASK:
       return {
         ...state,
         loading: false,
-        dataEdit: action.payload
+        dataEdit: action.payload,
       }
     case actionTypes.ADD_TASK:
       return {
         loading: false,
-        tasks: action.payload,
-        message: action.payload
+        message: action.payload,
       }
     case actionTypes.EDIT_TASK:
       return {
         loading: false,
         tasks: action.payload,
-        message: action.payload
+        message: action.payload,
       }
     case actionTypes.TASK_FAIL:
       return {
         ...state,
         loading: false,
-        error: action.payload
+        error: action.payload,
       }
     case actionTypes.ALUMNO_GET_TASKS_REQUEST:
       return {
@@ -58,7 +57,7 @@ export const getTasksReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        message: action.payload
+        message: action.payload,
       }
     default:
       return state
