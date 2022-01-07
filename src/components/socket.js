@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
 import store from '../store/'
-import { setNewMessage } from '../actions/chat'
+import { setNewMessage, addOnlineUser, removeOnlineUser } from '../actions/chat'
 const { REACT_APP_SOCKET } = process.env
 
 if (!REACT_APP_SOCKET)
@@ -10,6 +10,14 @@ const socket = io(REACT_APP_SOCKET)
 
 socket.on('new-message', (data) => {
   store.dispatch(setNewMessage(data))
+})
+
+socket.on('online', (userId) => {
+  store.dispatch(addOnlineUser(userId))
+})
+
+socket.on('offline', (userId) => {
+  store.dispatch(removeOnlineUser(userId))
 })
 
 export default socket

@@ -1,70 +1,104 @@
-import * as React from 'react'
-import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
-import ListItemText from '@mui/material/ListItemText'
-import ListItem from '@mui/material/ListItem'
 import List from '@mui/material/List'
-import Divider from '@mui/material/Divider'
-import AppBar from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
-import IconButton from '@mui/material/IconButton'
+import ListItem from '@mui/material/ListItem'
+import Paper from '@mui/material/Paper'
+import ListSubheader from '@mui/material/ListSubheader'
 import Typography from '@mui/material/Typography'
-import CloseIcon from '@mui/icons-material/Close'
-import Slide from '@mui/material/Slide'
+import ListUserItem from './ListUserItem'
+import { Fragment } from 'react'
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />
-})
+const userItem = (users, title) => {
+  return users.length ? (
+    <Fragment key={`${users.length}-${title}`}>
+      <Paper elevation={4}>
+        <ListItem>
+          <Typography
+            variant="body"
+            sx={{
+              p: 0,
 
-export default function FullScreenDialog() {
-  const [open, setOpen] = React.useState(false)
+              '&:first-letter': {
+                textTransform: 'capitalize',
+              },
+            }}
+          >
+            {`${title} - ${users.length}`}
+          </Typography>
+        </ListItem>
+      </Paper>
+      {users.map(({ user, online }) => {
+        return (
+          <ListUserItem
+            key={`${user.id}-${title}`}
+            user={user}
+            online={online}
+          />
+        )
+      })}
+    </Fragment>
+  ) : (
+    []
+  )
+}
 
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
+// ListUser
+//
+// users: Objeto que contiene propiedades que contienen cada una un array de usuarios,
+// ej : {teachers: [], students: []}
+//
+const ListUser = ({ open, users }) => {
+  const renderUsers = (users) => {
+    let copyUsers = { ...users }
 
-  const handleClose = () => {
-    setOpen(false)
+    let teachers = userItem(copyUsers.teachers, 'Profesores')
+    let students = userItem(copyUsers.students, 'Estudiantes')
+    // INFO: Antes se usaba este codigo comentado, pero para que funcione hay que corregir un poco el server para que mande un title y asi poder mostrar Profesores en vez de teachers
+    // delete copyUsers.teachers
+    //
+    // let rest = Object.keys(copyUsers)
+    //   .map((key) => {
+    //     return userItem(users[key], key)
+    //   })
+    //   .flat()
+
+    // return [{ ...teachers }, ...rest]
+    return [{ ...teachers }, { ...students }]
   }
 
   return (
-    <div>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        TransitionComponent={Transition}
-      >
-        <AppBar sx={{ position: 'relative' }}>
-          <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleClose}
-              aria-label="close"
+    <Paper
+      sx={{
+        width: open ? '25%' : '0',
+        transition: '.3s all',
+        overflowX: 'hidden',
+        height: 'calc(100vh - 252px)',
+      }}
+    >
+      <List
+        subheader={
+          <ListSubheader
+            sx={{
+              p: 0,
+              m: 0,
+              fontSize: '1.2em',
+              fontWeight: 'bold',
+              color: 'text',
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                p: 2,
+              }}
             >
-              <CloseIcon />
-            </IconButton>
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Sound
+              Usuarios
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
-              save
-            </Button>
-          </Toolbar>
-        </AppBar>
-        <List>
-          <ListItem button>
-            <ListItemText primary="Phone ringtone" secondary="Titania" />
-          </ListItem>
-          <Divider />
-          <ListItem button>
-            <ListItemText
-              primary="Default notification ringtone"
-              secondary="Tethys"
-            />
-          </ListItem>
-        </List>
-      </Dialog>
-    </div>
+          </ListSubheader>
+        }
+      >
+        {users && renderUsers(users)}
+      </List>
+    </Paper>
   )
 }
+
+export default ListUser
