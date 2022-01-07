@@ -119,3 +119,26 @@ export const getDatosMatricula = () => async (dispatch) => {
     });
   }
 };
+
+export const getStudentsMatricula = (body) => async (dispatch) => {
+  try {
+    dispatch({
+      type: actionType.GET_MATRICULAS_REQUEST
+    })
+
+    const { data } = await axios.post(`${REACT_APP_SERVER}/matriculas/students/matricula`, body);
+    //console.log(data);
+    dispatch({
+      type: actionType.GET_STUDENTS_MATRICULA,
+      payload: data
+    })
+  }catch (error) {
+    dispatch({
+      type: actionType.MATRICULA_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+    });
+  }
+};
