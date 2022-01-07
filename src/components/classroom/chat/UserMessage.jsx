@@ -6,6 +6,8 @@ import {
   Typography,
 } from '@mui/material/'
 
+import { stringAvatar } from '../utils'
+
 /**
  * UserMessage
  *
@@ -29,29 +31,37 @@ const UserMessage = ({ message, user, isSender, handleClick, open }) => {
         ml: isSender ? 'auto' : 2,
         mr: isSender ? 2 : 'auto',
         width: '40%',
-        minWidth: '300px',
+        minWidth: '250px',
         borderRadius: isSender ? '10px 10px 0px 10px' : '10px 10px 10px 0px',
       }}
     >
-      <ListItemAvatar>
-        <Avatar alt={fullName} src={user.avatar}>
-          {user.firstName[0]}
-        </Avatar>
-      </ListItemAvatar>
+      {isSender ? null : (
+        <ListItemAvatar>
+          <Avatar alt={fullName} src={user.avatar} {...stringAvatar(fullName)}>
+            <Typography variant="body2" sx={{ p: 0, m: 0 }}>
+              {`${fullName.split(' ')[0][0]}${
+                fullName.split(' ')[1][0]
+              }`.toUpperCase()}
+            </Typography>
+          </Avatar>
+        </ListItemAvatar>
+      )}
       <ListItemText
         primary={
-          <Typography
-            variant="body"
-            aria-controls="basic-menu"
-            aria-haspopup="true"
-            // sx={{
-            //   cursor: 'pointer',
-            // }}
-            aria-expanded={open ? 'true' : 'fasle'}
-            onClick={handleClick}
-          >
-            {fullName}
-          </Typography>
+          isSender ? null : (
+            <Typography
+              variant="body"
+              aria-controls="basic-menu"
+              aria-haspopup="true"
+              // sx={{
+              //   cursor: 'pointer',
+              // }}
+              aria-expanded={open ? 'true' : 'fasle'}
+              onClick={handleClick}
+            >
+              {fullName}
+            </Typography>
+          )
         }
         secondary={message}
       />
