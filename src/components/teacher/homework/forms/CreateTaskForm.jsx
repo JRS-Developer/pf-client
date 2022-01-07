@@ -34,25 +34,19 @@ export default function CreateTaskForm({
   const dispatch = useDispatch()
   
 
-  const [errors, setErrors] = useState({})
+  const [errorTitle, setErrorTitle] = useState(null)
 
   const handleChange = (event) => {
     setInput((input) => ({ ...input, [event.target.name]: event.target.value }))
-    // setErrors((errors) =>
-    //   validate(
-    //     { ...input, [event.target.name]: event.target.value },
-    //     event.target.name,
-    //     errors
-    //   )
-    // )
+    setErrorTitle(event.target.name === "title" && event.target.value ? null : "Campo necesario")
   }
 
-  const handleDateChange = (value) => {
+  /* const handleDateChange = (value) => {
     setInput((input) => ({ ...input, end_date: value }))
     // setErrors((errors) =>
     //   validate({ ...input, end_date: value }, 'end_date', errors)
     // )
-  }
+  } */
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -83,29 +77,25 @@ export default function CreateTaskForm({
                 <Grid item xs={6}>
                   <TextField
                     fullWidth
-                    error={errors.title ? true : false}
+                    error={errorTitle ? true : false}
                     name="title"
                     id="title"
-                    label="Title"
+                    label="Título"
                     placeholder="Titulo"
                     onChange={handleChange}
                     onFocus={handleChange}
-                    helperText={errors.title}
+                    helperText={errorTitle}
                     value={input.title}
                   />
                 </Grid>
                 <Grid item xs={5.8}>
                   <TextField
                     fullWidth
-                    error={errors.description ? true : false}
                     sx={{ ml: 2 }}
                     name="description"
                     id="description"
-                    label="Description"
+                    label="Descripción"
                     placeholder="Descripción"
-                    onChange={handleChange}
-                    onFocus={handleChange}
-                    helperText={errors.description}
                     value={input.description}
                   />
                 </Grid>
@@ -115,18 +105,15 @@ export default function CreateTaskForm({
                       fullWidth
                       sx={{ mr: 2, width: '100%' }}
                       value={input.end_date}
-                      onChange={handleDateChange}
                       renderInput={(params) => (
                         <TextField
                           fullWidth
                           sx={{ mr: 2, width: '100%' }}
                           {...params}
-                          error={errors.end_date ? true : false}
                           name="end_date"
                           id="end_Date"
-                          label="Plazo de Entrega"
+                          label="Fecha de Entrega"
                           type="date"
-                          helperText={errors.end_date}
                           InputLabelProps={{
                             shrink: true,
                           }}
