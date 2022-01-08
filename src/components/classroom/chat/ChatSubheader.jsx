@@ -15,6 +15,7 @@ const Subheader = ({ typing, handleClick, open }) => (
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
+      mb: 'auto',
     }}
   >
     <Box>

@@ -10,10 +10,7 @@ import { useEffect } from 'react'
 import socket from '../../socket'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  getMessages,
-  createMessages,
-} from '../../../actions/chat'
+import { getMessages, createMessages } from '../../../actions/chat'
 import { getDataById as getUser } from '../../../actions/user'
 import UserMessage from './UserMessage'
 import ChatInput from './ChatInput'
@@ -199,7 +196,7 @@ const Chat = () => {
               <Paper
                 sx={{
                   minHeight: '100%',
-                  height: 'auto',
+                  height: 'inherit',
                   flexDirection: 'column',
                   display: 'flex',
                   alignItems: 'center',
@@ -222,6 +219,7 @@ const Chat = () => {
                       sx={{
                         display: 'flex',
                         flexDirection: 'column',
+                        height: '100%',
                         gap: 1,
                         width: '100%',
                       }}

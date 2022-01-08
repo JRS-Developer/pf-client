@@ -15,7 +15,6 @@ import Divider from '@mui/material/Divider'
 const ListUserItem = ({ user, online }) => {
   const fullName = `${user.firstName} ${user.lastName}`
 
-  console.log(online)
   return (
     <>
       <ListItem
