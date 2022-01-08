@@ -10,12 +10,7 @@ import { useEffect } from 'react'
 import socket from '../../socket'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  getMessages,
-  createMessages,
-  resetMessages,
-  resetChat,
-} from '../../../actions/chat'
+import { getMessages, createMessages } from '../../../actions/chat'
 import { getDataById as getUser } from '../../../actions/user'
 import UserMessage from './UserMessage'
 import ChatInput from './ChatInput'
@@ -27,6 +22,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const user = window.localStorage.getItem('user')
 const drawerWidth = 240
+const chatHeight = 'calc(100vh - 252px)'
 
 const useStyles = makeStyles((theme) => ({
   box: {
@@ -152,12 +148,6 @@ const Chat = () => {
 
     dispatch(getMessages(chat))
     dispatch(getUser(user))
-
-    return () => {
-      // Reinicio los mensajes y el chat
-      dispatch(resetMessages())
-      dispatch(resetChat())
-    }
   }, [dispatch, params])
 
   // Mostrar typing cuando otro usuario esta escribiendo
@@ -197,7 +187,7 @@ const Chat = () => {
             <Box
               sx={{
                 overflow: 'auto',
-                height: 'calc(100vh - 252px)',
+                height: chatHeight,
                 position: 'relative',
                 transition: '.3s all',
                 width: openUsers ? '75%' : '100%',
@@ -206,8 +196,8 @@ const Chat = () => {
             >
               <Paper
                 sx={{
-                  minHeight: '100%',
                   height: 'auto',
+                  minHeight: chatHeight,
                   flexDirection: 'column',
                   display: 'flex',
                   alignItems: 'center',
@@ -230,6 +220,7 @@ const Chat = () => {
                       sx={{
                         display: 'flex',
                         flexDirection: 'column',
+                        minHeight: chatHeight,
                         gap: 1,
                         width: '100%',
                       }}
