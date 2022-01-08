@@ -13,8 +13,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   getMessages,
   createMessages,
-  resetMessages,
-  resetChat,
 } from '../../../actions/chat'
 import { getDataById as getUser } from '../../../actions/user'
 import UserMessage from './UserMessage'
@@ -152,12 +150,6 @@ const Chat = () => {
 
     dispatch(getMessages(chat))
     dispatch(getUser(user))
-
-    return () => {
-      // Reinicio los mensajes y el chat
-      dispatch(resetMessages())
-      dispatch(resetChat())
-    }
   }, [dispatch, params])
 
   // Mostrar typing cuando otro usuario esta escribiendo

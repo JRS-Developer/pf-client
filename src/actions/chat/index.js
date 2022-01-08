@@ -97,14 +97,6 @@ export const setNewMessage = (data) => {
   }
 }
 
-export const resetMessages = () => ({
-  type: RESET_MESSAGES,
-})
-
-export const resetChat = () => ({
-  type: RESET_CHAT,
-})
-
 export const addOnlineUser = (userId) => ({
   type: ADD_ONLINE_USER,
   payload: userId,
