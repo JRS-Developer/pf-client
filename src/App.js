@@ -23,7 +23,7 @@ import LandingPage from './components/LandingPage/LandingPage'
 
 function App() {
   const [sideToggle, setSideToggle] = useState(false)
-  const { isLogged } = useSelector((state) => state.auth)
+  const { isLogged, loading } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
   const location = useLocation()
 
@@ -91,13 +91,14 @@ function App() {
   )
 
   useEffect(() => {
-    dispatch(checkLogged)
+    dispatch(checkLogged())
   }, [dispatch])
 
-  return (
+  return(
     <Router>
       <ThemeProvider theme={selectedTheme}>
         <CssBaseline />
+        {!loading &&(
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route exact path="/home" component={LandingPage} />
@@ -134,6 +135,7 @@ function App() {
             )}
           </Route>
         </Switch>
+        )}
       </ThemeProvider>
     </Router>
   )
