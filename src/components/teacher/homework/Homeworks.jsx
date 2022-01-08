@@ -146,42 +146,116 @@ export default function Entregas() {
           </Typography>
 
           <Demo>
-            <List>
-              <Grid container columns={2} spacing={2}>
+            {tasks?.length <= 1 ? (
+              <List>
                 {tasks?.map((tasks, i) => {
                   return (
-                    <Grid item md={6}>
-                      <ListItem
-                        sx={{ border: 1, borderColor: 'primary.main' }}
-                        key={`${tasks.id + i}`}
-                        secondaryAction={
-                          <IconButton
-                            edge="end"
-                            aria-label="delete"
-                            onClick={() => openDeleteClick(tasks.id)}
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        }
-                      >
-                        <ListItemButton onClick={() => setTareaId(tasks.id)}>
-                          <ListItemAvatar>
-                            <Avatar>
-                              <AssignmentSharpIcon />
-                            </Avatar>
-                          </ListItemAvatar>
+                    <ListItem
+                      key={`${tasks.id + i}`}
+                      secondaryAction={
+                        <IconButton
+                          edge="end"
+                          aria-label="delete"
+                          onClick={() => openDeleteClick(tasks.id)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      }
+                    >
+                      <ListItemButton onClick={() => setTareaId(tasks.id)}>
+                        <ListItemAvatar>
+                          <Avatar>
+                            <AssignmentSharpIcon />
+                          </Avatar>
+                        </ListItemAvatar>
 
-                          <ListItemText
-                            primary={tasks.title}
-                            secondary={tasks.description}
-                          />
-                        </ListItemButton>
-                      </ListItem>
-                    </Grid>
+                        <ListItemText
+                          primary={tasks.title}
+                          secondary={tasks.description}
+                        />
+                      </ListItemButton>
+                    </ListItem>
                   )
                 })}
+              </List>
+            ) : (
+              <Grid container>
+                <Grid item xs={12} md={6}>
+                  <List>
+                    {tasks
+                      ?.slice(0, Math.round(tasks.length / 2))
+                      ?.map((tasks, i) => {
+                        return (
+                          <ListItem
+                            key={`${tasks.id + i}`}
+                            secondaryAction={
+                              <IconButton
+                                edge="end"
+                                aria-label="delete"
+                                onClick={() => openDeleteClick(tasks.id)}
+                              >
+                                <DeleteIcon />
+                              </IconButton>
+                            }
+                          >
+                            <ListItemButton
+                              onClick={() => setTareaId(tasks.id)}
+                            >
+                              <ListItemAvatar>
+                                <Avatar>
+                                  <AssignmentSharpIcon />
+                                </Avatar>
+                              </ListItemAvatar>
+
+                              <ListItemText
+                                primary={tasks.title}
+                                secondary={tasks.description}
+                              />
+                            </ListItemButton>
+                          </ListItem>
+                        )
+                      })}
+                  </List>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <List>
+                    {tasks
+                      ?.slice(Math.round(tasks.length / 2))
+                      ?.map((tasks, i) => {
+                        return (
+                          <ListItem
+                            key={`${tasks.id + i}`}
+                            secondaryAction={
+                              <IconButton
+                                edge="end"
+                                aria-label="delete"
+                                onClick={() => openDeleteClick(tasks.id)}
+                              >
+                                <DeleteIcon />
+                              </IconButton>
+                            }
+                          >
+                            <ListItemButton
+                              onClick={() => setTareaId(tasks.id)}
+                            >
+                              <ListItemAvatar>
+                                <Avatar>
+                                  <AssignmentSharpIcon />
+                                </Avatar>
+                              </ListItemAvatar>
+
+                              <ListItemText
+                                primary={tasks.title}
+                                secondary={tasks.description}
+                              />
+                            </ListItemButton>
+                          </ListItem>
+                        )
+                      })}
+                  </List>
+                </Grid>
               </Grid>
-            </List>
+            )}
           </Demo>
         </Box>
       )}

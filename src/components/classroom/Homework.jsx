@@ -41,7 +41,7 @@ export default function Homework() {
     dispatch(alumnoGetTaskById(id))
   }
 
-  console.log('tasks', tasks)
+  //console.log('tasks', tasks)
 
   return (
     <Paper elevation={24}>
