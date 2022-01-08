@@ -22,6 +22,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const user = window.localStorage.getItem('user')
 const drawerWidth = 240
+const chatHeight = 'calc(100vh - 252px)'
 
 const useStyles = makeStyles((theme) => ({
   box: {
@@ -186,7 +187,7 @@ const Chat = () => {
             <Box
               sx={{
                 overflow: 'auto',
-                height: 'calc(100vh - 252px)',
+                height: chatHeight,
                 position: 'relative',
                 transition: '.3s all',
                 width: openUsers ? '75%' : '100%',
@@ -195,8 +196,8 @@ const Chat = () => {
             >
               <Paper
                 sx={{
-                  minHeight: '100%',
-                  height: 'inherit',
+                  height: 'auto',
+                  minHeight: chatHeight,
                   flexDirection: 'column',
                   display: 'flex',
                   alignItems: 'center',
@@ -219,7 +220,7 @@ const Chat = () => {
                       sx={{
                         display: 'flex',
                         flexDirection: 'column',
-                        height: '100%',
+                        minHeight: chatHeight,
                         gap: 1,
                         width: '100%',
                       }}
