@@ -35,6 +35,12 @@ export const getTasksReducer = (state = initialState, action) => {
         tasks: action.payload,
         message: action.payload,
       }
+    case actionTypes.CORREGIR_TASK:
+      return {
+        ...state,
+        loading: false,
+        message: action.payload,
+      }
     case actionTypes.TASK_FAIL:
       return {
         ...state,
