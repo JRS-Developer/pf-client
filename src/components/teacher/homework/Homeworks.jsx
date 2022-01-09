@@ -14,7 +14,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import AssignmentSharpIcon from '@mui/icons-material/AssignmentSharp'
 import ListItemButton from '@mui/material/ListItemButton'
 import TablaEntregas from './TablaEntregas.jsx'
-import { getTasks } from '../../../actions/tasks/index.js'
+import { getTasks, cleanStore } from '../../../actions/tasks/index.js'
 import { getDataById } from '../../../actions/materia/index.js'
 import { getDataById as getDataByIdClase } from '../../../actions/clase/index.js'
 import { useParams } from 'react-router-dom'
@@ -55,6 +55,7 @@ export default function Entregas() {
 
   React.useEffect(() => {
     dispatch(getTasks(params))
+    return () => dispatch(cleanStore())
   }, [dispatch, params, deletedTask])
 
   const openDeleteClick = (id) => {
@@ -82,7 +83,7 @@ export default function Entregas() {
   //Close message
   const handleCloseMessage = (event, reason) => {
     if (reason === 'clickaway') {
-      return
+      return 
     }
 
     setOpenMessage(false)
