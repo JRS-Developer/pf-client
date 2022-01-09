@@ -36,26 +36,27 @@ function PaperComponent(props) {
 
 export default function AccessForm({openAccess, handleCloseAccess, dataForm, listData, handleClickMessage}) {
   const dispatch = useDispatch();
-  const initialStatee = [
+/*   const initialStatee = [
     "d544b900-a077-483e-b335-8a52c2fde399_4c8f8e25-63e5-46b4-b11d-309ff6666e11_318caf13-5c64-4aec-91fb-26abca03c348",
     "d544b900-a077-483e-b335-8a52c2fde399_4c8f8e25-63e5-46b4-b11d-309ff6666e11_30fe307d-363c-46d3-8cf5-184254e45198",
     "d544b900-a077-483e-b335-8a52c2fde399_4c8f8e25-63e5-46b4-b11d-309ff6666e11_f33c5435-9cb2-4d18-8530-e37f28fd231d"
-  ];
+  ]; */
   const initialState = [];
   let user_id = dataForm.id;
   const [checked, setChecked] = useState(initialState);
-  const [dataAccess, setDataAccess] = useState([])
+  const [dataAccess, /* setDataAccess */] = useState([])
 
   const getModulesAll = useSelector(state => state.accessUserReducer);
   const { modulesUser, loadingAccess, errorAccess } = getModulesAll;
 
-  const addAccess = useSelector(state => state.addAccessUserReducer);
-  const { message, loadingSave, error } = getModulesAll;
+  // const addAccess = useSelector(state => state.addAccessUserReducer);
+  // const { message, loadingSave, error } = getModulesAll;
 
     if(!loadingAccess){
-      modulesUser.map(padre => {
-        padre.sub_data.map(hijo => {
-          hijo.actions.map(action => {
+
+      modulesUser?.map(padre => {
+        return padre.sub_data.map(hijo => {
+          return hijo.actions.map(action => {
             if(action.action_id !== null){
               let value = `${padre.id}_${hijo.id}_${action.id}`
               const currentIndex = checked.indexOf(value);
@@ -68,6 +69,7 @@ export default function AccessForm({openAccess, handleCloseAccess, dataForm, lis
                 })
               }
             }
+            return checked //Le hago que retorne checked para que no me tire warning de que hace falta un return
           })
         })
       })
@@ -75,7 +77,8 @@ export default function AccessForm({openAccess, handleCloseAccess, dataForm, lis
 
   useEffect(() => {
     dispatch(getAccessByUser(dataForm.id))
-  }, [dispatch])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleToggle = (padre_id, hijo_id, action_id) => () => {
 
@@ -105,21 +108,6 @@ export default function AccessForm({openAccess, handleCloseAccess, dataForm, lis
     console.log(access)
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    dataForm.status === true ? dataForm.status = false : dataForm.status = true;
-    let dataStatus = {
-      id: dataForm.id,
-      status: dataForm.status
-    }
-
-    handleCloseAccess();
-    //Iniciamos el mensaje respuesta
-    handleClickMessage()
-    //Listamos la data
-    dispatch(listData());
-  }
-
   return (
     <div>
       <Dialog
@@ -128,16 +116,17 @@ export default function AccessForm({openAccess, handleCloseAccess, dataForm, lis
         PaperComponent={PaperComponent}
         aria-labelledby="draggable-dialog-title"
         maxWidth={`lg`}
-        fullWidth={`lg`}
+        width={`lg`}
         scroll='paper'
       >
-        <form onSubmit={handleSubmit}>
+        <form>
           <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
             ASIGNAR ACCESOS
           </DialogTitle>
           <DialogContent>
 
-            { loadingAccess ? <h2>Loading...</h2> : errorAccess ? <h3>{errorAccess}</h3> : modulesUser.map(dt => (
+            { loadingAccess ? <h2>Loading...</h2> : errorAccess ? <h3>{errorAccess}</h3> :
+              modulesUser.map(dt => (
               <Accordion key={dt.id}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
@@ -170,7 +159,7 @@ export default function AccessForm({openAccess, handleCloseAccess, dataForm, lis
                         </ListItemIcon>
                         <ListItemText id={`switch-list-label_${dt.id}_${ch.id}`} primary={ch.name} />
                         {ch.actions.map( act => (
-                          <>
+                          <div key={`${dt.id}_${ch.id}_${act.id}_a`}>
                             <Switch key={`${dt.id}_${ch.id}_${act.id}`}
                               edge="end"
                               onChange={handleToggle(dt.id, ch.id, act.id)}
@@ -179,7 +168,7 @@ export default function AccessForm({openAccess, handleCloseAccess, dataForm, lis
                                 'aria-labelledby': `switch-list-label_${dt.id}_${ch.id}_${act.id}`,
                               }}
                             /> { act.name }  &nbsp;&nbsp;
-                          </>
+                          </div>
                         ))}
                       </ListItem>
                     ) )}
@@ -191,7 +180,7 @@ export default function AccessForm({openAccess, handleCloseAccess, dataForm, lis
           </DialogContent>
           <DialogActions>
             <Button autoFocus onClick={handleCloseAccess}>
-              Cancelar
+              Aceptar
             </Button>
             {/*<Button type="submit">Save</Button>*/}
           </DialogActions>

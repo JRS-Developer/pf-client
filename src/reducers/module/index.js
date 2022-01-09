@@ -31,8 +31,9 @@ export const getModulesReducer = (state = initialState, action) => {
       }
     case actionTypes.EDIT_MODULE:
       return {
+        ...state,
         loading: false,
-        modules: action.payload,
+        //modules: action.payload,
         message: action.payload
       }
     case actionTypes.MODULE_FAIL:

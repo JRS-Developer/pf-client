@@ -7,7 +7,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle'
 import IconButton from '@mui/material/IconButton'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
-import { Button, Typography, Snackbar, Alert } from '@mui/material'
+import { Button, /* Typography, */ Snackbar, Alert } from '@mui/material'
 import validate from './validate'
 import { useHistory } from 'react-router-dom'
 import { setLogged, checkLogged } from '../../actions/auth/'
@@ -18,7 +18,7 @@ import * as React from 'react'
 import Grid from '@mui/material/Grid'
 import Logo from '../../logo2.png'
 
-export default function SignInSide() {
+export default function SignInSide({ location }) {
   const [values, setValues] = useState({
     amount: '',
     password: '',
@@ -87,12 +87,17 @@ export default function SignInSide() {
   }
 
   useEffect(() => {
-    isLogged && history.push('/')
-  }, [isLogged, history])
+    if (isLogged) {
+      location?.state?.location
+        ? history.replace(location.state.location)
+        : history.push('/')
+    }
+  }, [isLogged, history, location])
 
   useEffect(() => {
     dispatch(getLoginPhoto())
     dispatch(checkLogged())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -145,7 +150,7 @@ export default function SignInSide() {
               m: 5,
             }}
           >
-            <Box sx={{ minWidth: 100 }}>
+            <Box sx={{ minWidth: 100, transition: "transform 100ms ease-in-out", ':hover': { transform: "scale(1.2)" }, cursor: "pointer" }} onClick={() => history.push('/home')}>
               <img src={Logo} style={{ width: '100%' }} alt="Logo Gaia" />
             </Box>
           </Box>

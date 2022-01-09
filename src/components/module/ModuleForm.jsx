@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import Button from '@mui/material/Button';
-import Chip from '@mui/material/Chip';
+// import Chip from '@mui/material/Chip';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Dialog from '@mui/material/Dialog';
@@ -15,7 +15,7 @@ import { Close, Save } from '@mui/icons-material';
 import LoadingButton from "@mui/lab/LoadingButton";
 import {AutocompleteDiv} from './ModuleStyles';
 import { getModules as listModules, createModule, modifiedModule } from "../../actions/module";
-import {getActions as listaActions} from "../../actions/action";
+import { getActions as listaActions } from "../../actions/action";
 
 
 const ModuleForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage}) => {
@@ -30,20 +30,22 @@ const ModuleForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage
     ob.name = ac.name;
     ob.action_id = ac.id;
     defaultValue.push(ob);
-    dataForm.action_id.push(ac.id)
+    return dataForm.action_id.push(ac.id)
   });
+
   const [rowModule, setRowModule] = useState(dataForm);
 
   const dispatch = useDispatch();
 
   const getModules = useSelector(state => state.modulesReducer);
-  const { modules, loading, message, error } = getModules;
+  const { modules, loading/* , message, error */ } = getModules;
 
   const getActions = useSelector(state => state.actionsReducer);
-  const { actions, ldg, msg, err } = getActions;
+  const { actions/* , ldg, msg, err */ } = getActions;
 
   useEffect(() => {
     dispatch(listaActions())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Listamos los módulos padres
@@ -63,6 +65,7 @@ const ModuleForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage
 
         modulesFather.push(obj)
       }
+      return obj
     })
   }
   const [value, setValue] = React.useState(initialModule);
@@ -74,6 +77,7 @@ const ModuleForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage
     obj.name = action.name
     obj.action_id = action.id
     arrayActions.push(obj)
+    return obj
   })
 
   //////////////////////////////////
@@ -107,7 +111,7 @@ const ModuleForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage
         open={open}
         onClose={handleClose}
         maxWidth={`sm`}
-        fullWidth={`sm`}
+        width={`sm`}
         scroll='paper'
       >
         <form onSubmit={handleSubmit}>
@@ -169,7 +173,7 @@ const ModuleForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage
                       onChange={(event, newValue) => {
                         setValue(newValue);
                         setRowModule({
-                          ...rowModule, ['module_id']: newValue?.module_id
+                          ...rowModule, 'module_id': newValue?.module_id
                         })
                       }}
                       inputValue={value?.label}
@@ -178,13 +182,12 @@ const ModuleForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage
                       sx={{ width: '100%' }}
                       renderInput={(params) => <TextField {...params} label="Module" />}
                     />
-                </AutocompleteDiv>
+                  </AutocompleteDiv>
                 </Grid>
 
                 <Grid item xs={12}>
                   <AutocompleteDiv>
                     <Autocomplete
-
                       multiple
                       id="actions"
                       options={arrayActions.filter((option) => option.name)}
@@ -195,11 +198,11 @@ const ModuleForm =  ({open, handleClose, titleForm, dataForm, handleClickMessage
                         //console.log(newValue);
                         let actionsIds = []
                         newValue.map((opt) => {
-                          actionsIds.push(opt.action_id)
+                          return actionsIds.push(opt.action_id)
                         })
 
                         setRowModule({
-                          ...rowModule, ['action_id']: actionsIds
+                          ...rowModule, 'action_id': actionsIds
                         })
                       }}
                       renderInput={(params) => (

@@ -19,7 +19,7 @@ const ProfileForm =  ({open, handleClose, titleForm, dataForm, handleClickMessag
   const dispatch = useDispatch();
 
   const getRoles = useSelector(state => state.rolesReducer);
-  const { loading, message, error } = getRoles;
+  const { loading,/*  message, error */ } = getRoles;
 
   const handleChange = (e) => {
     setRowRole({
@@ -51,7 +51,7 @@ const ProfileForm =  ({open, handleClose, titleForm, dataForm, handleClickMessag
         open={open}
         onClose={handleClose}
         maxWidth={`sm`}
-        fullWidth={`sm`}
+        width={`sm`}
         scroll='paper'
       >
         <form onSubmit={handleSubmit}>
