@@ -222,3 +222,9 @@ export const markHomeworkDone = (id) => async (dispatch) => {
     })
   }
 }
+
+export const cleanStore = () => {
+  return {
+    type: actionType.CLEAN_STORE,
+  }
+}
