@@ -1,4 +1,4 @@
-import TeacherForm from './TeacherForm.jsx'
+import TeacherForm from './TeacherForm/TeacherForm';
 import Table from '../Table/Table.jsx'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
