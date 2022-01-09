@@ -65,6 +65,8 @@ export const getTasksReducer = (state = initialState, action) => {
         loading: false,
         message: action.payload,
       }
+    case actionTypes.CLEAN_STORE:
+      return initialState
     default:
       return state
   }

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
@@ -14,8 +14,8 @@ import {
   markHomeworkDone,
 } from '../../actions/tasks/index.js'
 import LinearProgress from '@mui/material/LinearProgress'
-
-// const tarea = {id: 9, title: "Tarea 9", complete: true, description: "Descripción de la tarea que tiene que realizar el alumno"}
+import Divider from '@mui/material/Divider';
+import HomeworkUploadFile from './HomeworkUploadFile.jsx'
 
 export default function Homework() {
   const id = useParams().id
@@ -23,8 +23,9 @@ export default function Homework() {
   const dispatch = useDispatch()
   const tasks = useSelector((state) => state.tasksReducer.task)
   const loading = useSelector((state) => state.tasksReducer.loading)
-
-  console.log(loading)
+  const { devolucion, observation, grade } = tasks.hasOwnProperty('matriculas')
+    ? tasks.matriculas[0].student_tasks
+    : {}
 
   useEffect(() => {
     dispatch(alumnoGetTaskById(id))
@@ -55,11 +56,59 @@ export default function Homework() {
               <IconButton aria-label="delete" onClick={handleClick}>
                 <ArrowBackIcon />
               </IconButton>
-              <center>
-                <Typography variant="h4">{tasks.title}</Typography>
-              </center>
-              <Typography variant="body1">{tasks.description}</Typography>
+            <Box sx={{display: "flex", flexDirection:"column", justifyContent: "space-between", height: "90%", p: 2}}>
+              <Box>
+                <Grid container>
+                  <Grid item xs={12}>
+                    <center>
+                      <Typography variant="h4">{tasks.title}</Typography>
+                    </center>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Typography variant="h5">
+                      Descripción de la tarea
+                    </Typography>
+                    <Typography variant="body1">{tasks.description}</Typography>
+
+                    <Divider sx={{py: 2}}/>
+                    
+                    <Typography variant="h5" sx={{pt: 2}}>
+                      Observaciones
+                      </Typography>
+                      <Typography variant="body1">
+                        {observation}
+                      </Typography>
+                    
+                    
+                  </Grid>
+                </Grid>
+              </Box>
+
+              <Box>
+              <Divider/>
+                <Grid container sx={{pt: 2}}>
+                  <Grid item xs={4}>
+                  <Typography variant="h5">
+                    Nota:
+                  </Typography>
+                  <Typography variant="h6">
+                    {grade ? grade : "-"}
+                  </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                  <Typography variant="h5">
+                        Estado de la tarea:
+                    </Typography>
+                    <Typography variant="h6">
+                        {devolucion ? devolucion : "Todavía sin revisar"}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Box>
+              </Box>
             </Grid>
+            
+
             <Grid item xs={3} sx={{ backgroundColor: 'secondary.light', p: 1 }}>
               <Box
                 sx={{
@@ -73,16 +122,16 @@ export default function Homework() {
                 <Typography variant="h4">Subi tu tarea</Typography>
                 <Paper
                   sx={{
-                    width: '16vw',
-                    height: '14vw',
+                    width: '8vw',
+                    height: '8vw',
                     borderRadius: 2,
                     mt: 1,
                     backgroundColor: 'primary.main',
                   }}
                 >
-                  Subida de archivos como en drive
+                <HomeworkUploadFile/>
                 </Paper>
-                <Paper
+                {/* <Paper
                   sx={{
                     width: '16vw',
                     height: '7vw',
@@ -92,7 +141,7 @@ export default function Homework() {
                   }}
                 >
                   Habla por privado con tu profesor
-                </Paper>
+                </Paper> */}
                 <Button
                   variant="contained"
                   sx={{ mt: 2 }}

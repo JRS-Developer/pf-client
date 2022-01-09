@@ -16,6 +16,9 @@ export default function authReducer(state = initialState, action) {
     }
     case LOGOUT: {
       localStorage.removeItem('token')
+      localStorage.clear()
+      // location.reload();
+      
       return {
         ...state,
         isLogged: false,

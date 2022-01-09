@@ -130,9 +130,6 @@ export const corregirTask = (body) => async (dispatch) => {
   }
 }
 
-
-
-
 export const removeTask = (id) => async (dispatch) => {
   try {
     dispatch({
@@ -223,5 +220,11 @@ export const markHomeworkDone = (id) => async (dispatch) => {
           ? error.response.data.message
           : error.message,
     })
+  }
+}
+
+export const cleanStore = () => {
+  return {
+    type: actionType.CLEAN_STORE,
   }
 }
