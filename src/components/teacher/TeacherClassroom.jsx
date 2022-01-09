@@ -225,7 +225,7 @@ export const TeacherClassroom = React.memo(function TeamCard() {
               }}
               inputValue={valueSchool?.label || ''}
               id="school_id"
-              options={listSchool}
+              options={listSchool? listSchool : false}
               sx={{ width: '100%' }}
               renderInput={(params) => <TextField {...params} label="School" />}
             />}
