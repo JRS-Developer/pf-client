@@ -130,9 +130,6 @@ export const corregirTask = (body) => async (dispatch) => {
   }
 }
 
-
-
-
 export const removeTask = (id) => async (dispatch) => {
   try {
     dispatch({

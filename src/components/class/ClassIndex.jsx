@@ -30,7 +30,7 @@ export default function ClassIndex() {
   const dispatch = useDispatch()
 
   const getStatusReducer = useSelector((state) => state.clasesReducer)
-  const { clases /* loading, error */ } = getStatusReducer
+  const { clases, loadingClases } = getStatusReducer
 
   const data = {
     columns,
@@ -52,6 +52,7 @@ export default function ClassIndex() {
           getActions={getStatusReducer}
           modifiedAction={modifiedClase}
           listData={listClass}
+          loading={loadingClases}
         />
       }
     </>

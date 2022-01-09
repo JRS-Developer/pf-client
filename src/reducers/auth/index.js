@@ -1,8 +1,8 @@
-import { LOGOUT, SET_LOGGED } from "../../actions/auth/types";
+import { LOGOUT, SET_LOGGED } from '../../actions/auth/types'
 
 const initialState = {
   isLogged: false,
-  loading: true
+  loading: true,
 }
 
 export default function authReducer(state = initialState, action) {
@@ -11,7 +11,7 @@ export default function authReducer(state = initialState, action) {
       return {
         ...state,
         isLogged: true,
-        loading: false
+        loading: false,
       }
     }
     case LOGOUT: {
@@ -19,9 +19,10 @@ export default function authReducer(state = initialState, action) {
       return {
         ...state,
         isLogged: false,
-        loading: false
+        loading: false,
       }
     }
-    default: return state
+    default:
+      return state
   }
 }

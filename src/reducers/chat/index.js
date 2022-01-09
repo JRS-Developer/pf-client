@@ -9,8 +9,7 @@ import {
   UPDATE_MESSAGES,
   GET_CHAT,
   SET_NEW_MESSAGE,
-  RESET_MESSAGES,
-  RESET_CHAT,
+  RESET_STORE,
   ADD_ONLINE_USER,
   REMOVE_ONLINE_USER,
 } from '../../actions/chat'
@@ -84,13 +83,6 @@ export const getChatReducer = (state = initialState, action) => {
         loading: false,
         chat: action.payload,
       }
-
-    case RESET_CHAT:
-      return {
-        ...state,
-        loading: false,
-        chat: null,
-      }
     case SET_NEW_MESSAGE:
       return {
         ...state,
@@ -108,12 +100,6 @@ export const getChatReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         message: action.payload,
-      }
-    case RESET_MESSAGES:
-      return {
-        ...state,
-        loading: false,
-        messages: [],
       }
     case MESSAGES_FAIL:
       return {
@@ -163,6 +149,8 @@ export const getChatReducer = (state = initialState, action) => {
             }
           : null,
       }
+    case RESET_STORE:
+      return initialState
     default:
       return state
   }

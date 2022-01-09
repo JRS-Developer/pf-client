@@ -49,7 +49,7 @@ export const getUsersReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: action.payload
+        error: action.payload,
       }
     }
     default:

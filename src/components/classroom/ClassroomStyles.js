@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 export const ButtonLink = styled.div`
-  & .btnLink{
+  & .btnLink {
     text-decoration: none;
     padding: 10px 20px;
     display: inline-block;
@@ -8,10 +8,10 @@ export const ButtonLink = styled.div`
     background: transparent;
     color: white;
     border: 2px solid white;
-    transition: all 0.3s
+    transition: all 0.3s;
   }
 
-  & .btnLink:hover{
+  & .btnLink:hover {
     text-decoration: none;
     padding: 10px 20px;
     display: inline-block;

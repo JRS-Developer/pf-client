@@ -1,10 +1,14 @@
-import TeacherForm from './TeacherForm/TeacherForm';
+import TeacherForm from './TeacherForm/TeacherForm'
 import Table from '../Table/Table.jsx'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { getTeachers as listTeachers, getDataById, modifiedTeacher } from "../../actions/teacher";
+import {
+  getTeachers as listTeachers,
+  getDataById,
+  modifiedTeacher,
+} from '../../actions/teacher'
 
-import {format} from 'date-fns'
+import { format } from 'date-fns'
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 300 },
@@ -58,7 +62,7 @@ const columns = [
     editable: true,
     valueFormatter: (params) => {
       return format(new Date(params.value), 'dd/MM/yyyy')
-    }
+    },
   },
   {
     field: 'country',
@@ -72,13 +76,13 @@ const form = TeacherForm
 export default function TeacherIndex() {
   const dispatch = useDispatch()
 
-  const getTeachersState = useSelector(state => state.teacherReducer)
-  const { teachers } = getTeachersState;
+  const getTeachersState = useSelector((state) => state.teacherReducer)
+  const { teachers, loadingTeacher } = getTeachersState
 
   const data = { columns, rows: teachers }
 
   useEffect(() => {
-    const role = {role_id: '606c0802-5332-4531-9189-eac84e6fcceb'};
+    const role = { role_id: '606c0802-5332-4531-9189-eac84e6fcceb' }
     dispatch(listTeachers(role))
   }, [dispatch])
 
@@ -91,6 +95,7 @@ export default function TeacherIndex() {
       getActions={getTeachersState}
       modifiedAction={modifiedTeacher}
       listData={listTeachers}
+      loading={loadingTeacher}
     />
   )
 }

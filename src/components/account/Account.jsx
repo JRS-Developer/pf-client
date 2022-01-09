@@ -228,7 +228,7 @@ const Account = () => {
               onChange={handleChange}
               InputProps={{
                 endAdornment: (
-                  <InputAdornment>
+                  <InputAdornment position='end'>
                     <IconButton
                       aria-label="toggle password visibility"
                       onClick={handleClickShowPassword}
@@ -248,7 +248,7 @@ const Account = () => {
               helperText={errors.repeatPassword}
               InputProps={{
                 endAdornment: (
-                  <InputAdornment>
+                  <InputAdornment position='end'>
                     <IconButton
                       aria-label="toggle password visibility"
                       onClick={handleClickShowPassword}

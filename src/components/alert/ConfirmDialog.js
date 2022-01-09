@@ -1,13 +1,13 @@
-import * as React from 'react';
-import { useDispatch } from "react-redux";
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Paper from '@mui/material/Paper';
-import Draggable from 'react-draggable';
+import * as React from 'react'
+import { useDispatch } from 'react-redux'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
+import Paper from '@mui/material/Paper'
+import Draggable from 'react-draggable'
 // import {getActions as listActions} from "../../actions/action";
 
 function PaperComponent(props) {
@@ -18,26 +18,36 @@ function PaperComponent(props) {
     >
       <Paper {...props} />
     </Draggable>
-  );
+  )
 }
 
-export default function ConfirmDialog({openConfirm, handleCloseConfirm, message, dataForm, fnModifiedStatus, listData, handleClickMessage}) {
-  const dispatch = useDispatch();
+export default function ConfirmDialog({
+  openConfirm,
+  handleCloseConfirm,
+  message,
+  dataForm,
+  fnModifiedStatus,
+  listData,
+  handleClickMessage,
+}) {
+  const dispatch = useDispatch()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    dataForm.status === true ? dataForm.status = false : dataForm.status = true;
+    dataForm.status === true
+      ? (dataForm.status = false)
+      : (dataForm.status = true)
     let dataStatus = {
       id: dataForm.id,
-      status: dataForm.status
+      status: dataForm.status,
     }
-    await dispatch(fnModifiedStatus(dataStatus));
+    await dispatch(fnModifiedStatus(dataStatus))
 
-    handleCloseConfirm();
+    handleCloseConfirm()
     //Iniciamos el mensaje respuesta
     handleClickMessage()
     //Listamos la data
-    dispatch(listData());
+    dispatch(listData())
   }
 
   return (
@@ -53,9 +63,7 @@ export default function ConfirmDialog({openConfirm, handleCloseConfirm, message,
             CONFIRMAR
           </DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              {message}
-            </DialogContentText>
+            <DialogContentText>{message}</DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button autoFocus onClick={handleCloseConfirm}>
@@ -66,5 +74,5 @@ export default function ConfirmDialog({openConfirm, handleCloseConfirm, message,
         </form>
       </Dialog>
     </div>
-  );
+  )
 }

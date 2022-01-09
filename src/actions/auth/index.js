@@ -21,6 +21,6 @@ export const setLogged = () => (dispatch) => {
 // Para cerrar sesion
 export const logout = (dispatch) => {
   return dispatch({
-    type: LOGOUT
+    type: LOGOUT,
   })
 }

@@ -1,1 +1,1 @@
-export default function validate (){}
+export default function validate() {}
