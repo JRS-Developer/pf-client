@@ -24,7 +24,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 // Imports
 
-const user = window.localStorage.getItem('user')
+const user = localStorage.getItem('user')
 const drawerWidth = 240
 const chatHeight = 'calc(100vh - 252px)'
 
