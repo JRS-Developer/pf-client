@@ -33,6 +33,7 @@ export default function ActionsMateria() {
             onChange={handleChange}
             aria-label="icon label tabs example"
           >
+
             <Tab icon={<FeedIcon />} label="Publicaciones" value="1" />
             <Tab icon={<AssignmentIcon />} label="Tareas" value="2" />
             <Tab

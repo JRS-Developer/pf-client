@@ -17,12 +17,12 @@ import JitsiComponent from "./Jitsi/JitsiComponent";
 
 export default function ClassRoom() {
   const [value, setValue] = useState('1');
-  const [materia, setMateria] = useState('');
+  // const [materia, setMateria] = useState('');
   
-  const handleChange = (event, newValue) => {
+  const handleChange = (_event, newValue) => {
     if(Number(newValue) === 2){
       setValue(newValue);
-      setMateria(newValue);
+      // setMateria(newValue);
       return
     }
     setValue(newValue);

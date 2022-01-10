@@ -54,7 +54,7 @@ export default function Homework() {
     body.append('matricula_id', matricula_id)
     body.append('task_id', task_id)
 
-    const { data } = await axios.post(`${REACT_APP_SERVER}/tasks/alumno`, body)
+    await axios.post(`${REACT_APP_SERVER}/tasks/alumno`, body)
     setFile(null)
     dispatch(alumnoGetTaskById(id))
   }
@@ -75,14 +75,12 @@ export default function Homework() {
   }
 
   async function deleteDataBase() {
-    const { data } = await axios.patch(`${REACT_APP_SERVER}/tasks/alumno`, {
+    await axios.patch(`${REACT_APP_SERVER}/tasks/alumno`, {
       task_id,
       matricula_id,
     })
     dispatch(alumnoGetTaskById(id))
   }
-
-  //console.log('tasks', tasks)
 
   return (
     <Paper elevation={24}>
@@ -160,10 +158,11 @@ export default function Homework() {
                   mt: 2,
                 }}
               >
-                {taskFile ?
-                <Typography variant="h5">Archivo cargado</Typography>:
-                <Typography variant="h5">Subir archivo</Typography>
-              }
+                {taskFile ? (
+                  <Typography variant="h5">Archivo cargado</Typography>
+                ) : (
+                  <Typography variant="h5">Subir archivo</Typography>
+                )}
                 {taskFile ? (
                   <>
                     {' '}
