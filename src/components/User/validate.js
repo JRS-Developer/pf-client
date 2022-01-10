@@ -2,11 +2,7 @@ const FIELD_REQUIRED = 'This field is required'
 
 export default function validate(input, name, error) {
   let errors = { ...error }
-  if (
-    name === 'firstName' ||
-    name === 'lastName' ||
-    name === 'country'
-  ) {
+  if (name === 'firstName' || name === 'lastName' || name === 'country') {
     if (!input[name]) {
       errors[name] = FIELD_REQUIRED
     } else if (!/^[a-zA-Z À-ÿ\u00f1\u00d1]+$/.test(input[name])) {

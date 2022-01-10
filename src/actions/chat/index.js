@@ -1,4 +1,11 @@
 import axios from 'axios'
+import {
+  getChatData,
+  createChat,
+  getOnlineUsers,
+  getChatUsers,
+  getChatMessages,
+} from './services'
 const { REACT_APP_CHAT } = process.env
 
 export const GET_MESSAGES_REQUEST = 'GET_MESSAGES_REQUEST'
@@ -10,9 +17,8 @@ export const USER_FAIL = 'USER_FAIL'
 export const SET_NEW_MESSAGE = 'SET_NEW_MESSAGE'
 export const CREATE_MESSAGES = 'CREATE_MESSAGES'
 export const UPDATE_MESSAGES = 'UPDATE_MESSAGES'
-export const RESET_MESSAGES = 'RESET_MESSAGES'
 export const GET_CHAT = 'GET_CHAT'
-export const RESET_CHAT = 'RESET_CHAT'
+export const RESET_STORE = 'RESET_STORE'
 
 // Users
 export const ADD_ONLINE_USER = 'ADD_ONLINE_USER'
@@ -25,50 +31,40 @@ export const getMessages =
       dispatch({
         type: GET_MESSAGES_REQUEST,
       })
+      const params = { materia_id, clase_id, school_id, ciclo_lectivo_id }
+
+      let chatData = {}
 
       // Obtengo el chat de la materia
-      let { data: chatData } = await axios.get(`${REACT_APP_CHAT}/chat/clase`, {
-        params: {
-          materia_id,
-          clase_id,
-          school_id,
-          ciclo_lectivo_id,
-        },
-      })
+      try {
+        const { data } = await getChatData(params)
+        chatData = data
+      } catch (e) {
+        // Si no existe el chat, lo creo
+        if (e.response.status === 404) {
+          const { data } = await createChat(params)
+          chatData = data
+        } else {
+          // Sino es 404 entonces devuelvo el error para que lo handlee el otro catch
+          throw e
+        }
+      }
 
       // Obtengo los mensajes del chat
-      let messagesRequest = axios.get(
-        `${REACT_APP_CHAT}/messages/${chatData._id}`
-      )
+      let messagesRequest = getChatMessages(chatData._id)
 
       // Obtengo los usuarios del chat desde la base de datos de postgres
-      const usersRequest = axios.get(`/chat/`, {
-        params: {
-          materia_id,
-          clase_id,
-          school_id,
-          ciclo_lectivo_id,
-        },
-      })
+      const usersRequest = getChatUsers(params)
 
       const [messages, users] = await Promise.all([
         messagesRequest,
         usersRequest,
       ])
 
-
-      // onlineUsers es un array de usuarios online
       const onlineUsers = chatData.onlineUsers
 
-      // Coloco los usuarios en el chat y coloco si esta online o no
-      chatData.users = {}
-
-      Object.keys(users.data).forEach((key) => {
-        chatData.users[key] = users.data[key].map((user) => ({
-          ...user,
-          online: onlineUsers.includes(user.user.id),
-        }))
-      })
+      // Coloco los usuarios en el chat e inidico si esta online o no
+      chatData.users = getOnlineUsers(users.data, onlineUsers)
 
       dispatch({
         type: GET_CHAT,
@@ -97,13 +93,11 @@ export const setNewMessage = (data) => {
   }
 }
 
-export const resetMessages = () => ({
-  type: RESET_MESSAGES,
-})
-
-export const resetChat = () => ({
-  type: RESET_CHAT,
-})
+export const resetStore = () => {
+  return {
+    type: RESET_STORE,
+  }
+}
 
 export const addOnlineUser = (userId) => ({
   type: ADD_ONLINE_USER,

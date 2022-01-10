@@ -16,6 +16,7 @@ import Grid from '@mui/material/Grid'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { createTask, getTasks } from '../../../../actions/tasks'
+import enAULocale from 'date-fns/locale/en-AU';
 
 export default function CreateTaskForm({
   open,
@@ -29,7 +30,7 @@ export default function CreateTaskForm({
     class_id: params.clase_id,
   }
 
-  const [input, setInput] = useState(dataparams)
+  const [input, setInput] = useState({...dataparams, end_date:null})
   const dispatch = useDispatch()
 
   const [errorTitle, setErrorTitle] = useState(null)
@@ -47,12 +48,12 @@ export default function CreateTaskForm({
     setInput((input) => ({ ...input, [event.target.name]: event.target.value }))
   }
 
-  /* const handleDateChange = (value) => {
+  const handleDateChange = (value) => {
     setInput((input) => ({ ...input, end_date: value }))
     // setErrors((errors) =>
     //   validate({ ...input, end_date: value }, 'end_date', errors)
     // )
-  } */
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -108,11 +109,13 @@ export default function CreateTaskForm({
                   />
                 </Grid>
                 <Grid item xs={6}>
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <LocalizationProvider dateAdapter={AdapterDateFns} locale={enAULocale} >
                     <DatePicker
                       fullWidth
+                      minDate={new Date()}
                       sx={{ mr: 2, width: '100%' }}
                       value={input.end_date}
+                      onChange={handleDateChange}
                       renderInput={(params) => (
                         <TextField
                           fullWidth
@@ -122,6 +125,7 @@ export default function CreateTaskForm({
                           id="end_Date"
                           label="Fecha de Entrega"
                           type="date"
+                         
                           InputLabelProps={{
                             shrink: true,
                           }}

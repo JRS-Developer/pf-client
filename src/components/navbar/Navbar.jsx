@@ -1,21 +1,17 @@
-import React, {useEffect} from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {Link} from 'react-router-dom'
-import {KeyboardArrowDown } from '@mui/icons-material';
-import { NavbarDiv } from './NavbarStyles';
-import Icon from '@mui/material/Icon';
-import Box from '@mui/material/Box';
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import Box from '@mui/material/Box'
+import { List, CircularProgress } from '@mui/material/'
+import ModuleItem from './ModuleItem'
 
-import { getNavbar as listNavbar } from "../../actions/navbar";
-import { getActionsByModule } from "../../actions/actionsModule";
+import { getNavbar as listNavbar } from '../../actions/navbar'
+import { getActionsByModule } from '../../actions/actionsModule'
 
-const Navbar = ({show, click}) => {
-  const dispatch = useDispatch();
+const Navbar = ({ show, click }) => {
+  const dispatch = useDispatch()
 
-  const getNavbar = useSelector(state => state.navbarReducer);
-  const { navbar, loading, error } = getNavbar;
-
-  //let userId = '2e9e4070-2d42-41ed-8c6b-a018f40c7757'
+  const getNavbar = useSelector((state) => state.navbarReducer)
+  const { navbar, loading, error } = getNavbar
 
   useEffect(() => {
     dispatch(listNavbar())
@@ -25,36 +21,56 @@ const Navbar = ({show, click}) => {
     dispatch(getActionsByModule(moduleId))
   }
 
-  const navbarClass = ["navbar"];
-
-  if(show){
-    navbarClass.push('close')
-  }
-  //console.log(loading && navbar)
-
   return (
-
-    <NavbarDiv>
-      <nav className={navbarClass.join(" ")}>
-        <ul className="navbar_links">
-          { loading ? <li>Loading...</li> : error ? <li>{error}</li> : navbar?.map(module => (
-            <li key={module.id} className="navbar_list">
-              <Link to={module.url}><Box sx={{color: 'text.primary'}}>{module.name}</Box><KeyboardArrowDown className="icono" sx={{color: 'text.primary'}}/></Link>
-              <ul className="navbar_sub_links">
-                {module.sub_data.map(subModule => (
-                  <li key={subModule.id} onClick={() => getActionsModule(subModule.id)}>
-                    <Link to={subModule.url}>
-                      <Icon sx={{color: 'text.primary'}}>{subModule.icon}</Icon>
-                      <span><Box sx={{color: 'text.primary'}}>{subModule.name}</Box></span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </NavbarDiv>
+    <List
+      component="nav"
+      sx={{
+        position: 'fixed',
+        top: '64px',
+        height: 'calc(100vh - 60px)',
+        transform: !show ? 'translateX(0)' : 'translateX(-100%)',
+        transition: 'transform 0.5s ease-out',
+        width: '200px',
+        zIndex: '1000',
+        overflow: 'hidden',
+        boxShadow:
+          'rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px',
+      }}
+    >
+      {loading ? (
+        <Box
+          sx={{
+            height: 'inherit',
+            width: 'inherit',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      ) : error ? (
+        <Box
+          sx={{
+            height: 'inherit',
+            width: 'inherit',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          {error}
+        </Box>
+      ) : (
+        navbar?.map((module) => (
+          <ModuleItem
+            key={module.id}
+            module={module}
+            getActionsModule={getActionsModule}
+          />
+        ))
+      )}
+    </List>
   )
 }
 

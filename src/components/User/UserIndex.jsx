@@ -7,7 +7,7 @@ import {
   getDataById,
   modifiedUser,
 } from '../../actions/user'
-import {format} from 'date-fns'
+import { format } from 'date-fns'
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 300 },
@@ -51,7 +51,7 @@ const columns = [
       const role = params.row.role
       if (role?.name) return role.name
 
-      return 
+      return
     },
   },
   {
@@ -61,7 +61,7 @@ const columns = [
     editable: true,
     valueFormatter: (params) => {
       return format(new Date(params.value), 'dd/mm/yyyy')
-    }
+    },
   },
   {
     field: 'country',
@@ -82,7 +82,7 @@ export default function UserIndex() {
 
   useEffect(() => {
     dispatch(listUsers())
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -94,6 +94,7 @@ export default function UserIndex() {
       getActions={getUsers}
       modifiedAction={modifiedUser}
       listData={listUsers}
+      loading={getUsers.loading}
     />
   )
 }

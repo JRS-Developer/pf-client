@@ -13,8 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   getMessages,
   createMessages,
-  resetMessages,
-  resetChat,
+  resetStore
 } from '../../../actions/chat'
 import { getDataById as getUser } from '../../../actions/user'
 import UserMessage from './UserMessage'
@@ -25,8 +24,9 @@ import { makeStyles } from '@material-ui/core/styles'
 
 // Imports
 
-const user = window.localStorage.getItem('user')
+const user = localStorage.getItem('user')
 const drawerWidth = 240
+const chatHeight = 'calc(100vh - 252px)'
 
 const useStyles = makeStyles((theme) => ({
   box: {
@@ -153,10 +153,9 @@ const Chat = () => {
     dispatch(getMessages(chat))
     dispatch(getUser(user))
 
+    // Cuando salga del chat, reinicio el store
     return () => {
-      // Reinicio los mensajes y el chat
-      dispatch(resetMessages())
-      dispatch(resetChat())
+      dispatch(resetStore())
     }
   }, [dispatch, params])
 
@@ -197,7 +196,7 @@ const Chat = () => {
             <Box
               sx={{
                 overflow: 'auto',
-                height: 'calc(100vh - 252px)',
+                height: chatHeight,
                 position: 'relative',
                 transition: '.3s all',
                 width: openUsers ? '75%' : '100%',
@@ -206,8 +205,8 @@ const Chat = () => {
             >
               <Paper
                 sx={{
-                  minHeight: '100%',
                   height: 'auto',
+                  minHeight: chatHeight,
                   flexDirection: 'column',
                   display: 'flex',
                   alignItems: 'center',
@@ -230,6 +229,7 @@ const Chat = () => {
                       sx={{
                         display: 'flex',
                         flexDirection: 'column',
+                        minHeight: chatHeight,
                         gap: 1,
                         width: '100%',
                       }}
@@ -239,10 +239,11 @@ const Chat = () => {
                         const { teachers, students } = users
 
                         // Encuentro al usuario que coincide con el id del usuario que esta en el mensaje
-                        const { user: foundUser } = findUserData(
+                        let foundUser = findUserData(
                           [...teachers, ...students],
                           userId
                         )
+                        foundUser = foundUser?.user
 
                         // Si lo encuentra significa que el suuario existe y es un usuario valido
                         if (foundUser)

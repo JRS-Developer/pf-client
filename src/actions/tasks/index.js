@@ -102,6 +102,34 @@ export const modifiedTask = (body) => async (dispatch) => {
   }
 }
 
+export const corregirTask = (body) => async (dispatch) => {
+  let taskId = body.task_id
+  let matriculaId = body.matricula_id
+  try {
+    dispatch({
+      type: actionType.GET_TASKS_REQUEST,
+    })
+
+    const { data } = await axios.put(
+      `${REACT_APP_SERVER}/tasks/${matriculaId}/${taskId}`,
+      body
+    )
+
+    dispatch({
+      type: actionType.CORREGIR_TASK,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: actionType.TASK_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
 export const removeTask = (id) => async (dispatch) => {
   try {
     dispatch({
@@ -192,5 +220,11 @@ export const markHomeworkDone = (id) => async (dispatch) => {
           ? error.response.data.message
           : error.message,
     })
+  }
+}
+
+export const cleanStore = () => {
+  return {
+    type: actionType.CLEAN_STORE,
   }
 }

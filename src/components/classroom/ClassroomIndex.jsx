@@ -16,6 +16,7 @@ import Container from '@mui/material/Container'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
+import CircularProgress from '@mui/material/CircularProgress'
 
 import { getDatosMatricula as listDatosMatricula } from '../../actions/matricula'
 
@@ -42,9 +43,25 @@ export default function ClassroomIndex() {
       <br />
       <Grid container spacing={4}>
         {loading ? (
-          <h1>Loading...</h1>
+          <Grid
+            container
+            item
+            xs={12}
+            justifyContent="center"
+            alignItems="center"
+          >
+            <CircularProgress />
+          </Grid>
         ) : error ? (
-          <h1>{error}</h1>
+          <Grid
+            container
+            item
+            xs={12}
+            justifyContent="center"
+            alignItems="center"
+          >
+            <h1>{error}</h1>
+          </Grid>
         ) : (
           datosMatricula?.class?.materias?.map((materia) => {
             const profesor = clase?.teachers_materias?.find(
