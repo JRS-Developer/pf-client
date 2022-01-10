@@ -1,45 +1,45 @@
-import * as actionTypes from '../../actions/cicloElectivo/types';
+import * as actionTypes from '../../actions/cicloElectivo/types'
 let initialState = {
   cicloElectivos: [],
-  dataEdit:{},
-  message: {}
+  dataEdit: {},
+  message: {},
 }
 export const getCicloElectivoReducer = (state = initialState, action) => {
-  switch (action.type){
+  switch (action.type) {
     case actionTypes.GET_CICLO_ELECTIVOS_REQUEST:
       return {
         ...state,
-        loadingElectivo : true
+        loadingElectivo: true,
       }
     case actionTypes.GET_CICLO_ELECTIVOS:
       return {
         ...state,
         loadingElectivo: false,
-        cicloElectivos: action.payload
+        cicloElectivos: action.payload,
       }
     case actionTypes.GET_CICLO_ELECTIVO:
       return {
         ...state,
         loadingElectivo: false,
-        dataEdit: action.payload
+        dataEdit: action.payload,
       }
     case actionTypes.ADD_CICLO_ELECTIVO:
       return {
         loadingElectivo: false,
         cicloElectivos: action.payload,
-        message: action.payload
+        message: action.payload,
       }
     case actionTypes.EDIT_CICLO_ELECTIVO:
       return {
         loadingElectivo: false,
         cicloElectivos: action.payload,
-        message: action.payload
+        message: action.payload,
       }
     case actionTypes.CICLO_ELECTIVO_FAIL:
       return {
         ...state,
         loadingElectivo: false,
-        error: action.payload
+        error: action.payload,
       }
     default:
       return state

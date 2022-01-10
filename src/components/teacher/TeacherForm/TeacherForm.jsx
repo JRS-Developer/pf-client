@@ -9,41 +9,19 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
-import { Close/* , Save  */} from '@mui/icons-material'
-
-import List from '@mui/material/List'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import ListItem from '@mui/material/ListItem'
-import ListItemText from '@mui/material/ListItemText'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import Checkbox from '@mui/material/Checkbox'
-import Divider from '@mui/material/Divider'
 
 import {
   getTeachers as listTeachers,
   modifiedTeacher,
   createTeacher,
   getTeacherMaterias,
-  resetTeacherMaterias,
-} from '../../actions/teacher'
-import { getCicloElectivos as listCicloElectivos } from '../../actions/cicloElectivo'
-import { getSchools as listSchools } from '../../actions/school'
+} from '../../../actions/teacher'
+import { getCicloElectivos as listCicloElectivos } from '../../../actions/cicloElectivo'
+import { getSchools as listSchools } from '../../../actions/school'
 
-import { AutocompleteDiv } from '../matricula/MatriculaStyles'
+import { AutocompleteDiv } from '../../matricula/MatriculaStyles'
 import Autocomplete from '@mui/material/Autocomplete'
-
-function not(a, b) {
-  return a.filter((value) => b.indexOf(value) === -1)
-}
-
-function intersection(a, b) {
-  return a.filter((value) => b.indexOf(value) !== -1)
-}
-
-function union(a, b) {
-  return [...a, ...not(b, a)]
-}
+import MateriasTransfer from './MateriasTransfer'
 
 const TeacherForm = ({
   open,
@@ -61,10 +39,6 @@ const TeacherForm = ({
     ciclo_lectivo_id: '',
   })
 
-  const [checked, setChecked] = useState([])
-  const [left, setLeft] = useState([])
-  const [right, setRight] = useState([])
-
   // Clase seleccionada
   const [valueClase, setValueClase] = useState()
   // Escuela seleccionada
@@ -79,135 +53,11 @@ const TeacherForm = ({
   /* const getTeachers = useSelector((state) => state.teacherReducer) */
   /* const { loading } = getTeachers */
 
-  const obtenerMateriasTeacher = useSelector((state) => state.teacherReducer)
-  const { teacherMaterias, allTeacherMaterias } = obtenerMateriasTeacher
-
   const obtenerCiclo = useSelector((state) => state.cicloElectivoReducer)
   const { cicloElectivos } = obtenerCiclo
 
   const obtenerSchools = useSelector((state) => state.schoolReducer)
   const { schools, loadingSchool } = obtenerSchools
-
-  // Otras variables
-  const leftChecked = intersection(checked, left)
-  const rightChecked = intersection(checked, right)
-
-  // Handlers
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value)
-    const newChecked = [...checked]
-
-    if (currentIndex === -1) {
-      newChecked.push(value)
-    } else {
-      newChecked.splice(currentIndex, 1)
-    }
-
-    setChecked(newChecked)
-  }
-
-  const numberOfChecked = (items) => intersection(checked, items).length
-
-  const handleToggleAll = (items) => () => {
-    if (numberOfChecked(items) === items.length) {
-      setChecked(not(checked, items))
-    } else {
-      setChecked(union(checked, items))
-    }
-  }
-
-  // Envio las materias al server para que las coloque al profesor
-  const saveTeacherMaterias = (materias, status = true) => {
-    const teacherMaterias = materias.map((materia) => materia.id)
-
-    const body = {
-      ...rowTeacher,
-      materias: teacherMaterias,
-      status,
-    }
-
-    dispatch(modifiedTeacher(body))
-  }
-
-  const handleCheckedRight = () => {
-    setRight(right.concat(leftChecked))
-    setLeft(not(left, leftChecked))
-    setChecked(not(checked, leftChecked))
-
-    saveTeacherMaterias(leftChecked)
-  }
-
-  const handleCheckedLeft = () => {
-    setLeft(left.concat(rightChecked))
-    setRight(not(right, rightChecked))
-    setChecked(not(checked, rightChecked))
-
-    saveTeacherMaterias(rightChecked, false)
-  }
-
-  const customList = (title, items) => (
-    <Card>
-      <CardHeader
-        sx={{ px: 2, py: 1 }}
-        avatar={
-          <Checkbox
-            onClick={handleToggleAll(items)}
-            checked={
-              numberOfChecked(items) === items.length && items.length !== 0
-            }
-            indeterminate={
-              numberOfChecked(items) !== items.length &&
-              numberOfChecked(items) !== 0
-            }
-            disabled={items.length === 0}
-            inputProps={{
-              'aria-label': 'all items selected',
-            }}
-          />
-        }
-        title={title}
-        subheader={`${numberOfChecked(items)}/${items.length} selected`}
-      />
-      <Divider />
-      <List
-        sx={{
-          width: 250,
-          height: 230,
-          bgcolor: 'background.paper',
-          overflow: 'auto',
-        }}
-        dense
-        component="div"
-        role="list"
-      >
-        {items.map((value) => {
-          const labelId = `transfer-list-all-item-${value}-label`
-
-          return (
-            <ListItem
-              key={value.id}
-              role="listitem"
-              button
-              onClick={handleToggle(value)}
-            >
-              <ListItemIcon>
-                <Checkbox
-                  checked={checked.indexOf(value) !== -1}
-                  tabIndex={-1}
-                  disableRipple
-                  inputProps={{
-                    'aria-labelledby': labelId,
-                  }}
-                />
-              </ListItemIcon>
-              <ListItemText id={labelId} primary={`${value.name}`} />
-            </ListItem>
-          )
-        })}
-        <ListItem />
-      </List>
-    </Card>
-  )
 
   const getMateriasData = async (clase = valueClase, school = valueSchool) => {
     const body = {
@@ -276,35 +126,13 @@ const TeacherForm = ({
     }
   }, [cicloElectivos])
 
-  // Al cambiar las materias que posee el profesor, entonces los muestro en el lado derecho
-  useEffect(() => {
-    const materias = teacherMaterias.map((t) => t.materia)
-    const allMaterias = allTeacherMaterias
-
-    setLeft((left) => {
-      // Elimino las materias de la izquierda que ya tengan un profesor asignado
-      let result = left.filter((materia) => {
-        const found = allMaterias.find((a) => a.materia_id === materia.id)
-        return !found
-      })
-      return result
-    })
-
-    setRight(materias)
-  }, [teacherMaterias, allTeacherMaterias, rowTeacher.teacher_id])
-
-  // Cuando se cierra el component, reinicio la lista de teacherMaterias, y asi cuando vaya a editar otro profesor no muestre la lista de materias que tenia el anterior
-  useEffect(() => {
-    return dispatch(resetTeacherMaterias())
-  }, [dispatch])
-
   return (
     <div>
       <Dialog
         open={open}
         onClose={handleClose}
         maxWidth={`md`}
-        width={"md"}
+        width={'md'}
         scroll="paper"
       >
         <form onSubmit={handleSubmit}>
@@ -339,10 +167,6 @@ const TeacherForm = ({
                         }))
                         // Seteo las nueva clase
                         classSelected && setValueClase(classSelected)
-
-                        // Coloco las materias a la izquierda y reinicio los de la derecha
-                        setLeft(classSelected.materias)
-                        setRight([])
 
                         // Obtengo las materias del profesor
                         await getMateriasData(classSelected, school)
@@ -402,10 +226,6 @@ const TeacherForm = ({
                             clase_id: newValue.id,
                           }))
 
-                          // Coloro las materias a la izquierda y reinicio los de la derecha
-                          setLeft(newValue?.materias)
-                          setRight([])
-
                           // Obtengo las materias que ya tiene el profesor
                           await getMateriasData(newValue)
                         }}
@@ -421,50 +241,17 @@ const TeacherForm = ({
                     </AutocompleteDiv>
                   </Grid>
                 )}
-                <Grid
-                  container
-                  spacing={2}
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Grid item>{customList('Materias', left)}</Grid>
-                  <Grid item>
-                    <Grid container direction="column" alignItems="center">
-                      <Button
-                        sx={{ my: 0.5 }}
-                        variant="outlined"
-                        size="small"
-                        onClick={handleCheckedRight}
-                        disabled={leftChecked.length === 0}
-                        aria-label="move selected right"
-                      >
-                        &gt;
-                      </Button>
-                      <Button
-                        sx={{ my: 0.5 }}
-                        variant="outlined"
-                        size="small"
-                        onClick={handleCheckedLeft}
-                        disabled={rightChecked.length === 0}
-                        aria-label="move selected left"
-                      >
-                        &lt;
-                      </Button>
-                    </Grid>
-                  </Grid>
-                  <Grid item>{customList('Materias Asignadas', right)}</Grid>
-                </Grid>
+                <MateriasTransfer
+                  rowTeacher={rowTeacher}
+                  clase={valueClase}
+                  school={valueSchool}
+                />
               </Grid>
             </Box>
           </DialogContent>
 
           <DialogActions>
-
-            <Button
-              variant="outlined"
-              onClick={handleClose}
-              startIcon={<Close />}
-            >
+            <Button variant="outlined" onClick={handleClose}>
               Aceptar
             </Button>
           </DialogActions>

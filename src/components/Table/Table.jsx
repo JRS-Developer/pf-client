@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { useSelector, useDispatch} from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
 import IconButton from '@mui/material/IconButton'
-import Icon from '@mui/material/Icon';
-import CircularProgress from '@mui/material/CircularProgress';
+import Icon from '@mui/material/Icon'
+import CircularProgress from '@mui/material/CircularProgress'
 import TextField from '@mui/material/TextField'
 import {
   DataGrid,
@@ -21,7 +21,7 @@ import Tooltip from '@mui/material/Tooltip'
 import Stack from '@mui/material/Stack'
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert from '@mui/material/Alert'
-import AccessForm from "../access/AccessForm";
+import AccessForm from '../access/AccessForm'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
@@ -109,6 +109,7 @@ const Table = ({
   getActions,
   modifiedAction,
   listData,
+  loading,
 }) => {
   const dispatch = useDispatch()
 
@@ -135,8 +136,8 @@ const Table = ({
   }
 
   //Obtenemos las acciones por módulos
-  const getActionsModule = useSelector(state => state.actionsModuleReducer);
-  const { actionsModule, loadingActions, errorActions } = getActionsModule;
+  const getActionsModule = useSelector((state) => state.actionsModuleReducer)
+  const { actionsModule, loadingActions, errorActions } = getActionsModule
 
   React.useEffect(() => {
     setRows(data.rows)
@@ -164,10 +165,10 @@ const Table = ({
       setSelection({})
       setTitleForm('Add')
       setOpen(true)
-    }else if( action === 'delete') {
+    } else if (action === 'delete') {
       /* Open DialogConfirm Delete*/
       selection.id ? setOpenConfirm(true) : setOpenAlert(true)
-    }else if( action === 'access') {
+    } else if (action === 'access') {
       /* Open DialogConfirm Access*/
       selection.id ? setOpenAccess(true) : setOpenAlert(true)
     } else if (selection.id) {
@@ -270,68 +271,46 @@ const Table = ({
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'baseline',
+          paddingTop: '5px',
         }}
       >
-        <Box>
+        <Box
+          sx={{
+            marginBottom: '10px',
+          }}
+        >
           <h3>{`LISTA DE ${title}`}</h3>
         </Box>
         <Box>
-
-          {loadingActions ?
+          {loadingActions ? (
             <Box sx={{ display: 'flex' }}>
               <CircularProgress />
-            </Box> : errorActions ? <h4>{errorActions}</h4> : actionsModule.map((act, i) => (
-            <Tooltip title={act.name} key={`t${i}`}>
-              <IconButton
-                aria-label={act.name}
-                size="large"
-                onClick={() => handleClickOpen(`${act.action_param}`)}
-              >
-                <Icon fontSize="inherit">
-                  {act.icon}
-                </Icon>
-              </IconButton>
-            </Tooltip>
-          ))}
-          {/*
-          <Tooltip title="Add">
-            <IconButton
-              aria-label="delete"
-              size="large"
-              onClick={() => handleClickOpen('add')}
-            >
-              <AddCircle fontSize="inherit" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Edit">
-            <IconButton
-              aria-label="delete"
-              size="large"
-              onClick={() => handleClickOpen('edit')}
-            >
-              <Edit fontSize="inherit" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Delete">
-            <IconButton
-              aria-label="delete"
-              size="large"
-              onClick={() => handleOpenConfirm()}
-            >
-              <Delete fontSize="inherit" />
-            </IconButton>
-          </Tooltip>*/}
+            </Box>
+          ) : errorActions ? (
+            <h4>{errorActions}</h4>
+          ) : (
+            actionsModule.map((act, i) => (
+              <Tooltip title={act.name} key={`t${i}`}>
+                <IconButton
+                  aria-label={act.name}
+                  size="large"
+                  onClick={() => handleClickOpen(`${act.action_param}`)}
+                >
+                  <Icon fontSize="inherit">{act.icon}</Icon>
+                </IconButton>
+              </Tooltip>
+            ))
+          )}
         </Box>
       </Box>
       <Paper elevation={24}>
         <Box sx={{ height: 'calc(100vh - 132px)', width: 1 }}>
           <DataGrid
-            //checkboxSelection
             pageSize={pageSize}
             onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
             pagination
             rowsPerPageOptions={[25, 50, 100]}
-            //pageSize={2}
+            loading={loading || loadingActions}
             sx={{
               borderRadius: 2,
               boxShadow: 3,

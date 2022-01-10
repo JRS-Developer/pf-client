@@ -14,7 +14,7 @@ export const GaiaTheme = {
       main: '#846699',
     },
   },
-};
+}
 
 export const HermesTheme = {
   typography: {
@@ -32,7 +32,7 @@ export const HermesTheme = {
       main: '#F2B705',
     },
   },
-};
+}
 
 export const HecateTheme = {
   typography: {
@@ -50,7 +50,7 @@ export const HecateTheme = {
       main: '#2196f3',
     },
   },
-};
+}
 
 export const AfroditaTheme = {
   typography: {
@@ -67,8 +67,8 @@ export const AfroditaTheme = {
     info: {
       main: '#d41e12',
     },
-  }
-};
+  },
+}
 
 export const PoseidonTheme = {
   typography: {
@@ -85,10 +85,10 @@ export const PoseidonTheme = {
     info: {
       main: '#D9C3B0',
     },
-  }
-};
+  },
+}
 
-export const  ZeusTheme = {
+export const ZeusTheme = {
   typography: {
     fontSize: 12,
   },
@@ -103,5 +103,5 @@ export const  ZeusTheme = {
     info: {
       main: '#5595A7',
     },
-  }
-};
+  },
+}

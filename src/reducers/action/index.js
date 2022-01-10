@@ -1,45 +1,45 @@
-import * as actionTypes from '../../actions/action/types';
+import * as actionTypes from '../../actions/action/types'
 let initialState = {
   actions: [],
-  dataEdit:{},
-  message: {}
+  dataEdit: {},
+  message: {},
 }
 export const getActionsReducer = (state = initialState, action) => {
-  switch (action.type){
+  switch (action.type) {
     case actionTypes.GET_ACTIONS_REQUEST:
       return {
         ...state,
-        loading : true
+        loading: true,
       }
     case actionTypes.GET_ACTIONS:
       return {
         ...state,
         loading: false,
-        actions: action.payload
+        actions: action.payload,
       }
     case actionTypes.GET_ACTION:
       return {
         ...state,
         loading: false,
-        dataEdit: action.payload
+        dataEdit: action.payload,
       }
     case actionTypes.ADD_ACTION:
       return {
         loading: false,
         actions: action.payload,
-        message: action.payload
+        message: action.payload,
       }
     case actionTypes.EDIT_ACTION:
       return {
         loading: false,
         actions: action.payload,
-        message: action.payload
+        message: action.payload,
       }
     case actionTypes.ACTION_FAIL:
       return {
         ...state,
         loading: false,
-        error: action.payload
+        error: action.payload,
       }
     default:
       return state

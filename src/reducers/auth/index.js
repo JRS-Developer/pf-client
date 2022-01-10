@@ -1,7 +1,8 @@
-import { LOGOUT, SET_LOGGED } from "../../actions/auth/types";
+import { LOGOUT, SET_LOGGED } from '../../actions/auth/types'
 
 const initialState = {
-  isLogged: false
+  isLogged: false,
+  loading: true,
 }
 
 export default function authReducer(state = initialState, action) {
@@ -9,16 +10,22 @@ export default function authReducer(state = initialState, action) {
     case SET_LOGGED: {
       return {
         ...state,
-        isLogged: true
+        isLogged: true,
+        loading: false,
       }
     }
     case LOGOUT: {
       localStorage.removeItem('token')
+      localStorage.clear()
+      // location.reload();
+
       return {
         ...state,
-        isLogged: false
+        isLogged: false,
+        loading: false,
       }
     }
-    default: return state
+    default:
+      return state
   }
 }

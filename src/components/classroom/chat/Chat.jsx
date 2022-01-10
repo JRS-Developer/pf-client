@@ -1,144 +1,85 @@
-import React, { useState } from 'react'
-// import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button'
-import Icon from '@mui/material/Icon'
-// import Grid from '@mui/material/Grid';
+import { useState, useRef } from 'react'
 import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
-// import AppBar from '@mui/material/AppBar';
-// import Container from '@mui/material/Container';
 import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemAvatar from '@mui/material/ListItemAvatar'
-import ListItemText from '@mui/material/ListItemText'
-import Avatar from '@mui/material/Avatar'
-import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import PrivateChat from './PrivateChat'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
+import CircularProgress from '@mui/material/CircularProgress'
 import { useEffect } from 'react'
 import socket from '../../socket'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getMessages, createMessages } from '../../../actions/chat'
+import {
+  getMessages,
+  createMessages,
+  resetStore
+} from '../../../actions/chat'
 import { getDataById as getUser } from '../../../actions/user'
+import UserMessage from './UserMessage'
+import ChatInput from './ChatInput'
+import Subheader from './ChatSubheader'
+import ListUser from './ListUser'
+import { makeStyles } from '@material-ui/core/styles'
 
-const mensajes = [
-  {
-    id: 1,
-    name: 'Juan',
-    message: 'Hola como andan?',
-    avatar: '/static/images/avatar/5.jpg',
+// Imports
+
+const user = window.localStorage.getItem('user')
+const drawerWidth = 240
+const chatHeight = 'calc(100vh - 252px)'
+
+const useStyles = makeStyles((theme) => ({
+  box: {
+    scrollbarColor: '#6b6b6b #2b2b2b',
+    '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
+      backgroundColor: 'none',
+      width: 5,
+    },
+    '&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb': {
+      borderRadius: 8,
+      backgroundColor: '#6b6b6b',
+      minHeight: 24,
+    },
+    '&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus': {
+      backgroundColor: '#959595',
+    },
+    '&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active': {
+      backgroundColor: '#959595',
+    },
+    '&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover': {
+      backgroundColor: '#959595',
+    },
+    '&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner': {
+      backgroundColor: '#2b2b2b',
+    },
   },
-  {
-    id: 2,
-    name: 'Lean',
-    message: `Cansado`,
-    avatar: '/static/images/avatar/1.jpg',
-  },
-  {
-    id: 1,
-    name: 'Juan',
-    message: 'Mal yo tambien',
-    avatar: '/static/images/avatar/2.jpg',
-  },
-  {
-    id: 2,
-    name: 'Lean',
-    message: 'Esta para un sandwich de milanesa',
-    avatar: '/static/images/avatar/3.jpg',
-  },
-  {
-    id: 1,
-    name: 'Juan',
-    message: 'Siii con una buena birra',
-    avatar: '/static/images/avatar/4.jpg',
-  },
-  {
-    id: 2,
-    name: 'Lean',
-    message: `Venite`,
-    avatar: '/static/images/avatar/5.jpg',
-  },
-  {
-    id: 1,
-    name: 'Juan',
-    message: `Yendo`,
-    avatar: '/static/images/avatar/1.jpg',
-  },
-  {
-    id: 7,
-    name: 'Juan',
-    message: `Yendo`,
-    avatar: '/static/images/avatar/1.jpg',
-  },
-  {
-    id: 7,
-    name: 'Juan',
-    message: `Yendo`,
-    avatar: '/static/images/avatar/1.jpg',
-  },
-  {
-    id: 7,
-    name: 'Juan',
-    message: `Yendo`,
-    avatar: '/static/images/avatar/1.jpg',
-  },
-  {
-    id: 7,
-    name: 'Juan',
-    message: `Yendo`,
-    avatar: '/static/images/avatar/1.jpg',
-  },
-  {
-    id: 7,
-    name: 'Juan',
-    message: `Yendo`,
-    avatar: '/static/images/avatar/1.jpg',
-  },
-  {
-    id: 7,
-    name: 'Juan',
-    message: `Yendo`,
-    avatar: '/static/images/avatar/1.jpg',
-  },
-  {
-    id: 7,
-    name: 'Juan',
-    message: `Yendo`,
-    avatar: '/static/images/avatar/1.jpg',
-  },
-  {
-    id: 7,
-    name: 'Juan',
-    message: `Yendo`,
-    avatar: '/static/images/avatar/1.jpg',
-  },
-  {
-    id: 7,
-    name: 'Juan',
-    message: `Yendo`,
-    avatar: '/static/images/avatar/1.jpg',
-  },
-]
+}))
+
 const Chat = () => {
-  //const context = createContext();
-  const [message, setMessage] = useState('')
   const [typing, setTyping] = useState('')
+  const [openUsers, setOpenUsers] = useState(false)
   const [isPrivate, setIsPrivate] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null)
 
-  const { messages: chatMessages } = useSelector((state) => state.chatReducer)
+  const classes = useStyles()
+
+  const chatRef = useRef(null)
+
+  const {
+    messages: chatMessages,
+    chat,
+    loading: loadingChat,
+  } = useSelector((state) => state.chatReducer)
+
   const { dataEdit: userInfo, loading: loadingUser } = useSelector(
     (state) => state.usersReducer
   )
   console.log(chatMessages)
   console.log(userInfo)
 
-  const user = window.localStorage.getItem('user')
+  const fullName = `${userInfo.firstName} ${userInfo.lastName}`
 
-  const { claseId, materiaId, cicloLectivoId, schoolId } = useParams()
+  const params = useParams()
   const dispatch = useDispatch()
 
   const open = Boolean(anchorEl)
@@ -146,93 +87,185 @@ const Chat = () => {
     setAnchorEl(event.currentTarget)
   }
 
+  const scrollToBottom = () => {
+    if (chatRef && chatRef.current)
+      chatRef.current.scrollTop = chatRef.current.scrollHeight
+  }
+
   const handleClose = () => {
     setIsPrivate(!isPrivate)
     setAnchorEl(null)
   }
 
-  const handleChange = (e) => {
-    e.prevent.default()
-    setMessage(e.target.value)
-    // socket.emit('typing', userInfo);
+  const handleClickUsers = () => {
+    setOpenUsers((open) => !open)
   }
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    dispatch(createMessages(message));
 
-    const fullName = `${userInfo.firstName} - ${userInfo.lastName}`
-    socket.emit('message', fullName, message);
+  const handleSubmit = (message) => {
+    // Si el mensaje esta vacio, no se envia
+    if (message.trim() === '') return
 
-    setMessage('');
+    const data = {
+      chat: chat._id,
+      user: userInfo.id,
+      message,
+    }
+
+    dispatch(createMessages(data))
+
+    const user = { ...userInfo, fullName }
+    // Crep un unico _id para el mensaje, esto es para los otros usuarios
+    const _id = new Date().getTime()
+
+    socket.emit('message', { user, message, chatId: chat._id, _id })
+  }
+
+  const findUserData = (users, userId) => {
+    return users.find(
+      (user) => user.user.id === userId || user.user.id === userId?.id
+    )
   }
 
   useEffect(() => {
+    // Despues de obtener la info del chat, mando un socket.emit para unirme al chat
+
+    if (chat) {
+      socket.emit('join', {
+        chatId: chat._id,
+        userId: userInfo.id,
+      })
+    }
+
+    return () => {
+      // Dejo el chat
+      if (chat) {
+        socket.emit('leave', { chatId: chat._id, userId: userInfo.id })
+      }
+    }
+  }, [chat, userInfo.id])
+
+  useEffect(() => {
     const chat = {
-      materia_id: materiaId,
-      clase_id: claseId,
-      ciclo_lectivo_id: cicloLectivoId,
-      school_id: schoolId,
+      materia_id: params?.materiaId || params?.materia_id,
+      clase_id: params?.claseId || params?.clase_id,
+      ciclo_lectivo_id: params?.cicloLectivoId || params?.ciclo_lectivo_id,
+      school_id: params?.schoolId || params?.school_id,
     }
 
     dispatch(getMessages(chat))
     dispatch(getUser(user))
-  }, [dispatch, materiaId, claseId, user, cicloLectivoId, schoolId])
 
-  // useEffect(() => {
-  //   socket.on('connect', () => {
+    // Cuando salga del chat, reinicio el store
+    return () => {
+      dispatch(resetStore())
+    }
+  }, [dispatch, params])
 
-  //   })
-  //   socket.emit('conectado', userInfo);
-  // }, [userInfo]);
+  // Mostrar typing cuando otro usuario esta escribiendo
+  useEffect(() => {
+    socket.on('typing', (data) => {
+      setTyping(data)
+    })
+  }, [])
 
-  //    socket.on('typing', (data) => {
-  //     setTyping(data);
-  //    });
+  // Cuando el usuario deja de escribir por un tiempo, se elimina el typing
+  useEffect(() => {
+    if (typing) {
+      const timeout = setTimeout(() => {
+        setTyping('')
+      }, 3000)
+      return () => clearTimeout(timeout)
+    }
+  }, [typing])
+
+  // Cuando abre el chat y hay nuevos mensajes, baja el scroll
+  useEffect(() => {
+    scrollToBottom()
+  }, [chatMessages])
 
   return (
     <>
       {!isPrivate ? (
-        <>
-          <Box sx={{ overflow: 'auto', height: 'calc(100vh - 180px)' }}>
-            <Box sx={{ overflow: 'auto', height: 'calc(100vh - 252px)' }}>
-              <Paper sx={{ pb: '50px' }}>
-                <Typography
-                  variant="h5"
-                  gutterBottom
-                  component="div"
-                  sx={{ p: 2, pb: 0 }}
-                >
-                  Inbox
-                </Typography>
-                <List sx={{ mb: 2 }}>
-                  {mensajes.map(({ id, name, message, person }, i) => (
-                    <ListItem
-                      key={`m${i}`}
-                      button
+        <Box>
+          <Box
+            className={classes.box}
+            sx={{
+              overflow: 'hidden',
+              borderRadius: 3,
+              display: 'flex',
+            }}
+          >
+            <Box
+              sx={{
+                overflow: 'auto',
+                height: chatHeight,
+                position: 'relative',
+                transition: '.3s all',
+                width: openUsers ? '75%' : '100%',
+              }}
+              ref={chatRef}
+            >
+              <Paper
+                sx={{
+                  height: 'auto',
+                  minHeight: chatHeight,
+                  flexDirection: 'column',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: openUsers ? `calc(100% - ${drawerWidth}px` : '100%',
+                }}
+              >
+                {loadingChat || loadingUser ? (
+                  <CircularProgress />
+                ) : chatMessages.length ? (
+                  <>
+                    <List
+                      subheader={
+                        <Subheader
+                          typing={typing}
+                          handleClick={handleClickUsers}
+                          open={openUsers}
+                        />
+                      }
                       sx={{
-                        color: name === 'Juan' ? 'primary.main' : 'secondary',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        minHeight: chatHeight,
+                        gap: 1,
+                        width: '100%',
                       }}
                     >
-                      <ListItemAvatar>
-                        <Avatar alt="Profile Picture" />
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={
-                          <Button
-                            id="basic-button"
-                            aria-controls="basic-menu"
-                            aria-haspopup="true"
-                            aria-expanded={open ? 'true' : undefined}
-                            onClick={handleClick}
-                          >
-                            {name}
-                          </Button>
-                        }
-                        secondary={message}
-                      />
-                    </ListItem>
-                  ))}
-                </List>
+                      {chatMessages.map(({ _id, message, user: userId }) => {
+                        const { users } = chat
+                        const { teachers, students } = users
+
+                        // Encuentro al usuario que coincide con el id del usuario que esta en el mensaje
+                        let foundUser = findUserData(
+                          [...teachers, ...students],
+                          userId
+                        )
+                        foundUser = foundUser?.user
+
+                        // Si lo encuentra significa que el suuario existe y es un usuario valido
+                        if (foundUser)
+                          return (
+                            <UserMessage
+                              key={_id}
+                              message={message}
+                              user={foundUser}
+                              isSender={foundUser.id === user}
+                              handleClick={handleClick}
+                              open={open}
+                            />
+                          )
+                        return null
+                      })}
+                    </List>
+                  </>
+                ) : (
+                  <>Este es el inicio del chat, envia el primer mensaje</>
+                )}
                 <Menu
                   id="basic-menu"
                   anchorEl={anchorEl}
@@ -248,39 +281,18 @@ const Chat = () => {
                 </Menu>
               </Paper>
             </Box>
+            {loadingUser || loadingChat ? null : (
+              <ListUser open={openUsers} users={chat?.users} />
+            )}
           </Box>
-          <Box
-            sx={{
-              top: 'auto',
-              bottom: 0,
-              bgColor: 'primary.main',
-              width: '100%',
-            }}
-          >
-            <form onSubmit={handleSubmit}>
-              <Box spacing={0} display="flex" direction="row" sx={{ mt: 2 }}>
-                <TextField
-                  name="message"
-                  required
-                  fullWidth
-                  id="message"
-                  placeholder="Escribir nuevo mensaje..."
-                  autoFocus
-                  value={message}
-                  onChange={handleChange}
-                />
-                <Button
-                  variant="contained"
-                  endIcon={<Icon>send</Icon>}
-                  width="15%"
-                  disabled={!message.length}
-                >
-                  Enviar
-                </Button>
-              </Box>
-            </form>
-          </Box>
-        </>
+          {loadingUser || loadingChat ? null : (
+            <ChatInput
+              handleSubmit={handleSubmit}
+              fullName={fullName}
+              chatId={chat?._id}
+            />
+          )}
+        </Box>
       ) : (
         <PrivateChat onButton={handleClose} />
       )}

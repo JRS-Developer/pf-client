@@ -4,45 +4,74 @@ import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
-import { useHistory } from "react-router-dom"
+import { makeStyles } from '@material-ui/core/styles'
+import { useHistory } from 'react-router-dom'
 import Logo from '../../logo2.png'
-import {gaia} from './gaia'
-import {pricing} from './pricing'
-import {who} from './who'
+import Gaia from './Gaia'
+import Pricing from './Pricing'
+import Who from './Who'
+
+const useStyles = makeStyles((theme) => ({
+  box: {
+    scrollbarColor: '#6b6b6b #2b2b2b',
+    '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
+      backgroundColor: 'none',
+      width: 5,
+    },
+    '&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb': {
+      borderRadius: 8,
+      backgroundColor: '#6b6b6b',
+      minHeight: 24,
+    },
+    '&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus': {
+      backgroundColor: '#959595',
+    },
+    '&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active': {
+      backgroundColor: '#959595',
+    },
+    '&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover': {
+      backgroundColor: '#959595',
+    },
+    '&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner': {
+      backgroundColor: '#2b2b2b',
+    },
+  },
+}))
 
 export default function LandingPage() {
-
+  const classes = useStyles()
   const [value, setValue] = useState('¿Que es GAIA?')
-  const pages = ['¿Que es GAIA?', 'Planes', '¿Quienes somos?'];
+  const [scroll, setScroll] = useState(0)
+  const pages = ['¿Que es GAIA?', 'Planes', '¿Quienes somos?']
   const history = useHistory()
 
-  function handleClick(e){
+  function handleClick(e) {
     setValue(e.target.name)
   }
 
-  function show(value){
-    switch (value){
+  function handleScroll(e) {
+    setScroll(e.target.scrollTop)
+  }
+
+  function show(value) {
+    switch (value) {
       case '¿Que es GAIA?':
-        return gaia
+        return <Gaia scroll={scroll}/>
 
       case 'Planes':
-        return pricing
+        return <Pricing/>
 
       case '¿Quienes somos?':
-        return who
+        return <Who/>
 
       default:
-        return(
-          <Box>
-            Error
-          </Box>
-        )
+        return <Box>Error</Box>
     }
   }
 
   return (
     <Box>
-      <AppBar position="static" sx={{ bgcolor: 'primary.main' }}>
+      <AppBar position="fixed" sx={{ bgcolor: 'primary.main' }}>
         <Toolbar>
           <Typography
             variant="h6"
@@ -61,17 +90,21 @@ export default function LandingPage() {
                 key={page}
                 name={page}
                 size="large"
-                sx={{color: 'white', display: 'block', backgroundColor: value === page ? 'secondary.main' : 'none', ':hover': {
-                  backgroundColor: value === page ? 'secondary.main' : 'none',
+                sx={{
                   color: 'white',
-                } }}
+                  display: 'block',
+                  backgroundColor: value === page ? 'secondary.main' : 'none',
+                  ':hover': {
+                    backgroundColor: value === page ? 'secondary.main' : 'none',
+                    color: 'white',
+                  },
+                }}
                 onClick={handleClick}
               >
                 {page}
               </Button>
             ))}
           </Box>
-
 
           <Button
             sx={{ backgroundColor: 'secondary.main', color: 'white' }}
@@ -81,7 +114,13 @@ export default function LandingPage() {
           </Button>
         </Toolbar>
       </AppBar>
-      {show(value)}
+      <Box
+        className={classes.box}
+        onScroll={handleScroll}
+        sx={{ height: 'calc(100vh - 64px)', overflow: 'auto' , mt: '64px' }}
+      >
+        {show(value)}
+      </Box>
     </Box>
   )
 }

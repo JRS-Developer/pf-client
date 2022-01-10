@@ -63,6 +63,10 @@ const Account = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    // Reinicio los estados de axios
+    setSuccessAxios(false)
+    setErrorAxios(false)
+
     const form = new FormData()
     // Guardo la imagen y la nueva contraseña en un formdata
     if (inputs.password) form.append('password', inputs.password)
@@ -224,7 +228,7 @@ const Account = () => {
               onChange={handleChange}
               InputProps={{
                 endAdornment: (
-                  <InputAdornment>
+                  <InputAdornment position='end'>
                     <IconButton
                       aria-label="toggle password visibility"
                       onClick={handleClickShowPassword}
@@ -244,7 +248,7 @@ const Account = () => {
               helperText={errors.repeatPassword}
               InputProps={{
                 endAdornment: (
-                  <InputAdornment>
+                  <InputAdornment position='end'>
                     <IconButton
                       aria-label="toggle password visibility"
                       onClick={handleClickShowPassword}
