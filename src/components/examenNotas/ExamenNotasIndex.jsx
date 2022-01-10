@@ -11,22 +11,23 @@ import {
   editNotasExamen,
 } from '../../actions/examenNotas'
 
-const columns = [
-  { field: 'id', headerName: 'ID', width: 300 },
-  { field: 'fecha', headerName: 'FECHA EVALUACIÓN', width: 200 },
-  { field: 'school', headerName: 'ESCUELA', width: 300 },
-  { field: 'clase', headerName: 'CLASE', width: 200 },
-  { field: 'ciclo_lectivo', headerName: 'CICLO LECTIVO', width: 200 },
-  { field: 'student', headerName: 'ALUMNO', width: 300 },
-  { field: 'examen', headerName: 'EXAMEN', width: 200 },
-  { field: 'nota', headerName: 'NOTA', width: 100 },
-  { field: 'periodo', headerName: 'PERIODO', width: 100 },
-]
 
 const form = ExamenNotasForm
 
 export default function ExamenNotasIndex(student=false) {
   const { school_id, clase_id, ciclo_lectivo_id, materia_id } = useParams()
+
+  const columns = [
+    { field: 'id', headerName: 'ID', width: 300, hide: student },
+    { field: 'fecha', headerName: 'FECHA EVALUACIÓN', width: 200 },
+    { field: 'school', headerName: 'ESCUELA', width: 300 },
+    { field: 'clase', headerName: 'CLASE', width: 200 },
+    { field: 'ciclo_lectivo', headerName: 'CICLO LECTIVO', width: 200 },
+    { field: 'student', headerName: 'ALUMNO', width: 300 },
+    { field: 'examen', headerName: 'EXAMEN', width: 200 },
+    { field: 'nota', headerName: 'NOTA', width: 100 },
+    { field: 'periodo', headerName: 'PERIODO', width: 100 },
+  ]
 
   const dispatch = useDispatch()
 
@@ -46,7 +47,7 @@ export default function ExamenNotasIndex(student=false) {
       id: materia_id,
     }
     //console.log(body)
-    dispatch(listExamenNotas(body))
+    dispatch(listExamenNotas(body, student))
   }, [])
 
   return (
