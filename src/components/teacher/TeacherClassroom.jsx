@@ -21,6 +21,8 @@ import CircularProgress from '@mui/material/CircularProgress'
 import { getCicloElectivos as listCicloElectivos } from '../../actions/cicloElectivo'
 import { teacherMaterias as listMaterias } from '../../actions/teacher'
 
+const nada = [];
+
 const useStyles = makeStyles(() => ({
   root: {
     height: '100%',
@@ -245,7 +247,7 @@ export const TeacherClassroom = React.memo(function TeamCard() {
               }}
               inputValue={valueSchool?.label || ''}
               id="school_id"
-              options={listSchool? listSchool : false}
+              options={listSchool? listSchool : nada}
               sx={{ width: '100%' }}
               renderInput={(params) => <TextField {...params} label="School" />}
             />
