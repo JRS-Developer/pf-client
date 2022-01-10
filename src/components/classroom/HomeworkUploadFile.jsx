@@ -11,9 +11,9 @@ const Input = styled('input')({
 
 export default function HomeworkUploadFile({onFileChange, setFile}) {
 
-  function removeFile() {
-    setFile(null)
-  }
+  // function removeFile() {
+  //   setFile(null)
+  // }
 
   return (
     <>
