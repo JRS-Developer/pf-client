@@ -1,1 +1,1 @@
-export const GET_LOGIN_PHOTO = "GET_LOGIN_PHOTO"
+export const GET_LOGIN_PHOTO = 'GET_LOGIN_PHOTO'

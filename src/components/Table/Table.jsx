@@ -109,6 +109,7 @@ const Table = ({
   getActions,
   modifiedAction,
   listData,
+  loading,
 }) => {
   const dispatch = useDispatch()
 
@@ -270,9 +271,14 @@ const Table = ({
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'baseline',
+          paddingTop: '5px',
         }}
       >
-        <Box>
+        <Box
+          sx={{
+            marginBottom: '10px',
+          }}
+        >
           <h3>{`LISTA DE ${title}`}</h3>
         </Box>
         <Box>
@@ -295,45 +301,16 @@ const Table = ({
               </Tooltip>
             ))
           )}
-          {/*
-          <Tooltip title="Add">
-            <IconButton
-              aria-label="delete"
-              size="large"
-              onClick={() => handleClickOpen('add')}
-            >
-              <AddCircle fontSize="inherit" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Edit">
-            <IconButton
-              aria-label="delete"
-              size="large"
-              onClick={() => handleClickOpen('edit')}
-            >
-              <Edit fontSize="inherit" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Delete">
-            <IconButton
-              aria-label="delete"
-              size="large"
-              onClick={() => handleOpenConfirm()}
-            >
-              <Delete fontSize="inherit" />
-            </IconButton>
-          </Tooltip>*/}
         </Box>
       </Box>
       <Paper elevation={24}>
         <Box sx={{ height: 'calc(100vh - 132px)', width: 1 }}>
           <DataGrid
-            //checkboxSelection
             pageSize={pageSize}
             onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
             pagination
             rowsPerPageOptions={[25, 50, 100]}
-            //pageSize={2}
+            loading={loading || loadingActions}
             sx={{
               borderRadius: 2,
               boxShadow: 3,
