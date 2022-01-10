@@ -10,6 +10,16 @@ import EditIcon from '@mui/icons-material/Edit'
 import Tooltip from '@mui/material/Tooltip'
 import CorregirTarea from './forms/CorregirTarea.jsx'
 import AlertDialog from '../../alert/AlertDialog'
+import Chip from '@mui/material/Chip'
+import Button from '@mui/material/Button'
+
+const chipProps = {
+  component: 'a',
+  color: 'primary',
+  clickable: true,
+  rel: 'noreferrer',
+  target: '_blank',
+}
 
 const columns = [
   { field: 'firstName', headerName: 'Nombre', width: 130 },
@@ -34,7 +44,22 @@ const columns = [
   { field: 'devolucion', headerName: 'Devolución', width: 130 },
   { field: 'grade', headerName: 'Nota', width: 80 },
   { field: 'observation', headerName: 'Observación', width: 350 },
-  {field: 'file', headerName: 'Archivo', width: 80},
+  {
+    field: 'file',
+    headerName: 'Archivo',
+    width: 120,
+    renderCell: (params) => {
+      const value = params.value
+      return (
+        <Chip
+          {...chipProps}
+          label={value ? 'Ver documento' : 'Sin documento'}
+          href={value?.url ? value.url : '#'}
+          disabled={value?.url ? false : true}
+        />
+      )
+    },
+  },
 ]
 
 export default function TablaEntregas({ tareaId, setTareaId }) {
@@ -52,7 +77,8 @@ export default function TablaEntregas({ tareaId, setTareaId }) {
   }, [dispatch, tareaId])
 
   const studentTasks = useSelector((state) => state.tasksReducer.dataEdit)
-
+  //const tareaUrl = studentTasks.matriculas.student_tasks.file.url
+  //console.log(tareaUrl)
   const rows = studentTasks?.matriculas?.map((matricula) => {
     return {
       end_date: studentTasks.end_date,
@@ -60,7 +86,10 @@ export default function TablaEntregas({ tareaId, setTareaId }) {
       matricula_id: matricula.id,
       firstName: matricula.user.firstName,
       lastName: matricula.user.lastName,
-      status: matricula.student_tasks.status,
+      status:
+        matricula.student_tasks.status === 'submitted'
+          ? 'Entregada'
+          : matricula.student_tasks.status,
       devolucion: matricula.student_tasks.devolucion
         ? matricula.student_tasks.devolucion
         : '-',
@@ -71,6 +100,7 @@ export default function TablaEntregas({ tareaId, setTareaId }) {
         ? matricula.student_tasks.observation
         : '-',
       fecha_entregada: matricula.student_tasks.fecha_entregada,
+      file: matricula.student_tasks.file,
     }
   })
 
