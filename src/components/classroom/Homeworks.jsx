@@ -49,7 +49,7 @@ export default function Homeworks() {
           align="center"
           sx={{ flexDirection: 'column' }}
         >
-          Tareas sin entregar
+          <Typography variant="h6">Tareas sin entregar</Typography>
           <Paper display="flex" sx={{ flexDirection: 'column' }}>
             {/* {tareas.filter(t => t.complete === false).map((t, i) => {return ( */}
             {tasks &&
@@ -111,7 +111,7 @@ export default function Homeworks() {
           align="center"
           sx={{ flexDirection: 'column' }}
         >
-          Tareas entregadas
+          <Typography variant="h6">Tareas entregadas</Typography>
           <Paper display="flex" sx={{ flexDirection: 'column' }}>
             {/* {tareas.filter(t => t.complete === false).map((t, i) => {return ( */}
             {tasks &&
