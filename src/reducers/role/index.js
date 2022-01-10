@@ -1,51 +1,51 @@
-import * as actionTypes from '../../actions/role/types';
+import * as actionTypes from '../../actions/role/types'
 let initialState = {
   roles: [],
-  dataEdit:{},
-  message: {}
+  dataEdit: {},
+  message: {},
 }
 export const getRolesReducer = (state = initialState, action) => {
-  switch (action.type){
+  switch (action.type) {
     case actionTypes.GET_ROLES_REQUEST:
       return {
         ...state,
-        loading : true
+        loading: true,
       }
     case actionTypes.GET_ROLES:
       return {
         ...state,
         loading: false,
-        roles: action.payload
+        roles: action.payload,
       }
     case actionTypes.GET_ROLE:
       return {
         ...state,
         loading: false,
-        dataEdit: action.payload
+        dataEdit: action.payload,
       }
     case actionTypes.ADD_ROLE:
       return {
         loading: false,
         roles: action.payload,
-        message: action.payload
+        message: action.payload,
       }
     case actionTypes.EDIT_ROLE:
       return {
         loading: false,
         roles: action.payload,
-        message: action.payload
+        message: action.payload,
       }
     case actionTypes.DELETE_ROLE:
       return {
         loading: false,
         roles: action.payload,
-        message: action.payload
+        message: action.payload,
       }
     case actionTypes.ROLE_FAIL:
       return {
         ...state,
         loading: false,
-        error: action.payload
+        error: action.payload,
       }
     default:
       return state

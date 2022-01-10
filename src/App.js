@@ -94,47 +94,50 @@ function App() {
     dispatch(checkLogged())
   }, [dispatch])
 
-  return(
+  return (
     <Router>
       <ThemeProvider theme={selectedTheme}>
         <CssBaseline />
-        {!loading &&(
-        <Switch>
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/home" component={LandingPage} />
-          <Route path="/">
-            {isLogged ? (
-              <>
-                <Header
-                  click={() => setSideToggle(false)}
-                  clickClose={() => setSideToggle(true)}
-                  show={sideToggle}
-                  setMode={setMode}
-                  mode={mode}
+        {!loading && (
+          <Switch>
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/home" component={LandingPage} />
+            <Route path="/">
+              {isLogged ? (
+                <>
+                  <Header
+                    click={() => setSideToggle(false)}
+                    clickClose={() => setSideToggle(true)}
+                    show={sideToggle}
+                    setMode={setMode}
+                    mode={mode}
+                  />
+                  <Navbar
+                    show={sideToggle}
+                    click={() => setSideToggle(false)}
+                  />
+                  <Container
+                    show={sideToggle}
+                    setTheme={setTheme}
+                    primary={primary}
+                    setPrimary={setPrimary}
+                    secondary={secondary}
+                    setSecondary={setSecondary}
+                  />
+                </>
+              ) : (
+                <Redirect
+                  push
+                  to={{
+                    pathname: '/home',
+                    state: {
+                      location: location.pathname,
+                    },
+                  }}
                 />
-                <Navbar show={sideToggle} click={() => setSideToggle(false)} />
-                <Container
-                  show={sideToggle}
-                  setTheme={setTheme}
-                  primary={primary}
-                  setPrimary={setPrimary}
-                  secondary={secondary}
-                  setSecondary={setSecondary}
-                />
-              </>
-            ) : (
-              <Redirect
-                push
-                to={{
-                  pathname: '/home',
-                  state: {
-                    location: location.pathname,
-                  },
-                }}
-              />
-            )}
-          </Route>
-        </Switch>
+              )}
+            </Route>
+          </Switch>
         )}
       </ThemeProvider>
     </Router>
