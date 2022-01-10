@@ -1,23 +1,15 @@
-import React, { useState } from 'react'
-import AttachFile from '@mui/icons-material/AttachFile'
+import React from 'react'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
-import FilePresentIcon from '@mui/icons-material/FilePresent'
-import Avatar from '@material-ui/core/Avatar'
 import FileUpload from '@mui/icons-material/FileUpload'
 
 const Input = styled('input')({
   display: 'none',
 })
 
-export default function HomeworkUploadFile() {
-  const [file, setFile] = useState(null)
-
-  function onFileChange(e) {
-    setFile(e.target.file)
-  }
+export default function HomeworkUploadFile({onFileChange, setFile}) {
 
   function removeFile() {
     setFile(null)
@@ -32,22 +24,12 @@ export default function HomeworkUploadFile() {
             height: '100%',
             position: 'relative',
             display: 'flex',
-            aligntItems: 'center',
+            alignItems: 'center',
             justifyContent: 'center',
-            ':hover #prueba': {
-              opacity: 0.7,
-              backgroundColor: 'black',
-              transition: 'opacity .5s',
-            },
           }}
         >
           <label
             htmlFor="icon-button-file"
-            sx={{
-              display: 'flex',
-              aligntItems: 'center',
-              justifyContent: 'center',
-            }}
           >
             <Input
               id="icon-button-file"
@@ -55,26 +37,36 @@ export default function HomeworkUploadFile() {
               onChange={onFileChange}
               accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf"
             />
-
+            <Box>
             <IconButton
               id="prueba"
               component="span"
+            >
+              <FileUpload
+                sx={{
+                  height: '100%',
+                  width: '100%',
+                  zIndex: 9,
+                  opacity: 1,
+                  p: 0,
+                  m: 0,
+                }}
+              />
+            </IconButton>
+            </Box>
+            <Box
               sx={{
-                position: 'absolute',
-                zIndex: 1,
-                opacity: 0,
-                backgroundColor: 'black',
-                transition: 'opacity .5s',
-                width: '80%',
-                height: '80%',
+                height: '100%',
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
-              <FileUpload sx={{ fontSize: 80, zIndex: 9, opacity: 1 }} />
-            </IconButton>
-            
-              <FilePresentIcon sx={{ height: '80%', width: "80%", p: 0, m: 0 }} />
+            </Box>
           </label>
         </Box>
+        
       </Tooltip>
     </>
   )
