@@ -112,6 +112,7 @@ export default function CreateTaskForm({
                   <LocalizationProvider dateAdapter={AdapterDateFns} locale={enAULocale} >
                     <DatePicker
                       fullWidth
+                      minDate={new Date()}
                       sx={{ mr: 2, width: '100%' }}
                       value={input.end_date}
                       onChange={handleDateChange}
