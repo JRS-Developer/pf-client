@@ -34,6 +34,7 @@ const columns = [
   { field: 'devolucion', headerName: 'Devolución', width: 130 },
   { field: 'grade', headerName: 'Nota', width: 80 },
   { field: 'observation', headerName: 'Observación', width: 350 },
+  {field: 'file', headerName: 'Archivo', width: 80},
 ]
 
 export default function TablaEntregas({ tareaId, setTareaId }) {
