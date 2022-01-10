@@ -133,8 +133,8 @@ const Chat = () => {
   const { dataEdit: userInfo, loading: loadingUser } = useSelector(
     (state) => state.usersReducer
   )
-  // console.log(chatMessages)
-  // console.log(userInfo)
+  console.log(chatMessages)
+  console.log(userInfo)
 
   const user = window.localStorage.getItem('user')
 
@@ -158,9 +158,12 @@ const Chat = () => {
   }
   const handleSubmit = (e) => {
     e.preventDefault()
-    // dispatch(createMessages(message));
-    // socket.emit('message', userInfo.fullname, message);
-    // setMessage('');
+    dispatch(createMessages(message));
+
+    const fullName = `${userInfo.firstName} - ${userInfo.lastName}`
+    socket.emit('message', fullName, message);
+
+    setMessage('');
   }
 
   useEffect(() => {
