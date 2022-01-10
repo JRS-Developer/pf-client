@@ -21,12 +21,19 @@ export default function Feed() {
   const [openEdit, setOpenEdit] = useState()
   const [dataPost, setDataPost] = useState({})
   const [img, setImg] = useState(undefined)
+  const [postSubmitted, setPostSubmitted] = useState(true)
   
 
   const { posts, loading } = useSelector((store) => store.postsReducer)
 
   const dispatch = useDispatch()
-  const { claseId, materiaId, cicloLectivoId, schoolId } = useParams()
+  // const { claseId, materiaId, cicloLectivoId, schoolId } = useParams()
+  const params = useParams()
+  const claseId = params.claseId || params.clase_id
+  const materiaId = params.materiaId || params.materia_id
+  const cicloLectivoId = params.cicloLectivoId || params.ciclo_lectivo_id
+  const schoolId = params.schoolId || params.school_id
+  const parametros = {claseId, materiaId, cicloLectivoId, schoolId}
 
   const handleFull = (img) => {
     setOpen(true)
@@ -53,8 +60,9 @@ export default function Feed() {
   const handleCloseEdit = () => setOpenEdit(false)
 
   useEffect(() => {
+    
     dispatch(getPosts(claseId, materiaId, cicloLectivoId, schoolId))
-  }, [claseId, materiaId, dispatch, cicloLectivoId, schoolId])
+  }, [dispatch,claseId, materiaId, cicloLectivoId, schoolId,postSubmitted])
 
   return (
     <Box sx={{ overflow: 'auto' }}>
@@ -96,7 +104,7 @@ export default function Feed() {
         </Grid>
         </Box>
       </Paper>
-        <CreatePost getPosts={getPosts} loading={loading} />
+        <CreatePost getPosts={getPosts} loading={loading} params={parametros} setPostSubmitted={setPostSubmitted} postSubmitted={postSubmitted} />
         {posts?.length ? (
           posts.map((e) => (
             <Post

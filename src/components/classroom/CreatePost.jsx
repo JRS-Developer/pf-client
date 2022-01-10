@@ -10,7 +10,6 @@ import IconButton from '@mui/material/IconButton'
 import Button from '@mui/material/Button'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
 import { getDataById } from '../../actions/user'
 import { createPost } from '../../actions/post'
 import FileUpload from './FileUpload'
@@ -18,13 +17,13 @@ import CardMedia from '@mui/material/CardMedia'
 import Card from '@mui/material/Card'
 import LinearProgress from '@mui/material/LinearProgress'
 
-export default function CreatePost({ getPosts, loading }) {
+export default function CreatePost({ getPosts, loading, params, setPostSubmitted, postSubmitted }) {
   const dispatch = useDispatch()
   const { firstName, lastName, avatar } = useSelector(
     (state) => state.usersReducer.dataEdit
   )
 
-  const { claseId, materiaId, schoolId, cicloLectivoId } = useParams()
+  const { claseId, materiaId, schoolId, cicloLectivoId } = params
 
   const [post, setPost] = useState({
     title: '',
@@ -97,8 +96,8 @@ export default function CreatePost({ getPosts, loading }) {
     setFiles([])
     setImages([])
 
-    dispatch(await createPost(form))
-    dispatch(await getPosts(claseId, materiaId, schoolId, cicloLectivoId))
+    await dispatch( createPost(form))
+    setPostSubmitted(!postSubmitted)
   }
 
   return (

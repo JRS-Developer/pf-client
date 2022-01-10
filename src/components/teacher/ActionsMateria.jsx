@@ -11,6 +11,7 @@ import CommentIcon from '@mui/icons-material/Comment'
 import Homeworks from './homework/Homeworks.jsx'
 import ExamenNotasIndex from '../examenNotas/ExamenNotasIndex'
 import Chat from '../classroom/chat/Chat'
+import Feed from '../classroom/Feed'
 //import CorregirTarea from './homework/forms/CorregirTarea.jsx'
 
 export default function ActionsMateria() {
@@ -30,21 +31,25 @@ export default function ActionsMateria() {
             aria-label="icon label tabs example"
           >
             <Tab icon={<AssignmentIcon />} label="Tareas" value="1" />
+            <Tab icon={<AssignmentIcon />} label="Tareas" value="2" />
             <Tab
               icon={<FormatListBulletedIcon />}
               label="Notas de Examen"
-              value="2"
+              value="3"
             />
-            <Tab icon={<CommentIcon />} label="Chat" value="3" />
+            <Tab icon={<CommentIcon />} label="Chat" value="4" />
           </TabList>
         </Box>
         <TabPanel value="1">
-          <Homeworks />
+          <Feed />
         </TabPanel>
         <TabPanel value="2">
-          <ExamenNotasIndex />
+          <Homeworks />
         </TabPanel>
         <TabPanel value="3">
+          <ExamenNotasIndex />
+        </TabPanel>
+        <TabPanel value="4">
           <Chat />
         </TabPanel>
       </TabContext>
