@@ -3,14 +3,14 @@ import axios from 'axios'
 
 const { REACT_APP_SERVER } = process.env
 
-export const getNotasExamen = (body) => async (dispatch) => {
+export const getNotasExamen = (body, student=false) => async (dispatch) => {
   try {
     dispatch({
       type: actionType.GET_EXAMEN_NOTAS_REQUEST,
     })
 
     const { data } = await axios.post(
-      `${REACT_APP_SERVER}/examenesNotas/notas`,
+      `${REACT_APP_SERVER}/examenesNotas/notas?student=${student}`,
       body
     )
 

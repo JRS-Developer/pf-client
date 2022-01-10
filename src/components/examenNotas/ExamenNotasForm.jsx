@@ -30,7 +30,7 @@ const ExamenNotasForm = ({
   dataForm,
   handleClickMessage,
 }) => {
-  const { school_id, clase_id, ciclo_lectivo_id, id } = useParams() // id = id de la materia
+  const { school_id, clase_id, ciclo_lectivo_id, materia_id } = useParams() // id = id de la materia
   let initialMatricula = []
   if (dataForm?.id) {
     initialMatricula = {
@@ -94,7 +94,7 @@ const ExamenNotasForm = ({
       school_id,
       clase_id,
       ciclo_lectivo_id,
-      id,
+      id: materia_id,
     }
     dispatch(listExamenNotas(body))
     //Cerramos el modal del formulario
@@ -132,7 +132,7 @@ const ExamenNotasForm = ({
                         setRowExamenNotas({
                           ...rowExamenNotas,
                           matriculaId: newValue?.matricula_id,
-                          materia_id: id,
+                          materia_id: materia_id,
                         })
                       }}
                       inputValue={valueMatricula?.label || ''}

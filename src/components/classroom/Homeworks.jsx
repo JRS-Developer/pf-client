@@ -2,7 +2,14 @@ import React from 'react'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
-import { Link, useParams } from 'react-router-dom'
+import ListItem from '@mui/material/ListItem'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemAvatar from '@mui/material/ListItemAvatar'
+import ListItemText from '@mui/material/ListItemText'
+import Avatar from '@mui/material/Avatar'
+import AssignmentSharpIcon from '@mui/icons-material/AssignmentSharp'
+import Typography from '@mui/material/Typography'
+import { Link, useParams, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { alumnoGetTasks } from '../../actions/tasks'
@@ -12,6 +19,11 @@ export default function Homeworks() {
   const tasks = useSelector((state) => state.tasksReducer.tasks)
   const { materiaId, claseId, cicloLectivoId, schoolId } = useParams()
   //console.log(tasks)
+  const history = useHistory()
+
+  function handleClick(id) {
+    history.push(`/tareas/${id}`)
+  }
 
   useEffect(() => {
     //datos mockeados para mandar por body asi devuelve la tarea de la clase 4to año materia biología.
@@ -47,10 +59,47 @@ export default function Homeworks() {
                 )
                 .map((t, i) => {
                   return (
-                    <Link to={`/tareas/${t.id}`} key={`tp${i}`}>
-                      <Box>{t.title}</Box>
-                      <Box>{t.description}</Box>
-                    </Link>
+                    <ListItem
+                      key={`${t.id + i}`}
+                      sx={{ p: 0 }}
+                      onClick={() => handleClick(t.id)}
+                    >
+                      <ListItemButton>
+                        <ListItemAvatar>
+                          <Avatar>
+                            <AssignmentSharpIcon />
+                          </Avatar>
+                        </ListItemAvatar>
+
+                        <ListItemText
+                          disableTypography
+                          primary={
+                            <Typography
+                              sx={{
+                                textOverflow: 'ellipsis',
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                width: 'calc(46vw - 200px)',
+                              }}
+                            >
+                              {t.title}
+                            </Typography>
+                          }
+                          secondary={
+                            <Typography
+                              sx={{
+                                textOverflow: 'ellipsis',
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                width: 'calc(46vw - 200px)',
+                              }}
+                            >
+                              {t.description}
+                            </Typography>
+                          }
+                        />
+                      </ListItemButton>
+                    </ListItem>
                   )
                 })}
           </Paper>
@@ -72,10 +121,47 @@ export default function Homeworks() {
                 )
                 .map((t, i) => {
                   return (
-                    <Link to={`/tareas/${t.id}`} key={`tp${i}`}>
-                      <Box>{t.title}</Box>
-                      <Box>{t.description}</Box>
-                    </Link>
+                    <ListItem
+                      key={`${t.id + i}`}
+                      sx={{ p: 0 }}
+                      onClick={() => handleClick(t.id)}
+                    >
+                      <ListItemButton>
+                        <ListItemAvatar>
+                          <Avatar>
+                            <AssignmentSharpIcon />
+                          </Avatar>
+                        </ListItemAvatar>
+
+                        <ListItemText
+                          disableTypography
+                          primary={
+                            <Typography
+                              sx={{
+                                textOverflow: 'ellipsis',
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                width: 'calc(46vw - 200px)',
+                              }}
+                            >
+                              {t.title}
+                            </Typography>
+                          }
+                          secondary={
+                            <Typography
+                              sx={{
+                                textOverflow: 'ellipsis',
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                width: 'calc(46vw - 200px)',
+                              }}
+                            >
+                              {t.description}
+                            </Typography>
+                          }
+                        />
+                      </ListItemButton>
+                    </ListItem>
                   )
                 })}
           </Paper>
