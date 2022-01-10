@@ -19,24 +19,22 @@ import Paper from '@mui/material/Paper'
 import CircularProgress from '@mui/material/CircularProgress'
 
 import { getCicloElectivos as listCicloElectivos } from '../../actions/cicloElectivo'
-import { teacherMaterias as listMaterias } from '../../actions/teacher'
 
 
-export const Noticias = React.memo(function TeamCard() {
+
+export default function Noticias(){
   const [valueCiclo, setValueCiclo] = React.useState('')
   const [valueSchool, setValueSchool] = React.useState('')
   const [listSchool, setListSchool] = React.useState('')
 
-  const dispatch = useDispatch()
-
+  
   const cicloElectivoReducer = useSelector(
     (state) => state.cicloElectivoReducer
-  )
-  const { cicloElectivos, loading, error } = cicloElectivoReducer
-
-  const obtenerMaterias = useSelector((state) => state.teacherReducer)
-  const { teacherMaterias, loadingTeacher } = obtenerMaterias
-
+    )
+    const { cicloElectivos, loading, error } = cicloElectivoReducer
+    
+  const dispatch = useDispatch()
+    
   useEffect(() => {
     dispatch(listCicloElectivos())
   }, [dispatch])
@@ -83,7 +81,7 @@ export const Noticias = React.memo(function TeamCard() {
       setListSchool(unicos)
       setValueSchool(unicos[0])
     }
-  }, [cicloElectivos, teacherMaterias])
+  }, [cicloElectivos])
 
   // Listamos Los ciclos electivos
   let listaElectivos = []
@@ -97,9 +95,7 @@ export const Noticias = React.memo(function TeamCard() {
   return (
     <>
       <br />
-      {/*<NoSsr>
-        <GoogleFontLoader fonts={[{ font: 'Ubuntu', weights: [400, 700] }]} />
-      </NoSsr>*/}
+    
       <Grid container spacing={4}>
         <Grid item xs={12} md={6} lg={3}>
           {loading ? (
@@ -124,7 +120,7 @@ export const Noticias = React.memo(function TeamCard() {
         </Grid>
 
         <Grid item xs={12} md={6} lg={3}>
-          {loadingTeacher || loading ? (
+          {loading ? (
             <CircularProgress />
           ) : (
             <Autocomplete
@@ -140,36 +136,12 @@ export const Noticias = React.memo(function TeamCard() {
             />
           )}
         </Grid>
-      </Grid>
-      <Grid container spacing={4}>
-        {loadingTeacher || loading ? (
-          <Grid item container justify="center" alignItems="center" xs={12}>
-            <CircularProgress />
-          </Grid>
-        ) : (
-          teacherMaterias?.map((mt) => (
-            <Grid item xs={12} md={6} lg={4} key={mt.id}>
-              <CustomCard
-                thumbnail={
-                  'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRQHCBAj8nRJkEwjWg5TpNuSZZG9iscsf43V1mfx0LZHNDYW3S_&usqp=CAU'
-                }
-                title={mt.materia.name}
-                subtitle={mt.class.name}
-                description={mt.materia.description}
-                id={mt.materia_id}
-                school_id={mt.school_id}
-                clase_id={mt.clase_id}
-                ciclo_lectivo_id={mt.ciclo_lectivo_id}
-                materia_id={mt.materia_id}
-              />
-            </Grid>
-          ))
-        )}
-      </Grid>
+      
+    </Grid>
     </>
   )
-})
-export default Noticias
+}
+
 
 
 
