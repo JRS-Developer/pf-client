@@ -19,6 +19,8 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { getCicloElectivos as listCicloElectivos } from '../../actions/cicloElectivo'
 import { teacherMaterias as listMaterias} from '../../actions/teacher'
 
+
+
 const useStyles = makeStyles(() => ({
   root: {
     height: '100%',
@@ -73,7 +75,7 @@ const useStyles = makeStyles(() => ({
     },
   },
 }));
-
+const nada = []
 const CustomCard = ({thumbnail, title, subtitle, description, materia_id, school_id, clase_id, ciclo_lectivo_id}) => {
   const styles = useStyles();
   // const btnStyles = useGraphicBtnStyles();
@@ -225,7 +227,7 @@ export const TeacherClassroom = React.memo(function TeamCard() {
               }}
               inputValue={valueSchool?.label || ''}
               id="school_id"
-              options={listSchool? listSchool : false}
+              options={listSchool? listSchool : nada}
               sx={{ width: '100%' }}
               renderInput={(params) => <TextField {...params} label="School" />}
             />}
