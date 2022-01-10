@@ -25,8 +25,8 @@ const columns = [
 
 const form = ExamenNotasForm
 
-export default function ExamenNotasIndex() {
-  const { school_id, clase_id, ciclo_lectivo_id, id } = useParams()
+export default function ExamenNotasIndex(student=false) {
+  const { school_id, clase_id, ciclo_lectivo_id, materia_id } = useParams()
 
   const dispatch = useDispatch()
 
@@ -43,7 +43,7 @@ export default function ExamenNotasIndex() {
       school_id,
       clase_id,
       ciclo_lectivo_id,
-      id,
+      id: materia_id,
     }
     //console.log(body)
     dispatch(listExamenNotas(body))

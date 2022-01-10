@@ -3,31 +3,33 @@ import axios from 'axios'
 
 const { REACT_APP_SERVER } = process.env
 
-export const getNotasExamen = (body) => async (dispatch) => {
-  try {
-    dispatch({
-      type: actionType.GET_EXAMEN_NOTAS_REQUEST,
-    })
+export const getNotasExamen =
+  (body, student = false) =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: actionType.GET_EXAMEN_NOTAS_REQUEST,
+      })
 
-    const { data } = await axios.post(
-      `${REACT_APP_SERVER}/examenesNotas/notas`,
-      body
-    )
+      const { data } = await axios.post(
+        `${REACT_APP_SERVER}/examenesNotas/notas?student=${student}`,
+        body
+      )
 
-    dispatch({
-      type: actionType.GET_EXAMEN_NOTAS,
-      payload: data,
-    })
-  } catch (error) {
-    dispatch({
-      type: actionType.EXAMEN_NOTA_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    })
+      dispatch({
+        type: actionType.GET_EXAMEN_NOTAS,
+        payload: data,
+      })
+    } catch (error) {
+      dispatch({
+        type: actionType.EXAMEN_NOTA_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
   }
-}
 
 export const getDataById = (id) => async (dispatch) => {
   try {
