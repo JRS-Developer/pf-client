@@ -12,6 +12,7 @@ import Homeworks from './homework/Homeworks.jsx'
 import ExamenNotasIndex from '../examenNotas/ExamenNotasIndex'
 import Chat from '../classroom/chat/Chat'
 import Feed from '../classroom/Feed'
+import FeedIcon from '@mui/icons-material/Feed';
 //import CorregirTarea from './homework/forms/CorregirTarea.jsx'
 
 export default function ActionsMateria() {
@@ -30,7 +31,7 @@ export default function ActionsMateria() {
             onChange={handleChange}
             aria-label="icon label tabs example"
           >
-            <Tab icon={<AssignmentIcon />} label="Tareas" value="1" />
+            <Tab icon={<FeedIcon/>} label="Publicaciones" value="1" />
             <Tab icon={<AssignmentIcon />} label="Tareas" value="2" />
             <Tab
               icon={<FormatListBulletedIcon />}
