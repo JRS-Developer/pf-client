@@ -18,7 +18,7 @@ export default function ExamenNotasIndex() {
   const { school_id, clase_id, ciclo_lectivo_id, materia_id } = useParams()
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 300, hide: student },
+    { field: 'id', headerName: 'ID', width: 300},
     { field: 'fecha', headerName: 'FECHA EVALUACIÓN', width: 200 },
     { field: 'school', headerName: 'ESCUELA', width: 300 },
     { field: 'clase', headerName: 'CLASE', width: 200 },
@@ -47,7 +47,7 @@ export default function ExamenNotasIndex() {
       id: materia_id,
     }
     //console.log(body)
-    dispatch(listExamenNotas(body, student))
+    dispatch(listExamenNotas(body))
   }, [dispatch])
 
 
