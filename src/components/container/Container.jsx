@@ -24,7 +24,6 @@ import TablaEntregas from '../teacher/homework/TablaEntregas.jsx'
 import TeacherClassroom from '../teacher/TeacherClassroom'
 import ActionsMateria from '../teacher/ActionsMateria'
 import socket from '../socket'
-import Feed from '../classroom/Feed'
 import Noticias from '../noticias/Noticias'
 
 const user = localStorage.getItem('user')
