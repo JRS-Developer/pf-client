@@ -13,6 +13,7 @@ import { useParams, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { alumnoGetTasks } from '../../actions/tasks'
+import { format } from 'date-fns'
 
 export default function Homeworks() {
   const dispatch = useDispatch()
@@ -86,18 +87,33 @@ export default function Homeworks() {
                             </Typography>
                           }
                           secondary={
+                            <Box sx={{
+                              display: 'flex',
+                              justifyContent: 'space-between'
+                            }}>
                             <Typography
                               sx={{
                                 textOverflow: 'ellipsis',
                                 overflow: 'hidden',
                                 whiteSpace: 'nowrap',
-                                width: 'calc(46vw - 200px)',
+                                width: 'calc(46vw - 350px)',
                               }}
                             >
                               {t.description}
                             </Typography>
+                            <Typography
+                            sx={{
+                              marginRight: '10px'
+                            }}
+                           >
+                     
+                             {'Fecha de entrega: ' + format(new Date(t.end_date), 'dd/MM/yy')}
+                           </Typography>
+                           </Box>
                           }
+                          
                         />
+
                       </ListItemButton>
                     </ListItem>
                   )
