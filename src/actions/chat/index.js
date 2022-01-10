@@ -17,9 +17,8 @@ export const USER_FAIL = 'USER_FAIL'
 export const SET_NEW_MESSAGE = 'SET_NEW_MESSAGE'
 export const CREATE_MESSAGES = 'CREATE_MESSAGES'
 export const UPDATE_MESSAGES = 'UPDATE_MESSAGES'
-export const RESET_MESSAGES = 'RESET_MESSAGES'
 export const GET_CHAT = 'GET_CHAT'
-export const RESET_CHAT = 'RESET_CHAT'
+export const RESET_STORE = 'RESET_STORE'
 
 // Users
 export const ADD_ONLINE_USER = 'ADD_ONLINE_USER'
@@ -91,6 +90,12 @@ export const setNewMessage = (data) => {
   return {
     type: SET_NEW_MESSAGE,
     payload: data,
+  }
+}
+
+export const resetStore = () => {
+  return {
+    type: RESET_STORE,
   }
 }
 

@@ -10,7 +10,11 @@ import { useEffect } from 'react'
 import socket from '../../socket'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getMessages, createMessages } from '../../../actions/chat'
+import {
+  getMessages,
+  createMessages,
+  resetStore
+} from '../../../actions/chat'
 import { getDataById as getUser } from '../../../actions/user'
 import UserMessage from './UserMessage'
 import ChatInput from './ChatInput'
@@ -148,6 +152,11 @@ const Chat = () => {
 
     dispatch(getMessages(chat))
     dispatch(getUser(user))
+
+    // Cuando salga del chat, reinicio el store
+    return () => {
+      dispatch(resetStore())
+    }
   }, [dispatch, params])
 
   // Mostrar typing cuando otro usuario esta escribiendo
@@ -230,10 +239,11 @@ const Chat = () => {
                         const { teachers, students } = users
 
                         // Encuentro al usuario que coincide con el id del usuario que esta en el mensaje
-                        const { user: foundUser } = findUserData(
+                        let foundUser = findUserData(
                           [...teachers, ...students],
                           userId
                         )
+                        foundUser = foundUser?.user
 
                         // Si lo encuentra significa que el suuario existe y es un usuario valido
                         if (foundUser)
