@@ -51,6 +51,7 @@ const Content = ({
     return () => {
       window.removeEventListener('unload', handleUnload)
     }
+    
   }, [])
 
   return (

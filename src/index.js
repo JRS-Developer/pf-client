@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import store from './store'
 import './lib/axios'
 import './index.css'
+import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <Provider store={store}>
@@ -13,4 +14,6 @@ ReactDOM.render(
     </BrowserRouter>
   </Provider>,
   document.getElementById('root')
-)
+);
+
+reportWebVitals();
