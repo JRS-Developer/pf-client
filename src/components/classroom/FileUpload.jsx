@@ -12,6 +12,20 @@ const Input = styled('input')({
 
 export default function FileUpload({ setFiles, files, setImages, images }) {
 
+  const refFiles = React.useRef(null)
+  const refImages = React.useRef(null)
+  console.log(refFiles.current)
+  React.useEffect(() => {
+    if(images.length === 0 && refImages){
+      refImages.current.value = null
+    }
+    if(files.length === 0 && refFiles){
+     refFiles.current.value = null
+    }
+
+
+  }, [images.length, files.length])
+
   function onFileChange(e) {
     let arr = Array.from(e.target.files)
     setFiles([...files, ...arr])
@@ -33,6 +47,7 @@ export default function FileUpload({ setFiles, files, setImages, images }) {
             onChange={onImageChange}
             accept="image/png, image/jpeg"
             multiple
+            ref={refImages}
           />
 
           <IconButton
@@ -54,6 +69,7 @@ export default function FileUpload({ setFiles, files, setImages, images }) {
             onChange={onFileChange}
             accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf"
             multiple
+            ref={refFiles}
           />
 
           <IconButton

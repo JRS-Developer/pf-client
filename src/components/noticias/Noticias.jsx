@@ -1,43 +1,36 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-//import GoogleFontLoader from 'react-google-font-loader';
-
-import { makeStyles } from '@material-ui/core/styles'
-import Avatar from '@material-ui/core/Avatar'
-import AvatarGroup from '@material-ui/lab/AvatarGroup'
-import Box from '@material-ui/core/Box'
-import { Link } from 'react-router-dom'
-
 import Grid from '@material-ui/core/Grid'
-import { Row, Item } from '@mui-treasury/components/flex'
-import { Info } from '@mui-treasury/components/info'
-import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
-import Button from '@mui/material/Button'
-import Paper from '@mui/material/Paper'
 import CircularProgress from '@mui/material/CircularProgress'
-
 import { getCicloElectivos as listCicloElectivos } from '../../actions/cicloElectivo'
+import { getSchools as listSchools } from '../../actions/school'
+import Feed from '../classroom/Feed'
 
-
-
-export default function Noticias(){
+export default function Noticias() {
   const [valueCiclo, setValueCiclo] = React.useState('')
   const [valueSchool, setValueSchool] = React.useState('')
-  const [listSchool, setListSchool] = React.useState('')
 
-  
   const cicloElectivoReducer = useSelector(
     (state) => state.cicloElectivoReducer
-    )
-    const { cicloElectivos, loading, error } = cicloElectivoReducer
-    
+  )
+  const schoolReducer = useSelector((state) => state.schoolReducer)
+
   const dispatch = useDispatch()
-    
+
   useEffect(() => {
     dispatch(listCicloElectivos())
+    dispatch(listSchools())
   }, [dispatch])
+
+  const cicloElectivos = cicloElectivoReducer.cicloElectivos
+  const loadingCicloLectivo = cicloElectivoReducer.loadingElectivo
+  const errorCicloLectivo = cicloElectivoReducer.error
+
+  const loadingSchool = schoolReducer.loadingSchool
+  const schools = schoolReducer.schools
+  const errorSchool = schoolReducer.error
 
   useEffect(() => {
     if (cicloElectivos?.length > 0) {
@@ -45,43 +38,17 @@ export default function Noticias(){
         id: cicloElectivos[0].id,
         label: cicloElectivos[0].name,
       })
-      const teacherId = localStorage.getItem('user')
-      dispatch(
-        listMaterias({
-          teacher_id: teacherId,
-          ciclo_lectivo_id: cicloElectivos[0].id,
-        })
-      )
     }
   }, [dispatch, cicloElectivos])
 
   useEffect(() => {
-    if (teacherMaterias?.length > 0) {
-      let materias = []
-      teacherMaterias?.forEach((sc) => {
-        materias.push({
-          id: sc.school.id,
-          label: sc.school.name,
-        })
+    if (schools?.length > 0) {
+      setValueSchool({
+        id: schools[0].id,
+        label: schools[0].name,
       })
-
-      //Obtenemos las schools no repetidas
-      const setObj = new Set() // creamos pares de clave y array
-
-      const unicos = materias.reduce((acc, persona) => {
-        const clave = JSON.stringify(persona)
-
-        if (!setObj.has(clave)) {
-          setObj.add(clave, persona)
-          acc.push(persona)
-        }
-        return acc
-      }, [])
-
-      setListSchool(unicos)
-      setValueSchool(unicos[0])
     }
-  }, [cicloElectivos])
+  }, [dispatch, schools])
 
   // Listamos Los ciclos electivos
   let listaElectivos = []
@@ -92,16 +59,24 @@ export default function Noticias(){
     })
   })
 
+  let listaSchools = []
+  schools?.map((school) => {
+    return listaSchools.push({
+      id: school.id,
+      label: school.name,
+    })
+  })
+
   return (
     <>
       <br />
-    
+
       <Grid container spacing={4}>
         <Grid item xs={12} md={6} lg={3}>
-          {loading ? (
+          {loadingCicloLectivo ? (
             <CircularProgress />
-          ) : error ? (
-            <h3>{error}</h3>
+          ) : errorCicloLectivo ? (
+            <h3>{errorCicloLectivo}</h3>
           ) : (
             <Autocomplete
               value={valueCiclo || ''}
@@ -120,8 +95,10 @@ export default function Noticias(){
         </Grid>
 
         <Grid item xs={12} md={6} lg={3}>
-          {loading ? (
+          {loadingSchool ? (
             <CircularProgress />
+          ) : errorSchool ? (
+            <h3>{errorSchool}</h3>
           ) : (
             <Autocomplete
               value={valueSchool || ''}
@@ -130,19 +107,18 @@ export default function Noticias(){
               }}
               inputValue={valueSchool?.label || ''}
               id="school_id"
-              options={listSchool? listSchool : false}
+              options={listaSchools}
               sx={{ width: '100%' }}
               renderInput={(params) => <TextField {...params} label="School" />}
             />
           )}
         </Grid>
-      
-    </Grid>
+      </Grid>
+      <Grid container>
+        {valueCiclo && valueSchool ? (
+          <Feed valueCiclo={valueCiclo.id} valueSchool={valueSchool.id} />
+        ) : null}
+      </Grid>
     </>
   )
 }
-
-
-
-
-

@@ -11,12 +11,20 @@ export const getPosts =
       })
 
       let query = `${REACT_APP_SERVER}/publications?`
-      query += new URLSearchParams({
-        classId: classId,
-        cicloLectivoId: cicloLectivoId,
-        materiaId: materiaId,
-        schoolId: schoolId,
-      }).toString()
+
+      if (classId || materiaId) {
+        query += new URLSearchParams({
+          classId: classId,
+          cicloLectivoId: cicloLectivoId,
+          materiaId: materiaId,
+          schoolId: schoolId,
+        }).toString()
+      } else {
+        query += new URLSearchParams({
+          cicloLectivoId: cicloLectivoId,
+          schoolId: schoolId,
+        }).toString()
+      }
 
       const { data } = await axios.get(query)
 
