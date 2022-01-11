@@ -91,9 +91,9 @@ export default function Header({
     }
   }
 
-  const handleNotificationOpen =(event) =>{
+  const handleNotificationOpen = (event) => {
     setAnchorNotification(event.currentTarget)
-   /*  setOpen(!open) */
+    /*  setOpen(!open) */
   }
 
   const handleNotificationClose = () => {
@@ -146,7 +146,7 @@ export default function Header({
       </MenuItem>
     </Menu>
   )
-  
+
   const notificationRender = (
     <Menu
       anchorEl={anchorNotification}
@@ -163,11 +163,10 @@ export default function Header({
       open={isNotificationOpen}
       onClose={handleNotificationClose}
     >
-      <MenuItem>
-      notificacion Like!
-      </MenuItem>
-      <MenuItem>
-      notificaciones comment!
+      <MenuItem>notificacion Like!</MenuItem>
+      <MenuItem>notificaciones comment!</MenuItem>
+      <MenuItem onClick={() => handleMenuClose('/notifications')}>
+        Ver todas las notificaciones
       </MenuItem>
     </Menu>
   )
@@ -255,15 +254,15 @@ export default function Header({
             </Typography>
             <Box sx={{ display: { xs: 'none', md: 'flex' }, ml: 'auto' }}>
               <IconButton
-                  size="large"
-                  aria-label="show 17 new notifications"
-                  color="inherit"
-                  onClick={handleNotificationOpen}
-                >
-                  <Badge badgeContent={17} color="secondary">
-                    <NotificationsIcon />
-                  </Badge>
-                </IconButton>
+                size="large"
+                aria-label="show 17 new notifications"
+                color="inherit"
+                onClick={handleNotificationOpen}
+              >
+                <Badge badgeContent={17} color="secondary">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
               <IconButton
                 size="large"
                 edge="end"

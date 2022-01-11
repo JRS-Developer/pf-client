@@ -23,6 +23,7 @@ import TeacherIndex from '../teacher/TeacherIndex'
 import TablaEntregas from '../teacher/homework/TablaEntregas.jsx'
 import TeacherClassroom from '../teacher/TeacherClassroom'
 import ActionsMateria from '../teacher/ActionsMateria'
+import Notifications from '../notifications/Notifications'
 import { socketChat } from '../socket'
 
 const user = localStorage.getItem('user')
@@ -85,6 +86,7 @@ const Content = ({
             setSecondary={setSecondary}
           />
         </Route>
+        <Route exact path="/notifications" component={Notifications} />
         <Route exact path="/classroom-teacher" component={TeacherClassroom} />
         <Route
           exact
