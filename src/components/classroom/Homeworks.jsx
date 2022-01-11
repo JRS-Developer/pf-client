@@ -9,10 +9,12 @@ import ListItemText from '@mui/material/ListItemText'
 import Avatar from '@mui/material/Avatar'
 import AssignmentSharpIcon from '@mui/icons-material/AssignmentSharp'
 import Typography from '@mui/material/Typography'
+import Divider from '@mui/material/Divider'
 import { useParams, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { alumnoGetTasks } from '../../actions/tasks'
+import { format } from 'date-fns'
 
 export default function Homeworks() {
   const dispatch = useDispatch()
@@ -49,7 +51,7 @@ export default function Homeworks() {
           align="center"
           sx={{ flexDirection: 'column' }}
         >
-          Tareas sin entregar
+          <Typography variant="h5">Tareas sin entregar</Typography>
           <Paper display="flex" sx={{ flexDirection: 'column' }}>
             {/* {tareas.filter(t => t.complete === false).map((t, i) => {return ( */}
             {tasks &&
@@ -61,12 +63,12 @@ export default function Homeworks() {
                   return (
                     <ListItem
                       key={`${t.id + i}`}
-                      sx={{ p: 0 }}
+                      sx={{ p: 0, border: 1, borderColor: "primary.main", pr: 1 }}
                       onClick={() => handleClick(t.id)}
                     >
-                      <ListItemButton>
-                        <ListItemAvatar>
-                          <Avatar>
+                      <ListItemButton sx={{p: 1}}>
+                        <ListItemAvatar sx={{pl:1}}>
+                          <Avatar sx={{width: 35, height: 35}}>
                             <AssignmentSharpIcon />
                           </Avatar>
                         </ListItemAvatar>
@@ -74,30 +76,50 @@ export default function Homeworks() {
                         <ListItemText
                           disableTypography
                           primary={
+                            <Box>
                             <Typography
+                            variant="h6"
                               sx={{
                                 textOverflow: 'ellipsis',
                                 overflow: 'hidden',
                                 whiteSpace: 'nowrap',
-                                width: 'calc(46vw - 200px)',
+                                width: 'calc(46vw - 200px)'
                               }}
                             >
                               {t.title}
                             </Typography>
+                            <Divider sx={{pb: 0.5}}/>
+                            </Box>
                           }
                           secondary={
+                            <Grid container>
+                              <Grid item xs={8}>
                             <Typography
+                            variant="body2"
                               sx={{
-                                textOverflow: 'ellipsis',
-                                overflow: 'hidden',
-                                whiteSpace: 'nowrap',
-                                width: 'calc(46vw - 200px)',
+                                pt: 0.5,
+                                width: '100%',
+                                lineHeight: "1.5em",
+                                height: "4.5em",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "normal",
                               }}
                             >
                               {t.description}
                             </Typography>
+                            </Grid>
+                            <Grid item xs={4}>
+                            <Typography variant="body2" sx={{pt: 0.5, textAlign: "right"}}>
+                     
+                             {'Fecha de entrega:'} <br/> {format(new Date(t.end_date), 'dd/MM/yy')}
+                           </Typography>
+                           </Grid>
+                           </Grid>
                           }
+                          
                         />
+
                       </ListItemButton>
                     </ListItem>
                   )
@@ -111,7 +133,7 @@ export default function Homeworks() {
           align="center"
           sx={{ flexDirection: 'column' }}
         >
-          Tareas entregadas
+          <Typography variant="h5">Tareas entregadas</Typography>
           <Paper display="flex" sx={{ flexDirection: 'column' }}>
             {/* {tareas.filter(t => t.complete === false).map((t, i) => {return ( */}
             {tasks &&
@@ -123,12 +145,12 @@ export default function Homeworks() {
                   return (
                     <ListItem
                       key={`${t.id + i}`}
-                      sx={{ p: 0 }}
+                      sx={{ p: 0, border: 1, borderColor: "primary.main", pr: 1 }}
                       onClick={() => handleClick(t.id)}
                     >
-                      <ListItemButton>
-                        <ListItemAvatar>
-                          <Avatar>
+                      <ListItemButton sx={{p: 1}}>
+                        <ListItemAvatar sx={{pl:1}}>
+                          <Avatar sx={{width: 35, height: 35}}>
                             <AssignmentSharpIcon />
                           </Avatar>
                         </ListItemAvatar>
@@ -136,30 +158,50 @@ export default function Homeworks() {
                         <ListItemText
                           disableTypography
                           primary={
+                            <Box>
                             <Typography
+                            variant="h6"
                               sx={{
                                 textOverflow: 'ellipsis',
                                 overflow: 'hidden',
                                 whiteSpace: 'nowrap',
-                                width: 'calc(46vw - 200px)',
+                                width: 'calc(46vw - 200px)'
                               }}
                             >
                               {t.title}
                             </Typography>
+                            <Divider sx={{pb: 0.5}}/>
+                            </Box>
                           }
                           secondary={
+                            <Grid container>
+                              <Grid item xs={8}>
                             <Typography
+                            variant="body2"
                               sx={{
-                                textOverflow: 'ellipsis',
-                                overflow: 'hidden',
-                                whiteSpace: 'nowrap',
-                                width: 'calc(46vw - 200px)',
+                                pt: 0.5,
+                                width: '100%',
+                                lineHeight: "1.5em",
+                                height: "4.5em",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "normal",
                               }}
                             >
                               {t.description}
                             </Typography>
+                            </Grid>
+                            <Grid item xs={4}>
+                            <Typography variant="body2" sx={{pt: 0.5, textAlign: "right"}}>
+                     
+                             {'Fecha de entrega:'} <br/> {format(new Date(t.end_date), 'dd/MM/yy')}
+                           </Typography>
+                           </Grid>
+                           </Grid>
                           }
+                          
                         />
+
                       </ListItemButton>
                     </ListItem>
                   )

@@ -20,6 +20,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 
 import { getDatosMatricula as listDatosMatricula } from '../../actions/matricula'
 
+
 export default function ClassroomIndex() {
   const dispatch = useDispatch()
 
@@ -105,7 +106,7 @@ export default function ClassroomIndex() {
                   <CardMedia
                     component="img"
                     height="194"
-                    image="https://www.rivera.gub.uy/portal/wp-content/uploads/2017/02/imagen-no-disponible.jpg"
+                    image= {`/imagenes/${materia.name}.jpg`}
                     alt="img"
                   />
                   <CardContent>

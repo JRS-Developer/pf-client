@@ -12,8 +12,7 @@ import EditPostForm from './EditPostForm'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 
-import Button from '@mui/material/Button' 
-
+import Button from '@mui/material/Button'
 
 export default function Feed() {
   const [open, setOpen] = useState(false) //Este es para el Dialog que muestra la imagen de una publicacion
@@ -22,7 +21,6 @@ export default function Feed() {
   const [dataPost, setDataPost] = useState({})
   const [img, setImg] = useState(undefined)
   const [postSubmitted, setPostSubmitted] = useState(true)
-  
 
   const { posts, loading } = useSelector((store) => store.postsReducer)
 
@@ -33,7 +31,7 @@ export default function Feed() {
   const materiaId = params.materiaId || params.materia_id
   const cicloLectivoId = params.cicloLectivoId || params.ciclo_lectivo_id
   const schoolId = params.schoolId || params.school_id
-  const parametros = {claseId, materiaId, cicloLectivoId, schoolId}
+  const parametros = { claseId, materiaId, cicloLectivoId, schoolId }
 
   const handleFull = (img) => {
     setOpen(true)
@@ -55,56 +53,76 @@ export default function Feed() {
     setOpenEdit(true)
   }
 
- 
-
   const handleCloseEdit = () => setOpenEdit(false)
 
   useEffect(() => {
-    
     dispatch(getPosts(claseId, materiaId, cicloLectivoId, schoolId))
-  }, [dispatch,claseId, materiaId, cicloLectivoId, schoolId,postSubmitted])
+  }, [dispatch, claseId, materiaId, cicloLectivoId, schoolId, postSubmitted])
 
   return (
     <Box sx={{ overflow: 'auto' }}>
       <Grid container spacing={2}>
-      <Paper
-        display="grid"
-        align="center"
-        sx={{
-          p: 1,
-          border: 1,
-          borderColor: 'primary.main',
-          borderRadius: 1,
-          flexDirection: 'column',
-          width: '100%'
-        }}
-      >
-        <Box>
-          
-          <Grid container spacing={2} sx={{ width: '90%', marginTop: '1px' }}>
-            <Grid item xs={10}>
-              <TextField
-                label="Meet"
-                name="meet"
-                variant="outlined"
-                sx={{ mb: 1, mt: 1, width: '95%', height: '40px',}}
-                size="small"
-                //onChange={handleChange}
-                //value={post.title}
-              />
+        {/* <Paper
+          display="grid"
+          align="center"
+          sx={{
+            mt:2,
+            ml: 2,
+            p: 1,
+            border: 1,
+            borderColor: 'primary.main',
+            borderRadius: 1,
+            display: 'flex',
+            width: '100%', justifyContent: "center", alignItems: "center"
+          }}
+        >
+          <Box sx={{p: 2, display: "flex", justifyContent: "center", alignItems: "center", width: '100%'}}>
+            <Grid container spacing={2} sx={{ alignItems: "center" }}>
+              <Grid item xs={12} sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                <TextField
+                  label="Meet"
+                  name="meet"
+                  variant="outlined"
+                  sx={{ width: '100%', height: '40px' }}
+                  size="small"
+                  //onChange={handleChange}
+                  //value={post.title}
+                />
+              </Grid>
+              <Grid item xs={1} sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                <Button
+                  variant="contained"
+                  size="small"
+                  sx={{
+                    width: '50px',
+                    height: '40px',
+                  }}
+                >
+                  Publicar
+                </Button>
+              </Grid>
+              <Grid item xs={1} sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                <Button
+                  variant="contained"
+                  size="small"
+                  href="http://meet.google.com/new"
+                  target="_blank"
+                  rel="noopener"
+                  sx={{ width: '50px', height: '40px' }}
+                >
+                  Nuevo Meet
+                </Button>
+              </Grid>
             </Grid>
-            
-        <Button variant="contained" size="small"  sx={{ marginRight:'5px',mb: 1, mt: 2.5, width: '50px', height: '40px'}}>
-          Publicar
-        </Button>
-        <Button variant="contained" size="small" href='http://meet.google.com/new' target="_blank" rel="noopener" sx={{mb: 1, mt: 2.5, width: '50px', height: '40px'}}>
-         Nuevo Meet
-        </Button>
-        
-        </Grid>
-        </Box>
-      </Paper>
-        <CreatePost getPosts={getPosts} loading={loading} params={parametros} setPostSubmitted={setPostSubmitted} postSubmitted={postSubmitted} />
+          </Box>
+        </Paper> */}
+        <CreatePost
+          getPosts={getPosts}
+          loading={loading}
+          params={parametros}
+          setPostSubmitted={setPostSubmitted}
+          postSubmitted={postSubmitted}
+        />
         {posts?.length ? (
           posts.map((e) => (
             <Post
