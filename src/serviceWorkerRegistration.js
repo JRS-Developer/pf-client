@@ -109,6 +109,8 @@ function registerValidSW(swUrl, config) {
     })
 }
 
+const user = localStorage.getItem('user')
+
 export const subscription = async (data) => {
   const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`
   const reg = await navigator.serviceWorker.register(swUrl)
@@ -118,7 +120,7 @@ export const subscription = async (data) => {
     applicationServerKey: REACT_APP_VAPID,
   })
 
-  await axios.post(`${REACT_APP_WEBPUSH}/subscription`, suscribe)
+  await axios.post(`${REACT_APP_WEBPUSH}/subscription`, { sub: suscribe, user })
 
   console.log('suscribed!')
 }
