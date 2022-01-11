@@ -7,22 +7,33 @@ import CircularProgress from '@mui/material/CircularProgress'
 import { getCicloElectivos as listCicloElectivos } from '../../actions/cicloElectivo'
 import { getSchools as listSchools } from '../../actions/school'
 import Feed from '../classroom/Feed'
+import { getMatriculaByUserId } from '../../actions/matricula'
 
 export default function Noticias() {
   const [valueCiclo, setValueCiclo] = React.useState('')
   const [valueSchool, setValueSchool] = React.useState('')
-
+  const alumnoId = localStorage.getItem('user')
+  const alumnoRole = localStorage.getItem('role')
   const cicloElectivoReducer = useSelector(
     (state) => state.cicloElectivoReducer
   )
   const schoolReducer = useSelector((state) => state.schoolReducer)
+  const alumnoMatriculaReducer = useSelector(
+    (state) => state.matriculaReducer.dataEdit
+  )
+  //Me traigo las acciones.
+  const getActionsModule = useSelector((state) => state.actionsModuleReducer)
+  const { actionsModule } = getActionsModule
 
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(listCicloElectivos())
     dispatch(listSchools())
-  }, [dispatch])
+    if (alumnoRole === 'Alumno') {
+      dispatch(getMatriculaByUserId(alumnoId))
+    }
+  }, [dispatch, alumnoId, alumnoRole])
 
   const cicloElectivos = cicloElectivoReducer.cicloElectivos
   const loadingCicloLectivo = cicloElectivoReducer.loadingElectivo
@@ -32,23 +43,33 @@ export default function Noticias() {
   const schools = schoolReducer.schools
   const errorSchool = schoolReducer.error
 
+  const actionsNames = actionsModule?.map((action) => action.name)
+
   useEffect(() => {
-    if (cicloElectivos?.length > 0) {
+    if (cicloElectivos?.length > 0 && alumnoRole !== 'Alumno') {
       setValueCiclo({
         id: cicloElectivos[0].id,
         label: cicloElectivos[0].name,
       })
+    } else {
+      if (alumnoRole === 'Alumno') {
+        setValueCiclo({ id: alumnoMatriculaReducer.ciclo_lectivo_id })
+      }
     }
-  }, [dispatch, cicloElectivos])
+  }, [dispatch, cicloElectivos, alumnoRole, alumnoMatriculaReducer])
 
   useEffect(() => {
-    if (schools?.length > 0) {
+    if (schools?.length > 0 && alumnoRole !== 'Alumno') {
       setValueSchool({
         id: schools[0].id,
         label: schools[0].name,
       })
+    } else {
+      if (alumnoRole === 'Alumno') {
+        setValueSchool({ id: alumnoMatriculaReducer.school_id })
+      }
     }
-  }, [dispatch, schools])
+  }, [dispatch, schools, alumnoRole, alumnoMatriculaReducer])
 
   // Listamos Los ciclos electivos
   let listaElectivos = []
@@ -72,51 +93,62 @@ export default function Noticias() {
       <br />
 
       <Grid container spacing={4}>
-        <Grid item xs={12} md={6} lg={3}>
-          {loadingCicloLectivo ? (
-            <CircularProgress />
-          ) : errorCicloLectivo ? (
-            <h3>{errorCicloLectivo}</h3>
-          ) : (
-            <Autocomplete
-              value={valueCiclo || ''}
-              onChange={(event, newValue) => {
-                setValueCiclo(newValue)
-              }}
-              inputValue={valueCiclo?.label || ''}
-              id="ciclo_lectivo_id"
-              options={listaElectivos}
-              sx={{ width: '100%' }}
-              renderInput={(params) => (
-                <TextField {...params} label="Ciclo Lectivo" />
-              )}
-            />
-          )}
-        </Grid>
+        {actionsNames?.includes('Nuevo') || actionsNames?.includes('Editar') ? (
+          <Grid item xs={12} md={6} lg={3}>
+            {loadingCicloLectivo ? (
+              <CircularProgress />
+            ) : errorCicloLectivo ? (
+              <h3>{errorCicloLectivo}</h3>
+            ) : (
+              <Autocomplete
+                value={valueCiclo || ''}
+                onChange={(event, newValue) => {
+                  setValueCiclo(newValue)
+                }}
+                inputValue={valueCiclo?.label || ''}
+                id="ciclo_lectivo_id"
+                options={listaElectivos}
+                sx={{ width: '100%' }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Ciclo Lectivo" />
+                )}
+              />
+            )}
+          </Grid>
+        ) : null}
 
-        <Grid item xs={12} md={6} lg={3}>
-          {loadingSchool ? (
-            <CircularProgress />
-          ) : errorSchool ? (
-            <h3>{errorSchool}</h3>
-          ) : (
-            <Autocomplete
-              value={valueSchool || ''}
-              onChange={(event, newValue) => {
-                setValueSchool(newValue)
-              }}
-              inputValue={valueSchool?.label || ''}
-              id="school_id"
-              options={listaSchools}
-              sx={{ width: '100%' }}
-              renderInput={(params) => <TextField {...params} label="School" />}
-            />
-          )}
-        </Grid>
+        {actionsNames?.includes('Nuevo') || actionsNames?.includes('Editar') ? (
+          <Grid item xs={12} md={6} lg={3}>
+            {loadingSchool ? (
+              <CircularProgress />
+            ) : errorSchool ? (
+              <h3>{errorSchool}</h3>
+            ) : (
+              <Autocomplete
+                value={valueSchool || ''}
+                onChange={(event, newValue) => {
+                  setValueSchool(newValue)
+                }}
+                inputValue={valueSchool?.label || ''}
+                id="school_id"
+                options={listaSchools}
+                sx={{ width: '100%' }}
+                renderInput={(params) => (
+                  <TextField {...params} label="School" />
+                )}
+              />
+            )}
+          </Grid>
+        ) : null}
       </Grid>
       <Grid container>
         {valueCiclo && valueSchool ? (
-          <Feed valueCiclo={valueCiclo.id} valueSchool={valueSchool.id} />
+          <Feed
+            valueCiclo={valueCiclo.id}
+            valueSchool={valueSchool.id}
+            noticias={true}
+            nuevo={actionsNames?.includes('Nuevo')}
+          />
         ) : null}
       </Grid>
     </>

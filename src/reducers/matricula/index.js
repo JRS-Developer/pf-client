@@ -13,6 +13,12 @@ export const getMatriculaReducer = (state = initialState, action) => {
         ...state,
         loading: true,
       }
+    case actionTypes.GET_MATRICULA_BY_USER_ID:
+      return {
+        ...state,
+        loading: false,
+        dataEdit: action.payload
+      }
     case actionTypes.GET_MATRICULAS:
       return {
         ...state,

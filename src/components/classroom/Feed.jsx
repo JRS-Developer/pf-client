@@ -14,7 +14,7 @@ import TextField from '@mui/material/TextField'
 
 import Button from '@mui/material/Button'
 
-export default function Feed({valueCiclo,valueSchool}) {
+export default function Feed({valueCiclo,valueSchool, noticias , nuevo}) {
   const [open, setOpen] = useState(false) //Este es para el Dialog que muestra la imagen de una publicacion
   const [openConfirm, setOpenConfirm] = useState(false) // Dialong Confirm, aqui muestra para eliminar la publicacion
   const [openEdit, setOpenEdit] = useState()
@@ -62,7 +62,7 @@ export default function Feed({valueCiclo,valueSchool}) {
 
   return (
     <Box sx={{ overflow: 'auto' }}>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} pt={5}>
         {/* <Paper
           display="grid"
           align="center"
@@ -117,13 +117,15 @@ export default function Feed({valueCiclo,valueSchool}) {
             </Grid>
           </Box>
         </Paper> */}
+        { !noticias || nuevo ?( //verificacion que le paso desde el componente noticias para que me renderice si el usuario tiene la action nuevo
         <CreatePost
           getPosts={getPosts}
           loading={loading}
           params={parametros}
           setPostSubmitted={setPostSubmitted}
           postSubmitted={postSubmitted}
-        />
+        />):null}
+             
         {posts?.length ? (
           posts.map((e) => (
             <Post

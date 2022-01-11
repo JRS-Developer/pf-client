@@ -14,7 +14,7 @@ export default function FileUpload({ setFiles, files, setImages, images }) {
 
   const refFiles = React.useRef(null)
   const refImages = React.useRef(null)
-  console.log(refFiles.current)
+  
   React.useEffect(() => {
     if(images.length === 0 && refImages){
       refImages.current.value = null
