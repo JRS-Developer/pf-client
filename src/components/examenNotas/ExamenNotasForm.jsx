@@ -15,6 +15,9 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import { useEffect } from 'react'
 import { AutocompleteDiv } from './ExamenNotasStyles'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import DatePicker from '@mui/lab/DatePicker'
 
 import {
   getNotasExamen as listExamenNotas,
@@ -146,24 +149,35 @@ const ExamenNotasForm = ({
                   </AutocompleteDiv>
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    name="fecha"
-                    margin="dense"
-                    id="fecha"
-                    label="Fecha de evaluación"
-                    type="text"
-                    value={rowExamenNotas.fecha}
-                    onChange={handleChange}
-                    fullWidth={true}
-                    variant="outlined"
-                  />
+                  <LocalizationProvider dateAdapter={AdapterDateFns} >
+                    <DatePicker
+                      fullWidth
+                      sx={{ mr: 2, width: '100%' }}
+                      value={rowExamenNotas.fecha}
+                      onChange={handleChange}
+                      renderInput={(params) => (
+                        <TextField
+                          fullWidth={true}
+                          sx={{ mr: 2, width: '100%' }}
+                          {...params}
+                          name="fecha"
+                          id="fecha"
+                          label="Fecha de evaluación"
+                          type="date"
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                        />
+                      )}
+                    />
+                  </LocalizationProvider>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     name="examen"
                     margin="dense"
                     id="examen"
-                    label="Número de Evaluación"
+                    label="Número de Evaluación (Ejem. Examen 1)"
                     type="text"
                     value={rowExamenNotas.examen}
                     onChange={handleChange}
@@ -189,7 +203,7 @@ const ExamenNotasForm = ({
                     name="periodo"
                     margin="dense"
                     id="periodo"
-                    label="Periodo de evaluación"
+                    label="Periodo de evaluación (Ejem. T1, T2)"
                     type="text"
                     value={rowExamenNotas.periodo}
                     onChange={handleChange}
