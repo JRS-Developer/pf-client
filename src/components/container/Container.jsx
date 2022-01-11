@@ -23,7 +23,7 @@ import TeacherIndex from '../teacher/TeacherIndex'
 import TablaEntregas from '../teacher/homework/TablaEntregas.jsx'
 import TeacherClassroom from '../teacher/TeacherClassroom'
 import ActionsMateria from '../teacher/ActionsMateria'
-import socket from '../socket'
+import { socketChat } from '../socket'
 
 const user = localStorage.getItem('user')
 
@@ -37,20 +37,7 @@ const Content = ({
 }) => {
   // Seteamos al usuario como usuario conectado en el socket
   useEffect(() => {
-    socket.emit('go-online', user)
-
-    const handleUnload = (e) => {
-      socket.emit('go-offline', user)
-      // e.preventDefault()
-      // e.returnValue = ''
-    }
-
-    // Seteamos al usuario como usuario desconectado en el socket cuando se cierre la pestaña
-    window.addEventListener('unload', handleUnload)
-
-    return () => {
-      window.removeEventListener('unload', handleUnload)
-    }
+    socketChat.emit('go-online', user)
   }, [])
 
   return (

@@ -26,7 +26,7 @@ import { useState, useEffect /*useContext*/ } from 'react'
 import { useSelector } from 'react-redux'
 // import socket from '../../socket';
 import Chat from './Chat'
-import socket from '../../socket'
+import { socketChat } from '../../socket'
 
 // const mensajes = [
 //   {
@@ -132,7 +132,7 @@ export default function PrivateChat() {
   const privateChat = useSelector((state) => state.privateChat)
 
   useEffect(() => {
-    socket.emit('conectado')
+    socketChat.emit('conectado')
   }, [])
 
   const handleClick = () => {
