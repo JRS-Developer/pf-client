@@ -1,12 +1,10 @@
-import axios from 'axios'
-const { REACT_APP_WEBPUSH, PUBLIC_VAPID_KEY} = process.env
+import axios from 'axios';
+import * as serviceWorkerRegistration from '../serviceWorkerRegistration';
+const { REACT_APP_WEBPUSH, PUBLIC_VAPID_KEY} = process.env;
 
 export const subscription = async (data) => {
     
-    const reg = await navigator.serviceWorker.register('./webPush.js', {
-        scope:'/'
-    });
-    console.log('register!')
+    const reg = await serviceWorkerRegistration.register()
 
     const suscribe = await reg.pushManager.subscribe({
         userVisibleOnly: true,

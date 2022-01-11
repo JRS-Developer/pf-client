@@ -3,12 +3,13 @@ import { createTheme } from '@mui/material/styles'
 import { ThemeProvider } from '@mui/material/styles'
 import * as themes from '../theme'
 import CssBaseline from '@mui/material/CssBaseline'
-import * as serviceWorkerRegistration from '../serviceWorkerRegistration';
+
 import Navbar from './navbar/Navbar'
 import Header from './header/Header'
 import Container from './container/Container'
 
-import {subscription} from '../services'
+import {subscription} from '../serviceWorkerRegistration'
+
 
 const Home = () => {
   const [sideToggle, setSideToggle] = useState(false)
@@ -42,10 +43,6 @@ const Home = () => {
   })
 
   useEffect(() => {
-    subscription()
-  })
-
-  useEffect(() => {
     setCustom({
       typography: {
         fontSize: 12,
@@ -66,7 +63,7 @@ const Home = () => {
   }, [primary, secondary])
 
   useEffect(() => {
-    serviceWorkerRegistration.register()
+    subscription()
   }, []);
 
   const actualTheme = theme !== 'custom' ? themes[theme] : custom

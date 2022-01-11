@@ -1,3 +1,5 @@
+import axios from 'axios';
+const { REACT_APP_WEBPUSH, PUBLIC_VAPID_KEY} = process.env;
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
@@ -19,7 +21,7 @@ const isLocalhost = Boolean(
 );
 
 export function register(config) {
-  if (process.env.NODE_ENV === 'development' && 'serviceWorker' in navigator) {
+  if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
     if (publicUrl.origin !== window.location.origin) {
@@ -28,7 +30,7 @@ export function register(config) {
       // serve assets; see https://github.com/facebook/create-react-app/issues/2374
       return;
     }
-
+    
     window.addEventListener('load', () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 
@@ -51,6 +53,7 @@ export function register(config) {
     });
   }
 }
+
 
 function registerValidSW(swUrl, config) {
   navigator.serviceWorker
@@ -94,6 +97,23 @@ function registerValidSW(swUrl, config) {
     .catch((error) => {
       console.error('Error during service worker registration:', error);
     });
+}
+
+export const subscription = async (data) => {
+  const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+  const reg = await navigator.serviceWorker
+  .register(swUrl)
+  console.log(reg)
+  const suscribe = await reg.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: PUBLIC_VAPID_KEY,
+  });
+
+
+  await axios.post(REACT_APP_WEBPUSH, suscribe);
+
+  console.log('suscribed!')
+
 }
 
 function checkValidServiceWorker(swUrl, config) {
