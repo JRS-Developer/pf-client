@@ -13,6 +13,12 @@ import Paper from '@mui/material/Paper';
 //import NotasProfesor from '../notas/NotasProfesor';
 import ExamenNotasIndex from '../examenNotas/ExamenNotasIndex';
 import FullScreenDialog from './chat/ListUser';
+import AssignmentIcon from '@mui/icons-material/Assignment'
+import FeedIcon from '@mui/icons-material/Feed';
+import VideoCameraFrontIcon from '@mui/icons-material/VideoCameraFront';
+import GroupIcon from '@mui/icons-material/Group';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
+import CommentIcon from '@mui/icons-material/Comment'
 import ListStudents from '../classroom/ListStudents.jsx'
 import JitsiComponent from "./Jitsi/JitsiComponent";
 
@@ -35,12 +41,12 @@ export default function ClassRoom() {
       <TabContext value={value}>
         <Box>
           <TabList onChange={handleChange}>
-            <Tab label="Publicaciones" value="1" />
-            <Tab label="Chat" value="2" />
-            <Tab label="Tareas" value="3" />
-            <Tab label="Notas" value="4" />
-            <Tab label="Lista" value="5" />
-            <Tab label="Videollamada" value="6" />
+            <Tab label="Publicaciones" icon={<FeedIcon />} value="1" />
+            <Tab label="Chat" icon={<CommentIcon />} value="2" />
+            <Tab label="Tareas" icon={<AssignmentIcon />} value="3" />
+            <Tab label="Notas" icon={<FormatListBulletedIcon />} value="4" />
+            <Tab label="Lista" icon={<GroupIcon />} value="5" />
+            <Tab label="Videollamada" icon={<VideoCameraFrontIcon />} value="6" />
           </TabList>
         </Box>
         <Paper elevation={24}>
