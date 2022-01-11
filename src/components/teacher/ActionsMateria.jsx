@@ -14,8 +14,10 @@ import Chat from '../classroom/chat/Chat'
 import Feed from '../classroom/Feed'
 import FeedIcon from '@mui/icons-material/Feed';
 import VideoCameraFrontIcon from '@mui/icons-material/VideoCameraFront';
+import GroupIcon from '@mui/icons-material/Group';
 import JitsiComponent from '../classroom/Jitsi/JitsiComponent'
 //import CorregirTarea from './homework/forms/CorregirTarea.jsx'
+import ListStudents from '../classroom/ListStudents.jsx'
 
 export default function ActionsMateria() {
   const [value, setValue] = useState('1')
@@ -43,6 +45,7 @@ export default function ActionsMateria() {
             />
             <Tab icon={<CommentIcon />} label="Chat" value="4" />
             <Tab icon={<VideoCameraFrontIcon />} label="Videollamada" value="5" />
+            <Tab icon={<GroupIcon />} label="Alumnos" value="6" />
           </TabList>
         </Box>
         <TabPanel value="1">
@@ -59,6 +62,10 @@ export default function ActionsMateria() {
         </TabPanel>
         <TabPanel value="5">
           <JitsiComponent />
+        </TabPanel>
+        <TabPanel value="6">
+          <h2>Lista de Alumnos</h2>
+          <ListStudents />
         </TabPanel>
       </TabContext>
     </Box>

@@ -10,9 +10,10 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Paper from '@mui/material/Paper';
-import NotasProfesor from '../notas/NotasProfesor';
+//import NotasProfesor from '../notas/NotasProfesor';
 import ExamenNotasIndex from '../examenNotas/ExamenNotasIndex';
 import FullScreenDialog from './chat/ListUser';
+import ListStudents from '../classroom/ListStudents.jsx'
 import JitsiComponent from "./Jitsi/JitsiComponent";
 
 export default function ClassRoom() {
@@ -50,7 +51,10 @@ export default function ClassRoom() {
             {/*<NotasProfesor />*/}
             <ExamenNotasIndex student={true} />
           </TabPanel>  
-          <TabPanel value="5"><FullScreenDialog /></TabPanel>
+          <TabPanel value="5">
+            <h2>Lista de Alumnos</h2>
+            <ListStudents />
+          </TabPanel>
           <TabPanel sx={{p: 0}} value="6"><JitsiComponent /></TabPanel>
         </Paper>
       </TabContext>
