@@ -14,7 +14,7 @@ import {
 
 const form = ExamenNotasForm
 
-export default function ExamenNotasIndex() {
+export default function ExamenNotasIndex(student = false) {
   const { school_id, clase_id, ciclo_lectivo_id, materia_id } = useParams()
 
   const columns = [
