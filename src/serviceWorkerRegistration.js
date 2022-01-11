@@ -1,5 +1,5 @@
 import axios from 'axios';
-const { REACT_APP_WEBPUSH, PUBLIC_VAPID_KEY} = process.env;
+const { REACT_APP_WEBPUSH, REACT_APP_VAPID} = process.env;
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
@@ -106,7 +106,7 @@ export const subscription = async (data) => {
   console.log(reg)
   const suscribe = await reg.pushManager.subscribe({
       userVisibleOnly: true,
-      applicationServerKey: PUBLIC_VAPID_KEY,
+      applicationServerKey: REACT_APP_VAPID,
   });
 
 
