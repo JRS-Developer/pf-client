@@ -163,7 +163,7 @@ export default function Post({
         <CardHeader
           avatar={<Avatar alt={name} src={avatar} />}
           title={name}
-          subheader={format(new Date(date), 'MMMM, d, yyyy')}
+          subheader={format(new Date(date), 'dd/MM/yy K:mmaaa')}
           action={
             isMyPost ? (
               <>
