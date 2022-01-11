@@ -17,7 +17,7 @@ export const getMatriculaReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        dataEdit: action.payload
+        dataEdit: action.payload,
       }
     case actionTypes.GET_MATRICULAS:
       return {
