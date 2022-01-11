@@ -118,7 +118,7 @@ export const subscription = async (data) => {
     applicationServerKey: REACT_APP_VAPID,
   })
 
-  await axios.post(REACT_APP_WEBPUSH, suscribe)
+  await axios.post(`${REACT_APP_WEBPUSH}/subscription`, suscribe)
 
   console.log('suscribed!')
 }
