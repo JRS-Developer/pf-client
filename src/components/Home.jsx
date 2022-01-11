@@ -3,7 +3,7 @@ import { createTheme } from '@mui/material/styles'
 import { ThemeProvider } from '@mui/material/styles'
 import * as themes from '../theme'
 import CssBaseline from '@mui/material/CssBaseline'
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import * as serviceWorkerRegistration from '../serviceWorkerRegistration';
 import Navbar from './navbar/Navbar'
 import Header from './header/Header'
 import Container from './container/Container'
