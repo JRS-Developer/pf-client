@@ -1,0 +1,1 @@
+console.log('todo bien desde webPush')

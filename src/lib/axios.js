@@ -1,7 +1,7 @@
 import axios from 'axios'
 const { REACT_APP_SERVER } = process.env
 
-if (!REACT_APP_SERVER)
+if (!REACT_APP_SERVER )
   console.error('Please provide the REACT_APP_SERVER env variable')
 
 // Esto es para no estar teniendo que importar el REACT_APP_SERVER

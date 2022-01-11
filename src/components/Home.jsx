@@ -8,6 +8,8 @@ import Navbar from './navbar/Navbar'
 import Header from './header/Header'
 import Container from './container/Container'
 
+import {subscription} from '../services'
+
 const Home = () => {
   const [sideToggle, setSideToggle] = useState(false)
 
@@ -37,6 +39,10 @@ const Home = () => {
         main: '#846699',
       },
     },
+  })
+
+  useEffect(() => {
+    subscription()
   })
 
   useEffect(() => {
