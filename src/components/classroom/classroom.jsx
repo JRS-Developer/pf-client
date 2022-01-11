@@ -12,7 +12,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import Paper from '@mui/material/Paper';
 //import NotasProfesor from '../notas/NotasProfesor';
 import ExamenNotasIndex from '../examenNotas/ExamenNotasIndex';
-import FullScreenDialog from './chat/ListUser';
+//import FullScreenDialog from './chat/ListUser';
 import ListStudents from '../classroom/ListStudents.jsx'
 import JitsiComponent from "./Jitsi/JitsiComponent";
 

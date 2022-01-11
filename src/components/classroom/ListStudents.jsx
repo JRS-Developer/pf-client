@@ -9,6 +9,8 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { getStudentsMatricula } from '../../actions/matricula'
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 export default function ListStudents() {
 
@@ -31,11 +33,11 @@ export default function ListStudents() {
 
   return (
     <List sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
-      {loading ? <h3>Loadin..</h3>: error ? <h3>{error}</h3> : studentsMatricula?.map(st => (
+      {loading ? <Box sx={{ display: 'flex' }}><CircularProgress /></Box> : error ? <h3>{error}</h3> : studentsMatricula?.map(st => (
         <>
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
-              <Avatar alt={st.student} src="/static/images/avatar/1.jpg" />
+              <Avatar alt={st.student.split(' - ')[1]} src="/static/images/avatar/1.jpg" />
             </ListItemAvatar>
             <ListItemText
               primary="Full Name"
@@ -47,7 +49,7 @@ export default function ListStudents() {
                     variant="body2"
                     color="text.primary"
                   >
-                    {st.student}
+                    {st.student.split(' - ')[1]}
                   </Typography>
                   
                 </React.Fragment>
