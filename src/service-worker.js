@@ -70,3 +70,22 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
+self.addEventListener("active", event => {
+
+  const cacheWhiteList = 'pwa-cache';
+
+  event.waitUntil(
+    caches.keys()
+    .then(keys => Promise.all(keys.map( key => {
+      if(!cacheWhiteList.includes(key)){
+        console.log(`deleting cache: ${key}`);
+        return caches.delete(key);
+      };
+    })))
+  );
+});
+
+// const doCache = false;
+// self.addEventListener('install', event => {
+//   if(doCache)
+// })
