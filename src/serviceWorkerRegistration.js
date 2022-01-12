@@ -114,7 +114,11 @@ const user = localStorage.getItem('user')
 export const subscription = async (data) => {
   const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`
   const reg = await navigator.serviceWorker.register(swUrl)
-  console.log(reg)
+
+  const isSubscribed = await reg.pushManager.getSubscription()
+
+  if(isSubscribed) return
+
   const suscribe = await reg.pushManager.subscribe({
     userVisibleOnly: true,
     applicationServerKey: REACT_APP_VAPID,
