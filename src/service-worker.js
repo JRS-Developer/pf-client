@@ -82,7 +82,10 @@ self.addEventListener('push', function (e) {
   const title = 'Push Test, Title'
 
   var options = {
-    body: e.data.text(),
+    body: 'Buzz! Buzz!',
+          icon: '../images/touch/chrome-touch-icon-192x192.png',
+          vibrate: [200, 100, 200, 100, 200, 100, 200],
+          tag: 'vibration-sample'
   }
   e.waitUntil(self.registration.showNotification(title, options))
 })
