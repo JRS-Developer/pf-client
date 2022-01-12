@@ -77,15 +77,14 @@ self.addEventListener('message', (event) => {
 // Cuando el backend envie un push.SendNotification, se ejecuta este evento, mostrando la notificación en el navegador
 self.addEventListener('push', function (e) {
   console.log('[Service Worker] Push Received.')
-  console.log(`[Service Worker] Push had this data: "${e.data.text()}"`)
+  console.log(`[Service Worker] Push had this data, maybe: "${e.data.json()}"`)
   console.log('event', e)
-  const title = 'Push Test, Title'
+  const data = e.data.json()
+  const title = data.title
 
   var options = {
-    body: 'Buzz! Buzz!',
-          icon: '../images/touch/chrome-touch-icon-192x192.png',
-          vibrate: [200, 100, 200, 100, 200, 100, 200],
-          tag: 'vibration-sample'
+    body: data.message,
+    vibrate: [200, 100, 200, 100, 200, 100, 200],
   }
   e.waitUntil(self.registration.showNotification(title, options))
 })
@@ -113,4 +112,15 @@ self.addEventListener('pushsubscriptionchange', function (event) {
   }
 
   event.waitUntil(axios.post(`${REACT_APP_WEBPUSH}/updateSubscribe`, body))
+})
+
+self.addEventListener('notificationclick', function (event) {
+  event.notification.close()
+  console.log('[Service Worker] Notification click Received.')
+  console.log('event', event)
+  // event.waitUntil(
+  //   clients.openWindow(
+  //     `${REACT_APP_WEBPUSH}/notification?id=${event.notification.data.id}`
+  //   )
+  // )
 })
