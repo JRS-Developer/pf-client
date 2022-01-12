@@ -40,7 +40,9 @@ export default function ListStudents() {
               <Avatar alt={st.student.split(' - ')[1]} src="/static/images/avatar/1.jpg" />
             </ListItemAvatar>
             <ListItemText
-              primary="Full Name"
+             primary= {st.student.split(' - ')[1]}
+             />
+              {/*primary="Full Name"
               secondary={
                 <React.Fragment>
                   <Typography
@@ -53,8 +55,8 @@ export default function ListStudents() {
                   </Typography>
                   
                 </React.Fragment>
-              }
-            />
+              }*/}
+            
           </ListItem>
           <Divider variant="inset" component="li" />
         </>

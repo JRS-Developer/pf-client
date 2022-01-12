@@ -49,12 +49,14 @@ export default function CreatePost({
     if (schoolId) {
       setPost({ ...post, schoolId })
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [schoolId])
 
   useEffect(() => {
     if (cicloLectivoId) {
       setPost({ ...post, cicloLectivoId })
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cicloLectivoId])
 
   useEffect(() => {
@@ -285,7 +287,7 @@ export default function CreatePost({
           variant="contained"
           size="small"
           onClick={handleSubmit}
-          sx={{ mb: 1 }}
+          sx={{ mb: 1, marginTop: '15px' }}
         >
           Publicar
         </Button>
