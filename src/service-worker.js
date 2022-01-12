@@ -12,6 +12,8 @@ import { ExpirationPlugin } from 'workbox-expiration'
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching'
 import { registerRoute } from 'workbox-routing'
 import { StaleWhileRevalidate } from 'workbox-strategies'
+import axios from 'axios'
+const { REACT_APP_WEBPUSH } = process.env
 
 clientsClaim()
 
@@ -72,9 +74,11 @@ self.addEventListener('message', (event) => {
 
 // Any other custom service worker logic can go here.
 
+// Cuando el backend envie un push.SendNotification, se ejecuta este evento, mostrando la notificación en el navegador
 self.addEventListener('push', function (e) {
+  console.log('[Service Worker] Push Received.')
+  console.log(`[Service Worker] Push had this data: "${e.data.text()}"`)
   console.log('event', e)
-
   var options = {
     body: 'This notification was generated from a push!',
     icon: 'images/example.png',
@@ -93,4 +97,29 @@ self.addEventListener('push', function (e) {
     ],
   }
   e.waitUntil(self.registration.showNotification('Hello world!', options))
+})
+
+// Cuando se actyalice el push subscription, lo mandamos al backend para que lo guarde
+self.addEventListener('pushsubscriptionchange', function (event) {
+  const user = localStorage.getItem('user')
+
+  const body = {
+    user,
+    endpoint: event.oldSubscription // Old endpoint
+      ? event.oldSubscription.endpoint
+      : null,
+    newSubscription: {
+      endpoint: event.newSubscription ? event.newSubscription.endpoint : null,
+      keys: {
+        p256dh: event.newSubscription
+          ? event.newSubscription.toJSON().keys.p256dh
+          : null,
+        auth: event.newSubscription
+          ? event.newSubscription.toJSON().keys.auth
+          : null,
+      },
+    },
+  }
+
+  event.waitUntil(axios.post(`${REACT_APP_WEBPUSH}/updateSubscribe`, body))
 })
