@@ -74,6 +74,8 @@ export default function Header({
 }) {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
+  const [anchorNotification, setAnchorNotification] = React.useState(null)
+  const isNotificationOpen = Boolean(anchorNotification)
   const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
   const dispatch = useDispatch()
@@ -87,6 +89,15 @@ export default function Header({
       setMode(1)
       localStorage.setItem('mode', 1)
     }
+  }
+
+  const handleNotificationOpen = (event) => {
+    setAnchorNotification(event.currentTarget)
+    /*  setOpen(!open) */
+  }
+
+  const handleNotificationClose = () => {
+    setAnchorNotification(null)
   }
 
   const handleProfileMenuOpen = (event) => {
@@ -132,6 +143,30 @@ export default function Header({
         }}
       >
         Logout
+      </MenuItem>
+    </Menu>
+  )
+
+  const notificationRender = (
+    <Menu
+      anchorEl={anchorNotification}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={'notificationItem'}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isNotificationOpen}
+      onClose={handleNotificationClose}
+    >
+      <MenuItem>notificacion Like!</MenuItem>
+      <MenuItem>notificaciones comment!</MenuItem>
+      <MenuItem onClick={() => handleMenuClose('/notifications')}>
+        Ver todas las notificaciones
       </MenuItem>
     </Menu>
   )
@@ -222,6 +257,7 @@ export default function Header({
                 size="large"
                 aria-label="show 17 new notifications"
                 color="inherit"
+                onClick={handleNotificationOpen}
               >
                 <Badge badgeContent={17} color="secondary">
                   <NotificationsIcon />
@@ -264,6 +300,7 @@ export default function Header({
         </AppBar>
         {renderMobileMenu}
         {renderMenu}
+        {notificationRender}
       </Box>
     </HeaderDiv>
   )
