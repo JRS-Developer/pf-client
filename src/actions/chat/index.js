@@ -100,19 +100,18 @@ export const resetStore = () => {
 }
 
 export const addOnlineUser = (userId) => {
-  
-  return{
-  type: ADD_ONLINE_USER,
-  payload: userId,
-}
+  return {
+    type: ADD_ONLINE_USER,
+    payload: userId,
+  }
 }
 
 export const removeOnlineUser = (userId) => {
- 
-  return{
-  type: REMOVE_ONLINE_USER,
-  payload: userId,
-}}
+  return {
+    type: REMOVE_ONLINE_USER,
+    payload: userId,
+  }
+}
 
 export const getUser = (id) => async (dispatch) => {
   try {
