@@ -102,10 +102,10 @@ export default function Noticias() {
 
   return (
     
-      <Box sx={{width: '100%'}}>
-      <Grid container spacing={4}>
+      <Box sx={{width: '100%', marginTop: '50px'}}>
+      <Grid container spacing={4} >
         {actionsNames?.includes('Nuevo') || actionsNames?.includes('Editar') ? (
-          <Grid item xs={12} md={6} lg={3}>
+          <Grid item xs={12} md={6} lg={3} >
             {loadingCicloLectivo ? (
               <CircularProgress />
             ) : errorCicloLectivo ? (

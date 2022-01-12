@@ -287,7 +287,7 @@ export default function CreatePost({
           variant="contained"
           size="small"
           onClick={handleSubmit}
-          sx={{ mb: 1 }}
+          sx={{ mb: 1, marginTop: '15px' }}
         >
           Publicar
         </Button>
