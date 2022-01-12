@@ -114,7 +114,6 @@ const ExamenNotasForm = ({
         open={open}
         onClose={handleClose}
         maxWidth={`sm`}
-        fullWidth={`sm`}
         scroll="paper"
       >
         <form onSubmit={handleSubmit}>
