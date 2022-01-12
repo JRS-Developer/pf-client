@@ -14,7 +14,7 @@ import TextField from '@mui/material/TextField'
 
 import Button from '@mui/material/Button'
 
-export default function Feed() {
+export default function Feed({ valueCiclo, valueSchool, noticias, nuevo }) {
   const [open, setOpen] = useState(false) //Este es para el Dialog que muestra la imagen de una publicacion
   const [openConfirm, setOpenConfirm] = useState(false) // Dialong Confirm, aqui muestra para eliminar la publicacion
   const [openEdit, setOpenEdit] = useState()
@@ -27,10 +27,12 @@ export default function Feed() {
   const dispatch = useDispatch()
   // const { claseId, materiaId, cicloLectivoId, schoolId } = useParams()
   const params = useParams()
-  const claseId = params.claseId || params.clase_id
-  const materiaId = params.materiaId || params.materia_id
-  const cicloLectivoId = params.cicloLectivoId || params.ciclo_lectivo_id
-  const schoolId = params.schoolId || params.school_id
+  const claseId = params.claseId || params.clase_id || null
+  const materiaId = params.materiaId || params.materia_id || null
+  const cicloLectivoId =
+    params.cicloLectivoId || params.ciclo_lectivo_id || valueCiclo
+  const schoolId = params.schoolId || params.school_id || valueSchool
+
   const parametros = { claseId, materiaId, cicloLectivoId, schoolId }
 
   const handleFull = (img) => {
@@ -60,8 +62,8 @@ export default function Feed() {
   }, [dispatch, claseId, materiaId, cicloLectivoId, schoolId, postSubmitted])
 
   return (
-    <Box sx={{ overflow: 'auto' }}>
-      <Grid container spacing={2}>
+    <Box sx={{ overflow: '100%' }}>
+      <Grid container spacing={2} pt={5}>
         {/* <Paper
           display="grid"
           align="center"
@@ -116,13 +118,16 @@ export default function Feed() {
             </Grid>
           </Box>
         </Paper> */}
-        <CreatePost
-          getPosts={getPosts}
-          loading={loading}
-          params={parametros}
-          setPostSubmitted={setPostSubmitted}
-          postSubmitted={postSubmitted}
-        />
+        {!noticias || nuevo ? ( //verificacion que le paso desde el componente noticias para que me renderice si el usuario tiene la action nuevo
+          <CreatePost
+            getPosts={getPosts}
+            loading={loading}
+            params={parametros}
+            setPostSubmitted={setPostSubmitted}
+            postSubmitted={postSubmitted}
+          />
+        ) : null}
+
         {posts?.length ? (
           posts.map((e) => (
             <Post

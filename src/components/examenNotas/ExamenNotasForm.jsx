@@ -74,6 +74,10 @@ const ExamenNotasForm = ({
     })
   })
 
+  const handleDateChange = (value) => {
+    setRowExamenNotas((input) => ({ ...input, fecha: value }))
+  }
+
   const handleChange = (e) => {
     setRowExamenNotas({
       ...rowExamenNotas,
@@ -154,7 +158,7 @@ const ExamenNotasForm = ({
                       fullWidth
                       sx={{ mr: 2, width: '100%' }}
                       value={rowExamenNotas.fecha}
-                      onChange={handleChange}
+                      onChange={handleDateChange}
                       renderInput={(params) => (
                         <TextField
                           fullWidth={true}
