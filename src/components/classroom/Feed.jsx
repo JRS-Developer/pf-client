@@ -61,7 +61,7 @@ export default function Feed({valueCiclo,valueSchool, noticias , nuevo}) {
   }, [dispatch, claseId, materiaId, cicloLectivoId, schoolId, postSubmitted])
 
   return (
-    <Box sx={{ overflow: 'auto' }}>
+    <Box sx={{ overflow: '100%' }}>
       <Grid container spacing={2} pt={5}>
         {/* <Paper
           display="grid"

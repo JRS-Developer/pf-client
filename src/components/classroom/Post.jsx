@@ -133,6 +133,7 @@ export default function Post({
           flexWrap: 'wrap',
           gap: '.5rem',
           paddingTop: '1rem',
+          
         }}
       >
         {docs.map((doc) => (
