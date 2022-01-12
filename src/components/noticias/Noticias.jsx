@@ -8,6 +8,7 @@ import { getCicloElectivos as listCicloElectivos } from '../../actions/cicloElec
 import { getSchools as listSchools } from '../../actions/school'
 import Feed from '../classroom/Feed'
 import { getMatriculaByUserId } from '../../actions/matricula'
+import Box from '@mui/material/Box'
 
 export default function Noticias() {
   const [valueCiclo, setValueCiclo] = React.useState('')
@@ -100,9 +101,8 @@ export default function Noticias() {
   })
 
   return (
-    <>
-      <br />
-
+    
+      <Box sx={{width: '100%'}}>
       <Grid container spacing={4}>
         {actionsNames?.includes('Nuevo') || actionsNames?.includes('Editar') ? (
           <Grid item xs={12} md={6} lg={3}>
@@ -152,7 +152,8 @@ export default function Noticias() {
           </Grid>
         ) : null}
       </Grid>
-      <Grid container>
+      <Box sx={{width: '100%'}}>
+      
         {valueCiclo && valueSchool ? (
           <Feed
             valueCiclo={valueCiclo.id}
@@ -161,7 +162,9 @@ export default function Noticias() {
             nuevo={actionsNames?.includes('Nuevo')}
           />
         ) : null}
-      </Grid>
-    </>
+      
+      
+      </Box>
+      </Box>
   )
 }
