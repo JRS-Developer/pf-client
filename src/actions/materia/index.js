@@ -79,13 +79,16 @@ export const modifiedMateria = (body) => async (dispatch) => {
       type: actionType.GET_MATERIAS_REQUEST,
     })
 
-    if(body.name){
-    const { data } = await axios.put(`${REACT_APP_SERVER}/materias/${id}`, body)
-    dispatch({
-      type: actionType.EDIT_MATERIA,
-      payload: data,
-    })
-    } else{
+    if (body.name) {
+      const { data } = await axios.put(
+        `${REACT_APP_SERVER}/materias/${id}`,
+        body
+      )
+      dispatch({
+        type: actionType.EDIT_MATERIA,
+        payload: data,
+      })
+    } else {
       const { data } = await axios.delete(
         `${REACT_APP_SERVER}/materias/${id}`,
         body

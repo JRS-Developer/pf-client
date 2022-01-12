@@ -42,13 +42,13 @@ export const getMateriasReducer = (state = initialState, action) => {
         error: action.payload,
       }
 
-      case actionTypes.DELETE_MATERIA:
+    case actionTypes.DELETE_MATERIA:
       return {
         ...state,
         loadingMaterias: false,
         message: action.payload,
       }
-      
+
     default:
       return state
   }

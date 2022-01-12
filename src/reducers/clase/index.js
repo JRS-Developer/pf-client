@@ -37,12 +37,12 @@ export const getClasesReducer = (state = initialState, action) => {
         loadingClases: false,
         message: action.payload,
       }
-      case actionTypes.DELETE_CLASE:
-        return {
-          ...state,
-          loadingClasses: false,
-          message: action.payload,
-        }
+    case actionTypes.DELETE_CLASE:
+      return {
+        ...state,
+        loadingClasses: false,
+        message: action.payload,
+      }
     case actionTypes.CLASE_FAIL:
       return {
         ...state,

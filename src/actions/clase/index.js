@@ -78,14 +78,17 @@ export const modifiedClase = (body) => async (dispatch) => {
     dispatch({
       type: actionType.GET_CLASES_REQUEST,
     })
-    if(body.name){
-    const { data } = await axios.put(`${REACT_APP_SERVER}/classes/${id}`, body)
+    if (body.name) {
+      const { data } = await axios.put(
+        `${REACT_APP_SERVER}/classes/${id}`,
+        body
+      )
 
-    dispatch({
-      type: actionType.EDIT_CLASE,
-      payload: data,
-    })
-    } else{
+      dispatch({
+        type: actionType.EDIT_CLASE,
+        payload: data,
+      })
+    } else {
       const { data } = await axios.delete(
         `${REACT_APP_SERVER}/classes/${id}`,
         body
