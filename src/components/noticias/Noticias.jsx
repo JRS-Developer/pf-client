@@ -103,7 +103,6 @@ export default function Noticias() {
   return (
     
       <Box sx={{width: '100%'}}>
-
       <Grid container spacing={4}>
         {actionsNames?.includes('Nuevo') || actionsNames?.includes('Editar') ? (
           <Grid item xs={12} md={6} lg={3}>
