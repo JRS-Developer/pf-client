@@ -25,14 +25,14 @@ export const getCicloElectivoReducer = (state = initialState, action) => {
       }
     case actionTypes.ADD_CICLO_ELECTIVO:
       return {
+        ...state,
         loadingElectivo: false,
-        cicloElectivos: action.payload,
         message: action.payload,
       }
     case actionTypes.EDIT_CICLO_ELECTIVO:
       return {
+        ...state,
         loadingElectivo: false,
-        cicloElectivos: action.payload,
         message: action.payload,
       }
     case actionTypes.CICLO_ELECTIVO_FAIL:

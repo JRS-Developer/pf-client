@@ -27,16 +27,22 @@ export const getClasesReducer = (state = initialState, action) => {
       }
     case actionTypes.ADD_CLASE:
       return {
+        ...state,
         loadingClases: false,
-        clases: action.payload,
         message: action.payload,
       }
     case actionTypes.EDIT_CLASE:
       return {
+        ...state,
         loadingClases: false,
-        clases: action.payload,
         message: action.payload,
       }
+      case actionTypes.DELETE_CLASE:
+        return {
+          ...state,
+          loadingClasses: false,
+          message: action.payload,
+        }
     case actionTypes.CLASE_FAIL:
       return {
         ...state,

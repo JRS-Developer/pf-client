@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import Divider from '@mui/material/Divider'
-import ListItemText from '@mui/material/ListItemText'
 import ListItemAvatar from '@mui/material/ListItemAvatar'
 import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
@@ -28,20 +27,18 @@ export default function ListStudents() {
 
   useEffect(() => {
     dispatch(getStudentsMatricula(body))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch])
 
   return (
     <List sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
 
       {loading ? <Box sx={{ display: 'flex' }}><CircularProgress /></Box> : error ? <h3>{error}</h3> : studentsMatricula?.map(st => (
-        <>
-          <ListItem alignItems="flex-start">
+          <ListItem sx={{display: "flex", alignItems: "center"}}key={st.matricula_id}>
             <ListItemAvatar>
               <Avatar alt={st.student.split(' - ')[1]} src="/static/images/avatar/1.jpg" />
             </ListItemAvatar>
-            <ListItemText
-             primary= {st.student.split(' - ')[1]}
-             />
+            <Box sx={{width: "50%"}}><Typography variant="subtitle1">{st.student.split(' - ')[1]}</Typography><Divider/></Box>
               {/*primary="Full Name"
               secondary={
                 <React.Fragment>
@@ -58,8 +55,6 @@ export default function ListStudents() {
               }*/}
             
           </ListItem>
-          <Divider variant="inset" component="li" />
-        </>
       ))}
 
     </List>

@@ -7,10 +7,10 @@ import Table from "../Table/Table"
 import { getMaterias as listMaterias, getDataById, modifiedMateria } from "../../actions/materia";
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 350 },
-  { field: 'name', headerName: 'Name', width: 300},
+  { field: 'id', headerName: 'ID', width: 350, hide: true},
+  { field: 'name', headerName: 'Nombre', width: 300},
   { field: 'description', headerName: 'Descripción', width: 300},
-  { field: 'status', headerName: 'Status', width: 300},
+  { field: 'status', headerName: 'Estado', width: 300},
 
 ];
 
@@ -24,16 +24,15 @@ export default function MateriaIndex() {
 
   const data = {
     columns,
-    rows: materias
+    rows: materias.map(m => Object.assign({...m, status: m.status ? "Activo" : "Inactivo"}))
   }
 
   useEffect(() => {
     dispatch(listMaterias())
   }, [dispatch])
 
-  return (
-    <>
-      { <Table
+  return materias && 
+      ( <Table
         data={data}
         DialogForm={form}
         title="MATERIAS"
@@ -42,7 +41,6 @@ export default function MateriaIndex() {
         modifiedAction={modifiedMateria}
         listData={listMaterias}
         loading={loadingMaterias}
-      /> }
-    </>
+      />
   )
 }

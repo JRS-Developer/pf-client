@@ -25,14 +25,14 @@ export const getMateriasReducer = (state = initialState, action) => {
       }
     case actionTypes.ADD_MATERIA:
       return {
+        ...state,
         loadingMaterias: false,
-        materias: action.payload,
         message: action.payload,
       }
     case actionTypes.EDIT_MATERIA:
       return {
+        ...state,
         loadingMaterias: false,
-        materias: action.payload,
         message: action.payload,
       }
     case actionTypes.MATERIA_FAIL:
@@ -41,6 +41,14 @@ export const getMateriasReducer = (state = initialState, action) => {
         loadingMaterias: false,
         error: action.payload,
       }
+
+      case actionTypes.DELETE_MATERIA:
+      return {
+        ...state,
+        loadingMaterias: false,
+        message: action.payload,
+      }
+      
     default:
       return state
   }
