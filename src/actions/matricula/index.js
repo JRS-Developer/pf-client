@@ -26,6 +26,31 @@ export const getMatriculas = () => async (dispatch) => {
   }
 }
 
+export const getMatriculaByUserId = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: actionType.GET_MATRICULAS_REQUEST,
+    })
+
+    const { data } = await axios.get(
+      `${REACT_APP_SERVER}/matriculas/user/${id}`
+    )
+    //console.log(data);
+    dispatch({
+      type: actionType.GET_MATRICULA_BY_USER_ID,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: actionType.MATRICULA_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
 export const getDataById = (id) => async (dispatch) => {
   try {
     dispatch({

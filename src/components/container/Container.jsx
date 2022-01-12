@@ -25,6 +25,7 @@ import TeacherClassroom from '../teacher/TeacherClassroom'
 import ActionsMateria from '../teacher/ActionsMateria'
 import Notifications from '../notifications/Notifications'
 import { socketChat } from '../socket'
+import Noticias from '../noticias/Noticias'
 
 const user = localStorage.getItem('user')
 
@@ -76,6 +77,7 @@ const Content = ({
         <Route exact path="/materias" component={MateriaIndex} />
         {/* AULA virtual */}
         {/* <Route exact path="/materias/details/:claseId/:materiaId" component={ClassRoom} /> */}
+        <Route exact path="/noticias" component={Noticias} />
         <Route exact path="/homeworkslist/:tareaId" component={TablaEntregas} />
         <Route exact path="/profile">
           <Profile

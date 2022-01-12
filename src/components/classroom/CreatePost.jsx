@@ -17,7 +17,13 @@ import CardMedia from '@mui/material/CardMedia'
 import Card from '@mui/material/Card'
 import LinearProgress from '@mui/material/LinearProgress'
 
-export default function CreatePost({ getPosts, loading, params, setPostSubmitted, postSubmitted }) {
+export default function CreatePost({
+  getPosts,
+  loading,
+  params,
+  setPostSubmitted,
+  postSubmitted,
+}) {
   const dispatch = useDispatch()
   const { firstName, lastName, avatar } = useSelector(
     (state) => state.usersReducer.dataEdit
@@ -38,6 +44,18 @@ export default function CreatePost({ getPosts, loading, params, setPostSubmitted
   const [files, setFiles] = useState([])
   const [images, setImages] = useState([])
   const [previewImages, setPreviewImages] = useState([])
+
+  useEffect(() => {
+    if (schoolId) {
+      setPost({ ...post, schoolId })
+    }
+  }, [schoolId])
+
+  useEffect(() => {
+    if (cicloLectivoId) {
+      setPost({ ...post, cicloLectivoId })
+    }
+  }, [cicloLectivoId])
 
   useEffect(() => {
     if (images) {
@@ -66,14 +84,22 @@ export default function CreatePost({ getPosts, loading, params, setPostSubmitted
     let arr = [...files]
     arr.splice(e.currentTarget.name, 1)
     setFiles(arr)
+    console.log(files)
   }
 
   async function handleSubmit(e) {
     e.preventDefault()
     const form = new FormData()
 
-    for (let key in post) {
-      form.append(key, post[key])
+    const noticiasPost = { ...post }
+
+    if (!noticiasPost.classId && !noticiasPost.materiaId) {
+      delete noticiasPost.classId
+      delete noticiasPost.materiaId
+    }
+
+    for (let key in noticiasPost) {
+      form.append(key, noticiasPost[key])
     }
 
     for (let key in images) {
@@ -96,7 +122,7 @@ export default function CreatePost({ getPosts, loading, params, setPostSubmitted
     setFiles([])
     setImages([])
 
-    await dispatch( createPost(form))
+    await dispatch(createPost(form))
     setPostSubmitted(!postSubmitted)
   }
 
@@ -268,6 +294,3 @@ export default function CreatePost({ getPosts, loading, params, setPostSubmitted
     </Grid>
   )
 }
-
-
-

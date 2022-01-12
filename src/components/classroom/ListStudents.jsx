@@ -1,23 +1,24 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import Divider from '@mui/material/Divider'
+import ListItemText from '@mui/material/ListItemText'
+import ListItemAvatar from '@mui/material/ListItemAvatar'
+import Avatar from '@mui/material/Avatar'
+import Typography from '@mui/material/Typography'
 import { getStudentsMatricula } from '../../actions/matricula'
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 export default function ListStudents() {
-
-  const param = useParams();
+  const param = useParams()
 
   let body = {
     school_id: param.school_id || param.schoolId,
     clase_id: param.clase_id || param.claseId,
-    ciclo_lectivo_id: param.ciclo_lectivo_id || param.cicloLectivoId
+    ciclo_lectivo_id: param.ciclo_lectivo_id || param.cicloLectivoId,
   }
 
   const dispatch = useDispatch()
@@ -31,11 +32,12 @@ export default function ListStudents() {
 
   return (
     <List sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}>
-      {loading ? <h3>Loadin..</h3>: error ? <h3>{error}</h3> : studentsMatricula?.map(st => (
+
+      {loading ? <Box sx={{ display: 'flex' }}><CircularProgress /></Box> : error ? <h3>{error}</h3> : studentsMatricula?.map(st => (
         <>
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
-              <Avatar alt={st.student} src="/static/images/avatar/1.jpg" />
+              <Avatar alt={st.student.split(' - ')[1]} src="/static/images/avatar/1.jpg" />
             </ListItemAvatar>
             <ListItemText
               primary="Full Name"
@@ -47,7 +49,7 @@ export default function ListStudents() {
                     variant="body2"
                     color="text.primary"
                   >
-                    {st.student}
+                    {st.student.split(' - ')[1]}
                   </Typography>
                   
                 </React.Fragment>
@@ -57,6 +59,7 @@ export default function ListStudents() {
           <Divider variant="inset" component="li" />
         </>
       ))}
+
     </List>
-  );
+  )
 }
