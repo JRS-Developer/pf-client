@@ -109,9 +109,8 @@ function registerValidSW(swUrl, config) {
     })
 }
 
-const user = localStorage.getItem('user')
-
 export const subscription = async (data) => {
+  const user = localStorage.getItem('user')
   const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`
   const reg = await navigator.serviceWorker.register(swUrl)
 
