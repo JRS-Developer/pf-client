@@ -1,4 +1,5 @@
 import { LOGOUT, SET_LOGGED } from '../../actions/auth/types'
+import socket from '../../components/socket'
 
 const initialState = {
   isLogged: false,
@@ -15,6 +16,7 @@ export default function authReducer(state = initialState, action) {
       }
     }
     case LOGOUT: {
+      socket.emit('go-offline',{userId:localStorage.getItem('user')})
       localStorage.removeItem('token')
       localStorage.clear()
       // location.reload();

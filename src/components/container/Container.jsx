@@ -26,7 +26,6 @@ import ActionsMateria from '../teacher/ActionsMateria'
 import socket from '../socket'
 import Noticias from '../noticias/Noticias'
 
-const user = localStorage.getItem('user')
 
 const Content = ({
   show,
@@ -38,6 +37,7 @@ const Content = ({
 }) => {
   // Seteamos al usuario como usuario conectado en el socket
   useEffect(() => {
+    const user = localStorage.getItem('user')
     socket.emit('go-online', user)
 
     const handleUnload = (e) => {
