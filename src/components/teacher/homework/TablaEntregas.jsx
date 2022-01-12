@@ -116,7 +116,7 @@ export default function TablaEntregas({ tareaId, setTareaId }) {
     setOpenAlert(false)
   }
 
-  return (
+  return rows ? (
     <Box>
       {openAlert && (
         <AlertDialog
@@ -178,12 +178,12 @@ export default function TablaEntregas({ tareaId, setTareaId }) {
               setSelection(newSelection.row)
             }}
             columns={columns}
-            pageSize={30}
-            rowsPerPageOptions={[5]}
+            pageSize={25}
+            rowsPerPageOptions={[10, 25, 50]}
             checkboxSelection={false}
           />
         </Box>
       </Paper>
     </Box>
-  )
+    ) : null
 }

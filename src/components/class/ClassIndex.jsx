@@ -11,17 +11,17 @@ import {
 } from '../../actions/clase'
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 350 },
-  { field: 'name', headerName: 'Name', width: 300 },
+  { field: 'id', headerName: 'ID', width: 350, hide: true },
+  { field: 'name', headerName: 'Nombre', width: 300 },
   {
     field: 'schools',
-    headerName: 'Schools',
+    headerName: 'Escuelas',
     width: 300,
     valueGetter: (params) => {
       return params.row.schools?.map((school) => school.name).join(', ') || ''
     },
   },
-  { field: 'status', headerName: 'Status Clase', width: 300 },
+  { field: 'status', headerName: 'Estado', width: 300 },
 ]
 
 const form = ClassForm
@@ -34,7 +34,7 @@ export default function ClassIndex() {
 
   const data = {
     columns,
-    rows: clases,
+    rows: clases.map(m => Object.assign({...m, status: m.status ? "Activo" : "Inactivo"})),
   }
 
   useEffect(() => {

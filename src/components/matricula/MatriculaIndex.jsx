@@ -12,7 +12,7 @@ import {
 import { format } from 'date-fns'
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 350 },
+  { field: 'id', headerName: 'ID', width: 350, hide: true },
   {
     field: 'fecha',
     headerName: 'Fecha',
@@ -45,6 +45,8 @@ export default function MatriculaIndex() {
     dispatch(listMatriculas())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  console.log(matriculas)
 
   return (
     <>

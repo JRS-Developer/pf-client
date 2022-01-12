@@ -18,7 +18,7 @@ export default function ExamenNotasIndex({student = false}) {
   const param = useParams()
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 300 },
+    { field: 'id', headerName: 'ID', width: 300, hide: true },
     { field: 'fecha', headerName: 'FECHA EVALUACIÓN', width: 200 },
     { field: 'school', headerName: 'ESCUELA', width: 300 },
     { field: 'clase', headerName: 'CLASE', width: 200 },
@@ -44,7 +44,7 @@ export default function ExamenNotasIndex({student = false}) {
   examenNotas?.map(nt => (
     suma += parseFloat(nt.nota)
   ));
-  promedio = suma / examenNotas.length;
+  promedio = suma / examenNotas?.length;
 
   useEffect(() => {
     const body = {
@@ -56,6 +56,7 @@ export default function ExamenNotasIndex({student = false}) {
 
  
     dispatch(listExamenNotas(body, student))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch])
 
 
@@ -63,7 +64,7 @@ export default function ExamenNotasIndex({student = false}) {
     <>
       {student && <><h3>Promedio: {promedio.toFixed(2)}</h3> <Divider /></> }
       
-      {
+      {examenNotas &&
         <Table
           data={data}
           DialogForm={form}
