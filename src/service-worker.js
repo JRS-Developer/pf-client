@@ -77,14 +77,18 @@ self.addEventListener('message', (event) => {
 // Cuando el backend envie un push.SendNotification, se ejecuta este evento, mostrando la notificación en el navegador
 self.addEventListener('push', function (e) {
   console.log('[Service Worker] Push Received.')
-  console.log(`[Service Worker] Push had this data, maybe: "${e.data.json()}"`)
-  console.log('event', e)
-  const data = e.data.json()
+  const data = e.data.json() // data es un objeto JSON con el mensaje del push
   const title = data.title
 
   var options = {
     body: data.message,
     vibrate: [200, 100, 200, 100, 200, 100, 200],
+    data: {
+      dateOfArrival: Date.now(),
+      primaryKey: 1,
+      url: data.url ? `${self.origin}${data.url}` : null,
+    },
+    icon: '/icon.png'
   }
   e.waitUntil(self.registration.showNotification(title, options))
 })
@@ -115,12 +119,36 @@ self.addEventListener('pushsubscriptionchange', function (event) {
 })
 
 self.addEventListener('notificationclick', function (event) {
-  event.notification.close()
+  const notification = event.notification
+  const url = event.notification.data.url
+
+  notification.close()
   console.log('[Service Worker] Notification click Received.')
   console.log('event', event)
-  // event.waitUntil(
-  //   clients.openWindow(
-  //     `${REACT_APP_WEBPUSH}/notification?id=${event.notification.data.id}`
-  //   )
-  // )
+  console.log('url', url)
+  event.waitUntil(
+    clients // eslint-disable-line
+      .matchAll({ type: 'window', includeUncontrolled: true })
+      .then(function (windowClients) {
+        let matchingClient = null
+        // Reviso si hay una ventana abierta con la url del push
+        for (let i = 0; i < windowClients.length; i++) {
+          const windowClient = windowClients[i]
+          if (windowClient.url === url) {
+            matchingClient = windowClient
+            break
+          }
+        }
+
+        // Si hay una ventana abierta con la url del push, la pongo en primer plano
+        if (matchingClient) {
+          console.log('Focus')
+          return matchingClient.focus()
+        } else {
+          console.log('Open')
+          // Si no hay una ventana abierta con la url del push, la abro
+          return url && clients.openWindow(url) // eslint-disable-line
+        }
+      })
+  )
 })
