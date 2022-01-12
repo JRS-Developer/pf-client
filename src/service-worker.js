@@ -86,7 +86,7 @@ self.addEventListener('push', function (e) {
     data: {
       dateOfArrival: Date.now(),
       primaryKey: 1,
-      url: data.url || '',
+      url: data.url ? `${self.origin}${data.url}` : null,
     },
   }
   e.waitUntil(self.registration.showNotification(title, options))
