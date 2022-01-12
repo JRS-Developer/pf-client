@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import ExamenNotasForm from './ExamenNotasForm'
 import Table from '../Table/Table'
+import Divider from '@mui/material/Divider';
 
 //importamos los métodos
 import {
@@ -13,8 +14,8 @@ import {
 
 const form = ExamenNotasForm
 
-export default function ExamenNotasIndex(student = false) {
-  const { school_id, clase_id, ciclo_lectivo_id, materia_id } = useParams()
+export default function ExamenNotasIndex({student = false}) {
+  const param = useParams()
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 300 },
@@ -38,19 +39,30 @@ export default function ExamenNotasIndex(student = false) {
     rows: examenNotas,
   }
 
+  let promedio = 0;
+  let suma = 0;
+  examenNotas?.map(nt => (
+    suma += parseFloat(nt.nota)
+  ));
+  promedio = suma / examenNotas.length;
+
   useEffect(() => {
     const body = {
-      school_id,
-      clase_id,
-      ciclo_lectivo_id,
-      id: materia_id,
+      school_id: param.school_id || param.schoolId,
+      clase_id : param.clase_id || param.claseId,
+      ciclo_lectivo_id: param.ciclo_lectivo_id || param.cicloLectivoId,
+      id: param.materia_id || param.materiaId,
     }
-    //console.log(body)
-    dispatch(listExamenNotas(body))
-  }, [dispatch, school_id, clase_id, ciclo_lectivo_id, materia_id])
+
+ 
+    dispatch(listExamenNotas(body, student))
+  }, [dispatch])
+
 
   return (
     <>
+      {student && <><h3>Promedio: {promedio.toFixed(2)}</h3> <Divider /></> }
+      
       {
         <Table
           data={data}
@@ -63,6 +75,7 @@ export default function ExamenNotasIndex(student = false) {
           loading={loadingExamenNotas}
         />
       }
+      
     </>
   )
 }
