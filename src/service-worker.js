@@ -77,7 +77,10 @@ self.addEventListener('message', (event) => {
 // Cuando el backend envie un push.SendNotification, se ejecuta este evento, mostrando la notificación en el navegador
 self.addEventListener('push', function (e) {
   console.log('[Service Worker] Push Received.')
+  console.log(`[Service Worker] Push had this data, maybe: "${e.data.text()}"`)
   console.log(`[Service Worker] Push had this data, maybe: "${e.data.json()}"`)
+  console.log(`[Service Worker] Push had this data, maybe: "${e.data.blob()}"`)
+  console.log(`[Service Worker] Push had this data, maybe: "${e.data.arrayBuffer()}"`)
   console.log('event', e)
   const data = e.data.json()
   const title = data.title
