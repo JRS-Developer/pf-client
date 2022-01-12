@@ -114,7 +114,7 @@ export default function Post({
           })}
         </ImageList>
       ) : (
-        <CardMedia component="img" image={imgs[0].url} alt={imgs[0].name} />
+        <CardMedia component="img" image={imgs[0].url} alt={imgs[0].name} sx={{maxWidth: '50%', maxHeight: '500px', marginLeft: '25%'}}/>
       )
     ) : null
 
@@ -159,7 +159,7 @@ export default function Post({
 
   return (
     <Grid item xs={12}>
-      <Card>
+      <Card >
         <CardHeader
           avatar={<Avatar alt={name} src={avatar} />}
           title={name}
