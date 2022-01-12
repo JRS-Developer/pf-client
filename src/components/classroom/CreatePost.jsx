@@ -45,7 +45,17 @@ export default function CreatePost({
   const [images, setImages] = useState([])
   const [previewImages, setPreviewImages] = useState([])
 
-  
+  useEffect(() => {
+    if (schoolId) {
+      setPost({ ...post, schoolId })
+    }
+  }, [schoolId])
+
+  useEffect(() => {
+    if (cicloLectivoId) {
+      setPost({ ...post, cicloLectivoId })
+    }
+  }, [cicloLectivoId])
 
   useEffect(() => {
     if (images) {
@@ -80,7 +90,6 @@ export default function CreatePost({
   async function handleSubmit(e) {
     e.preventDefault()
     const form = new FormData()
-    
 
     const noticiasPost = { ...post }
 
@@ -113,10 +122,8 @@ export default function CreatePost({
     setFiles([])
     setImages([])
 
-
     await dispatch(createPost(form))
     setPostSubmitted(!postSubmitted)
-    
   }
 
   return (
