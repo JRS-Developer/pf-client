@@ -79,24 +79,12 @@ self.addEventListener('push', function (e) {
   console.log('[Service Worker] Push Received.')
   console.log(`[Service Worker] Push had this data: "${e.data.text()}"`)
   console.log('event', e)
+  const title = 'Push Test, Title'
+
   var options = {
-    body: 'This notification was generated from a push!',
-    icon: 'images/example.png',
-    vibrate: [100, 50, 100],
-    data: {
-      dateOfArrival: Date.now(),
-      primaryKey: '2',
-    },
-    actions: [
-      {
-        action: 'explore',
-        title: 'Explore this new world',
-        icon: 'images/checkmark.png',
-      },
-      { action: 'close', title: 'Close', icon: 'images/xmark.png' },
-    ],
+    body: e.data.text(),
   }
-  e.waitUntil(self.registration.showNotification('Hello world!', options))
+  e.waitUntil(self.registration.showNotification(title, options))
 })
 
 // Cuando se actyalice el push subscription, lo mandamos al backend para que lo guarde
