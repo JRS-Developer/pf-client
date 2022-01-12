@@ -11,7 +11,6 @@ import {
 } from '../../actions/action'
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 200 },
   { field: 'name', headerName: 'Name', width: 300 },
   { field: 'onclick', headerName: 'onClick', width: 300 },
   { field: 'action_param', headerName: 'Action Param', width: 300 },

@@ -1,23 +1,36 @@
 import io from 'socket.io-client'
 import store from '../store/'
 import { setNewMessage, addOnlineUser, removeOnlineUser } from '../actions/chat'
-const { REACT_APP_CHAT } = process.env
+const { REACT_APP_SOCKET_CHAT, REACT_APP_SOCKET_NOTIFICATION } = process.env
 
-if (!REACT_APP_CHAT)
-  console.error('error con la variable de entorno de socket.io')
+if (!REACT_APP_SOCKET_CHAT?.startsWith('http')) {
+  console.error(
+    'error con la variable de entorno de socket.io, falta la variable REACT_APP_SOCKET_CHAT'
+  )
+}
 
-const socket = io(REACT_APP_CHAT)
+if (!REACT_APP_SOCKET_NOTIFICATION?.startsWith('http')) {
+  console.error(
+    'error con la variable de entorno de socket.io, falta la variable REACT_APP_SOCKET_NOTIFICATION'
+  )
+}
 
-socket.on('new-message', (data) => {
+const socketChat = io(REACT_APP_SOCKET_CHAT)
+const socketNotification = io(REACT_APP_SOCKET_NOTIFICATION)
+
+// Chat
+socketChat.on('new-message', (data) => {
   store.dispatch(setNewMessage(data))
 })
 
-socket.on('online', (userId) => {
+socketChat.on('online', (userId) => {
   store.dispatch(addOnlineUser(userId))
 })
 
-socket.on('offline', (userId) => {
+socketChat.on('offline', (userId) => {
   store.dispatch(removeOnlineUser(userId))
 })
 
-export default socket
+// Notification
+
+export { socketChat, socketNotification }

@@ -12,7 +12,6 @@ import {
 import { format } from 'date-fns'
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 350 },
   {
     field: 'fecha',
     headerName: 'Fecha',

@@ -23,7 +23,9 @@ import TeacherIndex from '../teacher/TeacherIndex'
 import TablaEntregas from '../teacher/homework/TablaEntregas.jsx'
 import TeacherClassroom from '../teacher/TeacherClassroom'
 import ActionsMateria from '../teacher/ActionsMateria'
-import socket from '../socket'
+import Notifications from '../notifications/Notifications'
+import { socketChat } from '../socket'
+import Noticias from '../noticias/Noticias'
 
 const user = localStorage.getItem('user')
 
@@ -37,21 +39,7 @@ const Content = ({
 }) => {
   // Seteamos al usuario como usuario conectado en el socket
   useEffect(() => {
-    socket.emit('go-online', user)
-
-    const handleUnload = (e) => {
-      socket.emit('go-offline', user)
-      // e.preventDefault()
-      // e.returnValue = ''
-    }
-
-    // Seteamos al usuario como usuario desconectado en el socket cuando se cierre la pestaña
-    window.addEventListener('unload', handleUnload)
-
-    return () => {
-      window.removeEventListener('unload', handleUnload)
-    }
-    
+    socketChat.emit('go-online', user)
   }, [])
 
   return (
@@ -89,6 +77,7 @@ const Content = ({
         <Route exact path="/materias" component={MateriaIndex} />
         {/* AULA virtual */}
         {/* <Route exact path="/materias/details/:claseId/:materiaId" component={ClassRoom} /> */}
+        <Route exact path="/noticias" component={Noticias} />
         <Route exact path="/homeworkslist/:tareaId" component={TablaEntregas} />
         <Route exact path="/profile">
           <Profile
@@ -99,6 +88,7 @@ const Content = ({
             setSecondary={setSecondary}
           />
         </Route>
+        <Route exact path="/notifications" component={Notifications} />
         <Route exact path="/classroom-teacher" component={TeacherClassroom} />
         <Route
           exact

@@ -1,13 +1,15 @@
 import { Box, TextField, IconButton } from '@mui/material/'
 import Send from '@mui/icons-material/Send'
 import { useState } from 'react'
-import socket from '../../socket'
+import { socketChat } from '../../socket'
 
 /**
  * ChatInput
  *
  * handleSubmit: funcion que es llamada cuando se presiona enter
  * en el campo de texto
+ * chatId: id del chat
+ * fullName: nombre del usuario
  *
  */
 const ChatInput = ({ handleSubmit, chatId, fullName }) => {
@@ -15,7 +17,7 @@ const ChatInput = ({ handleSubmit, chatId, fullName }) => {
 
   const handleChange = (e) => {
     setMessage(e.target.value)
-    socket.emit('typing', { fullName, chatId })
+    socketChat.emit('typing', { fullName, chatId })
   }
 
   return (
@@ -27,12 +29,14 @@ const ChatInput = ({ handleSubmit, chatId, fullName }) => {
         mt: 3,
       }}
     >
-      <form onSubmit={(e) => {
-        e.preventDefault()
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
 
-        handleSubmit(message)
-        setMessage('')
-      }}>
+          handleSubmit(message)
+          setMessage('')
+        }}
+      >
         <Box
           spacing={0}
           display="flex"
@@ -48,6 +52,7 @@ const ChatInput = ({ handleSubmit, chatId, fullName }) => {
             autoFocus
             value={message}
             onChange={handleChange}
+            autoComplete="off"
           />
           <IconButton
             width="15%"

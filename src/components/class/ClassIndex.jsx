@@ -11,7 +11,6 @@ import {
 } from '../../actions/clase'
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 350 },
   { field: 'name', headerName: 'Name', width: 300 },
   {
     field: 'schools',

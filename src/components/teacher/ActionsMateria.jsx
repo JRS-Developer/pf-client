@@ -13,7 +13,11 @@ import ExamenNotasIndex from '../examenNotas/ExamenNotasIndex'
 import Chat from '../classroom/chat/Chat'
 import Feed from '../classroom/Feed'
 import FeedIcon from '@mui/icons-material/Feed';
+import VideoCameraFrontIcon from '@mui/icons-material/VideoCameraFront';
+import GroupIcon from '@mui/icons-material/Group';
+import JitsiComponent from '../classroom/Jitsi/JitsiComponent'
 //import CorregirTarea from './homework/forms/CorregirTarea.jsx'
+import ListStudents from '../classroom/ListStudents.jsx'
 
 export default function ActionsMateria() {
   const [value, setValue] = useState('1')
@@ -31,7 +35,8 @@ export default function ActionsMateria() {
             onChange={handleChange}
             aria-label="icon label tabs example"
           >
-            <Tab icon={<FeedIcon/>} label="Publicaciones" value="1" />
+
+            <Tab icon={<FeedIcon />} label="Publicaciones" value="1" />
             <Tab icon={<AssignmentIcon />} label="Tareas" value="2" />
             <Tab
               icon={<FormatListBulletedIcon />}
@@ -39,6 +44,8 @@ export default function ActionsMateria() {
               value="3"
             />
             <Tab icon={<CommentIcon />} label="Chat" value="4" />
+            <Tab icon={<VideoCameraFrontIcon />} label="Videollamada" value="5" />
+            <Tab icon={<GroupIcon />} label="Alumnos" value="6" />
           </TabList>
         </Box>
         <TabPanel value="1">
@@ -52,6 +59,13 @@ export default function ActionsMateria() {
         </TabPanel>
         <TabPanel value="4">
           <Chat />
+        </TabPanel>
+        <TabPanel value="5">
+          <JitsiComponent />
+        </TabPanel>
+        <TabPanel value="6">
+          <h2>Lista de Alumnos</h2>
+          <ListStudents />
         </TabPanel>
       </TabContext>
     </Box>
