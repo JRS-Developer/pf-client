@@ -12,14 +12,13 @@ import {
   editNotasExamen,
 } from '../../actions/examenNotas'
 
-
 const form = ExamenNotasForm
 
 export default function ExamenNotasIndex({student = false}) {
   const param = useParams()
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 300},
+    { field: 'id', headerName: 'ID', width: 300 },
     { field: 'fecha', headerName: 'FECHA EVALUACIÓN', width: 200 },
     { field: 'school', headerName: 'ESCUELA', width: 300 },
     { field: 'clase', headerName: 'CLASE', width: 200 },
@@ -54,7 +53,8 @@ export default function ExamenNotasIndex({student = false}) {
       ciclo_lectivo_id: param.ciclo_lectivo_id || param.cicloLectivoId,
       id: param.materia_id || param.materiaId,
     }
-    console.log(body)
+
+ 
     dispatch(listExamenNotas(body, student))
   }, [dispatch])
 

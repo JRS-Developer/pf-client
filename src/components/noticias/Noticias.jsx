@@ -25,6 +25,17 @@ export default function Noticias() {
   const getActionsModule = useSelector((state) => state.actionsModuleReducer)
   const { actionsModule } = getActionsModule
 
+  //  function onSchoolChange(e) {
+  //  console.log(e.target)
+  //  let arr = Array.from(e.target.school_id)
+  //  setValueSchool([alumnoMatriculaReducer.school_id])
+  //  }
+
+  // function onCicloLectivoChange(e) {
+  //   let arr = Array.from(e.target.ciclo_lectivo_id)
+  //   setValueCiclo([...arr])
+  // }
+
   const dispatch = useDispatch()
 
   useEffect(() => {
