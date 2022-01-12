@@ -7,7 +7,7 @@ import Avatar from '@material-ui/core/Avatar'
 import AvatarGroup from '@material-ui/lab/AvatarGroup'
 import Box from '@material-ui/core/Box'
 import { Link } from 'react-router-dom'
-
+import CardMedia from '@mui/material/CardMedia'
 import Grid from '@material-ui/core/Grid'
 import { Row, Item } from '@mui-treasury/components/flex'
 import { Info } from '@mui-treasury/components/info'
@@ -17,11 +17,12 @@ import Autocomplete from '@mui/material/Autocomplete'
 import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
 import CircularProgress from '@mui/material/CircularProgress'
+import Divider from '@mui/material/Divider'
 
 import { getCicloElectivos as listCicloElectivos } from '../../actions/cicloElectivo'
 import { teacherMaterias as listMaterias } from '../../actions/teacher'
 
-const nada = [];
+const nada = []
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -92,13 +93,29 @@ const CustomCard = ({
   // const btnStyles = useGraphicBtnStyles();
   return (
     <Paper elevation={3}>
-      <Row p={2} gap={2}>
-        <Info position={'middle'}>
-          <Typography>{title}</Typography>
-          <Typography variant="body2">{subtitle}</Typography>
-        </Info>
+      <Row p={2} gap={2} sx={{ pb: 1 }}>
+        <Grid container>
+          <Grid item xs={4}>
+            <Info sx={{p:0, m:0}}>
+              <Typography variant="h5">{title}</Typography>
+              <Divider sx={{mr: 2}}/>
+              <Typography variant="subtitle1">{subtitle}</Typography>
+            </Info>
+          </Grid>
+          <Grid item xs={8}>
+            <Box sx={{ width: '100%', height: '20vh' }}>
+              <CardMedia
+                component="img"
+                height="100%"
+                image={`/imagenes/${title}.jpg`}
+                alt="img"
+              />
+            </Box>
+          </Grid>
+        </Grid>
       </Row>
-      <Box
+      <Divider sx={{pb: 0.5, mx: 1}}/>
+      {/* <Box
         pb={1}
         px={2}
         color={'grey.600'}
@@ -106,8 +123,8 @@ const CustomCard = ({
         fontFamily={'Ubuntu'}
       >
         {description}
-      </Box>
-      <Row p={2} gap={2} position={'bottom'}>
+      </Box> */}
+      <Row p={2} gap={2} position={'bottom'} sx={{ pt: 0 }}>
         <Item>
           <AvatarGroup max={3} classes={{ avatar: styles.avatar }}>
             {new Array(5).fill(0).map((_, index) => (
@@ -247,7 +264,7 @@ export const TeacherClassroom = React.memo(function TeamCard() {
               }}
               inputValue={valueSchool?.label || ''}
               id="school_id"
-              options={listSchool? listSchool : nada}
+              options={listSchool ? listSchool : nada}
               sx={{ width: '100%' }}
               renderInput={(params) => <TextField {...params} label="School" />}
             />

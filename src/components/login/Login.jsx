@@ -69,11 +69,12 @@ export default function SignInSide({ location }) {
         `${process.env.REACT_APP_SERVER}/auth/login`,
         { email: values.user, password: values.password }
       )
-
+        
       setOpen(true)
       setMessage({ type: 'success', text: data.message })
       localStorage.setItem('token', data.token)
       localStorage.setItem('user', data.user)
+      localStorage.setItem('role', data.role)
 
       dispatch(setLogged())
     } catch (error) {

@@ -4,7 +4,7 @@ import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 import { useHistory } from 'react-router-dom'
 import Logo from '../../logo2.png'
 import Gaia from './Gaia'
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
     '&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb': {
       borderRadius: 8,
-      backgroundColor: '#6b6b6b',
+      backgroundColor: theme.palette.primary.main,
       minHeight: 24,
     },
     '&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus': {
