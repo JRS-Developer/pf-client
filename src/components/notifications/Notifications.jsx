@@ -7,8 +7,11 @@ import ListItemText from '@mui/material/ListItemText'
 import Avatar from '@mui/material/Avatar'
 import CircularProgress from '@mui/material/CircularProgress'
 import { useDispatch, useSelector } from 'react-redux'
+import { socketNotification } from '../socket'
 
 const Notification = ({ user, link, description }) => {
+
+
   return (
     <ListItem>
       <ListItemAvatar>
