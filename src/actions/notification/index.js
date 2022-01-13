@@ -1,6 +1,6 @@
-import * as actionTypes from './types';
-import axios from 'axios';
-const { REACT_APP_WEBPUSH, /*REACT_APP_API*/ } = process.env
+import * as actionTypes from './types'
+import axios from 'axios'
+const { REACT_APP_WEBPUSH /*REACT_APP_API*/ } = process.env
 
 export const getNotifications = (user_id) => async (dispatch) => {
   try {

@@ -88,7 +88,7 @@ self.addEventListener('push', function (e) {
       primaryKey: 1,
       url: data.url ? `${self.origin}${data.url}` : null,
     },
-    icon: '/icon.png'
+    icon: '/icon.png',
   }
   e.waitUntil(self.registration.showNotification(title, options))
 })
