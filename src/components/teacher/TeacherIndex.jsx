@@ -36,12 +36,13 @@ const columns = [
     width: 250,
     editable: true,
   },
-  // {
-  //   field: 'password',
-  //   headerName: 'Contraseña',
-  //   width: 150,
-  //   editable: true,
-  // },
+  {
+    field: 'password',
+    headerName: 'Contraseña',
+    width: 150,
+    editable: true,
+    hide: true
+  },
   {
     field: 'role',
     headerName: 'Rol',
