@@ -11,7 +11,6 @@ import {
 } from '../../actions/cicloElectivo'
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 350 },
   { field: 'name', headerName: 'Name', width: 300 },
   { field: 'status', headerName: 'Status', width: 300 },
 ]
@@ -26,7 +25,7 @@ export default function CicloElectivoIndex() {
 
   const data = {
     columns,
-    rows: cicloElectivos,
+    rows: cicloElectivos.map(m => Object.assign({...m, status: m.status ? "Activo" : "Inactivo"})),
   }
 
   useEffect(() => {

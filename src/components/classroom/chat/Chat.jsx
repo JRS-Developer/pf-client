@@ -7,7 +7,7 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import CircularProgress from '@mui/material/CircularProgress'
 import { useEffect } from 'react'
-import socket from '../../socket'
+import { socketChat } from '../../socket'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -24,11 +24,11 @@ import { makeStyles } from '@material-ui/core/styles'
 
 // Imports
 
-const user = localStorage.getItem('user')
+
 const drawerWidth = 240
 const chatHeight = 'calc(100vh - 252px)'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   box: {
     scrollbarColor: '#6b6b6b #2b2b2b',
     '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
@@ -60,6 +60,8 @@ const Chat = () => {
   const [openUsers, setOpenUsers] = useState(false)
   const [isPrivate, setIsPrivate] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null)
+
+  const user = localStorage.getItem('user')
 
   const classes = useStyles()
 
@@ -117,7 +119,7 @@ const Chat = () => {
     // Crep un unico _id para el mensaje, esto es para los otros usuarios
     const _id = new Date().getTime()
 
-    socket.emit('message', { user, message, chatId: chat._id, _id })
+    socketChat.emit('message', { user, message, chatId: chat._id, _id})
   }
 
   const findUserData = (users, userId) => {
@@ -128,18 +130,19 @@ const Chat = () => {
 
   useEffect(() => {
     // Despues de obtener la info del chat, mando un socket.emit para unirme al chat
-
     if (chat) {
-      socket.emit('join', {
+      socketChat.emit('join', {
         chatId: chat._id,
         userId: userInfo.id,
       })
+      
     }
+
 
     return () => {
       // Dejo el chat
       if (chat) {
-        socket.emit('leave', { chatId: chat._id, userId: userInfo.id })
+        socketChat.emit('leave', { chatId: chat._id, userId: userInfo.id })
       }
     }
   }, [chat, userInfo.id])
@@ -159,11 +162,12 @@ const Chat = () => {
     return () => {
       dispatch(resetStore())
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, params])
 
   // Mostrar typing cuando otro usuario esta escribiendo
   useEffect(() => {
-    socket.on('typing', (data) => {
+    socketChat.on('typing', (data) => {
       setTyping(data)
     })
   }, [])

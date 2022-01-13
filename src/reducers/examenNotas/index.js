@@ -26,7 +26,6 @@ export const getExamenNotasReducer = (state = initialState, action) => {
     case actionTypes.ADD_EXAMEN_NOTA:
       return {
         loadingExamenNotas: false,
-        examenNotas: action.payload,
         message: action.payload,
       }
     case actionTypes.EDIT_EXAMEN_NOTA:

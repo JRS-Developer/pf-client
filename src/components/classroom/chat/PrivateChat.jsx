@@ -26,113 +26,17 @@ import { useState, useEffect /*useContext*/ } from 'react'
 import { useSelector } from 'react-redux'
 // import socket from '../../socket';
 import Chat from './Chat'
-import socket from '../../socket'
+import { socketChat } from '../../socket'
 
-// const mensajes = [
-//   {
-//     id: 1,
-//     name: 'Juan',
-//     message: "Hola como andan?",
-//     avatar: '/static/images/avatar/5.jpg',
-//   },
-//   {
-//     id: 2,
-//     name: 'Lean',
-//     message: `Cansado`,
-//     avatar: '/static/images/avatar/1.jpg',
-//   },
-//   {
-//     id: 1,
-//     name: 'Juan',
-//     message: 'Mal yo tambien',
-//     avatar: '/static/images/avatar/2.jpg',
-//   },
-//   {
-//     id: 2,
-//     name: 'Lean',
-//     message: 'Esta para un sandwich de milanesa',
-//     avatar: '/static/images/avatar/3.jpg',
-//   },
-//   {
-//     id: 1,
-//     name: "Juan",
-//     message: 'Siii con una buena birra',
-//     avatar: '/static/images/avatar/4.jpg',
-//   },
-//   {
-//     id: 2,
-//     name: 'Lean',
-//     message: `Venite`,
-//     avatar: '/static/images/avatar/5.jpg',
-//   },
-//   {
-//     id: 1,
-//     name: 'Juan',
-//     message: `Yendo`,
-//     avatar: '/static/images/avatar/1.jpg',
-//   },
-//   {
-//     id: 7,
-//     name: 'Juan',
-//     message: `Yendo`,
-//     avatar: '/static/images/avatar/1.jpg',
-//   },
-//   {
-//     id: 7,
-//     name: 'Juan',
-//     message: `Yendo`,
-//     avatar: '/static/images/avatar/1.jpg',
-//   },
-//   {
-//     id: 7,
-//     name: 'Juan',
-//     message: `Yendo`,
-//     avatar: '/static/images/avatar/1.jpg',
-//   },
-//   {
-//     id: 7,
-//     name: 'Juan',
-//     message: `Yendo`,
-//     avatar: '/static/images/avatar/1.jpg',
-//   },
-//   {
-//     id: 7,
-//     name: 'Juan',
-//     message: `Yendo`,
-//     avatar: '/static/images/avatar/1.jpg',
-//   },
-//   {
-//     id: 7,
-//     name: 'Juan',
-//     message: `Yendo`,
-//     avatar: '/static/images/avatar/1.jpg',
-//   },
-//   {
-//     id: 7,
-//     name: 'Juan',
-//     message: `Yendo`,
-//     avatar: '/static/images/avatar/1.jpg',
-//   },
-//   {
-//     id: 7,
-//     name: 'Juan',
-//     message: `Yendo`,
-//     avatar: '/static/images/avatar/1.jpg',
-//   },
-//   {
-//     id: 7,
-//     name: 'Juan',
-//     message: `Yendo`,
-//     avatar: '/static/images/avatar/1.jpg',
-//   },
-// ];
+
+
 export default function PrivateChat() {
   const [messages, setMessages] = useState('')
   const [isGeneral, setIsGeneral] = useState(false)
   const privateChat = useSelector((state) => state.privateChat)
 
   useEffect(() => {
-    socket.emit('conectado')
+    socketChat.emit('conectado')
   }, [])
 
   const handleClick = () => {
@@ -164,7 +68,7 @@ export default function PrivateChat() {
                 Inbox
               </Typography>
               <List sx={{ mb: 2 }}>
-                {privateChat.map(({ id, name, message, person }, i) => (
+                {privateChat?.map(({ id, name, message, person }, i) => (
                   <ListItem
                     key={`m${i}`}
                     button

@@ -11,7 +11,6 @@ import {
 } from '../../actions/school'
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 350 },
   { field: 'name', headerName: 'Name', width: 300 },
   { field: 'status', headerName: 'Status', width: 300 },
 ]
@@ -26,7 +25,7 @@ export default function SchoolIndex() {
 
   const data = {
     columns,
-    rows: schools,
+    rows: schools.map(s => Object.assign({...s, status: s.status ? "Activo" : "Inactivo"})),
   }
 
   useEffect(() => {
@@ -35,7 +34,7 @@ export default function SchoolIndex() {
 
   return (
     <>
-      {
+      { schools &&
         <Table
           data={data}
           DialogForm={form}

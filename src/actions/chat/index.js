@@ -49,7 +49,7 @@ export const getMessages =
           throw e
         }
       }
-
+      console.log(chatData)
       // Obtengo los mensajes del chat
       let messagesRequest = getChatMessages(chatData._id)
 
@@ -99,15 +99,19 @@ export const resetStore = () => {
   }
 }
 
-export const addOnlineUser = (userId) => ({
-  type: ADD_ONLINE_USER,
-  payload: userId,
-})
+export const addOnlineUser = (userId) => {
+  return {
+    type: ADD_ONLINE_USER,
+    payload: userId,
+  }
+}
 
-export const removeOnlineUser = (userId) => ({
-  type: REMOVE_ONLINE_USER,
-  payload: userId,
-})
+export const removeOnlineUser = (userId) => {
+  return {
+    type: REMOVE_ONLINE_USER,
+    payload: userId,
+  }
+}
 
 export const getUser = (id) => async (dispatch) => {
   try {
