@@ -105,6 +105,7 @@ const Notifications = () => {
 
   React.useEffect(() => {
     socketNotification.on('notification', (data) => {
+      data.status = true
       setNewNotify([(prev) => [...prev, data]])
     })
 
