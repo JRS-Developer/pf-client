@@ -13,8 +13,8 @@ import Checkbox from '@mui/material/Checkbox'
 import { useDispatch, useSelector } from 'react-redux'
 import { socketNotification } from '../socket'
 // import { Link } from 'react-router-dom'
-// import Avatar from '@mui/material/Avatar'
-// import ListItemAvatar from '@mui/material/ListItemAvatar'
+import Avatar from '@mui/material/Avatar'
+import ListItemAvatar from '@mui/material/ListItemAvatar'
 import CircularProgress from '@mui/material/CircularProgress'
 import { useHistory } from 'react-router-dom'
 import {
@@ -79,10 +79,12 @@ const Notification = ({
 
 const Notifications = () => {
   const [checked, setChecked] = React.useState([])
+  const [newNotify, setNewNotify] = React.useState([])
 
   const { notifications, loading } = useSelector(
     (state) => state.notificationReducer
   )
+
 
   const history = useHistory()
 
@@ -103,9 +105,11 @@ const Notifications = () => {
 
   React.useEffect(() => {
     socketNotification.on('notification', (data) => {
-      console.log(data)
+      setNewNotify([(prev) => [...prev, data]])
     })
-  }, [])
+
+    notifications.concat(newNotify)
+  }, [newNotify, notifications])
 
   const handleLeido = async () => {
     setChecked([])

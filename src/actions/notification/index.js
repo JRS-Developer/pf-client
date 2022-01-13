@@ -31,7 +31,8 @@ export const getNotifications = (user_id) => async (dispatch) => {
   }
 }
 
-export const addNotification = (notification) => {
+export const addNotification = async (notification) => {
+    await axios.post(`${REACT_APP_WEBPUSH}/notifications/`, notification)
   return {
     type: actionTypes.ADD_NOTIFICATION,
     payload: notification,
