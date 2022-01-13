@@ -1,4 +1,5 @@
-import ListItem from '@mui/material/ListItem'
+// import ListItem from '@mui/material/ListItem'
+import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 import ListItemAvatar from '@mui/material/ListItemAvatar'
 import Avatar from '@mui/material/Avatar'
@@ -6,6 +7,10 @@ import Badge from '@mui/material/Badge'
 import Typography from '@mui/material/Typography'
 import { stringAvatar } from '../utils'
 import Divider from '@mui/material/Divider'
+import * as React from 'react';
+// import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 // ListUterItem
 // Item de lista de usuarios
@@ -15,9 +20,18 @@ import Divider from '@mui/material/Divider'
 const ListUserItem = ({ user, online }) => {
   const fullName = `${user.firstName} ${user.lastName}`
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <>
-      <ListItem
+      <ListItemButton
         key={user.id}
         sx={{
           display: 'flex',
@@ -28,6 +42,7 @@ const ListUserItem = ({ user, online }) => {
           m: 0,
           my: 1,
         }}
+        onClick={handleClick}
       >
         <ListItemAvatar
           sx={{
@@ -74,8 +89,19 @@ const ListUserItem = ({ user, online }) => {
             </Typography>
           }
         />
-      </ListItem>
+      </ListItemButton>
       <Divider />
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={handleClose}>Enviar mensaje</MenuItem>
+      </Menu>
     </>
   )
 }

@@ -25,13 +25,13 @@ const columns = [
   {
     field: 'userName',
     headerName: 'Nombre de usuario',
-    width: 120,
+    width: 150,
     editable: true,
   },
   {
     field: 'email',
     headerName: 'Correo Electronico',
-    width: 150,
+    width: 250,
     editable: true,
   },
   {
@@ -39,6 +39,7 @@ const columns = [
     headerName: 'Contraseña',
     width: 150,
     editable: true,
+    hide: true
   },
   {
     field: 'role',

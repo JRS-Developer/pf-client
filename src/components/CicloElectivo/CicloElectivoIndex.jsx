@@ -25,7 +25,7 @@ export default function CicloElectivoIndex() {
 
   const data = {
     columns,
-    rows: cicloElectivos,
+    rows: cicloElectivos.map(m => Object.assign({...m, status: m.status ? "Activo" : "Inactivo"})),
   }
 
   useEffect(() => {

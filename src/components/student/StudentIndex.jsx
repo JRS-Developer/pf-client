@@ -45,6 +45,7 @@ const columns = [
     field: 'role',
     headerName: 'Rol',
     width: 120,
+    hide: true,
     editable: true,
     // Con esto obtengo el nombre del role
     valueGetter: (params) => {

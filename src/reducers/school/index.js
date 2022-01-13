@@ -25,20 +25,20 @@ export const getSchoolReducer = (state = initialState, action) => {
       }
     case actionTypes.ADD_SCHOOL:
       return {
+        ...state,
         loadingSchool: false,
-        schools: action.payload,
         message: action.payload,
       }
     case actionTypes.EDIT_SCHOOL:
       return {
+        ...state,
         loadingSchool: false,
-        schools: action.payload,
         message: action.payload,
       }
     case actionTypes.DELETE_SCHOOL:
       return {
+        ...state,
         loadingSchool: false,
-        schools: action.payload,
         message: action.payload,
       }
     case actionTypes.SCHOOL_FAIL:

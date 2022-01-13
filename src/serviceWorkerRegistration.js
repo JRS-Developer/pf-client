@@ -116,7 +116,7 @@ export const subscription = async (data) => {
 
   const isSubscribed = await reg.pushManager.getSubscription()
 
-  if(isSubscribed) return
+  if (isSubscribed) return
 
   const suscribe = await reg.pushManager.subscribe({
     userVisibleOnly: true,

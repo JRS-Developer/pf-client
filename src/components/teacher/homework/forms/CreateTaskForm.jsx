@@ -76,10 +76,10 @@ export default function CreateTaskForm({
         scroll="paper"
       >
         <form onSubmit={handleSubmit}>
-          <DialogTitle>{titleForm} Nueva Tarea </DialogTitle>
+          <DialogTitle>{titleForm}</DialogTitle>
           <DialogContent>
             <DialogContentText></DialogContentText>
-            <Box sx={{ width: '100%' }}>
+            <Box sx={{ width: '100%', pt: 1 }}>
               <Grid container spacing={2} columns={12}>
                 <Grid item xs={6}>
                   <TextField

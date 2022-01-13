@@ -25,7 +25,7 @@ export default function SchoolIndex() {
 
   const data = {
     columns,
-    rows: schools,
+    rows: schools.map(s => Object.assign({...s, status: s.status ? "Activo" : "Inactivo"})),
   }
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function SchoolIndex() {
 
   return (
     <>
-      {
+      { schools &&
         <Table
           data={data}
           DialogForm={form}

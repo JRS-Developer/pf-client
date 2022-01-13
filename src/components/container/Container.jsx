@@ -27,7 +27,6 @@ import Notifications from '../notifications/Notifications'
 import { socketChat, socketNotification } from '../socket'
 import Noticias from '../noticias/Noticias'
 
-const user = localStorage.getItem('user')
 
 const Content = ({
   show,
@@ -39,8 +38,23 @@ const Content = ({
 }) => {
   // Seteamos al usuario como usuario conectado en el socket
   useEffect(() => {
-    socketChat.emit('go-online', user);
+    const user = localStorage.getItem('user')
+    
+    socketChat.emit('go-online', user)
     socketNotification.emit('online', user)
+
+    const handleUnload = () => {
+      socketChat.emit('go-offline', user)
+      // e.preventDefault()
+      // e.returnValue = ''
+    }
+
+    // Seteamos al usuario como usuario desconectado en el socket cuando se cierre la pestaña
+    window.addEventListener('unload', handleUnload)
+
+    return () => {
+      window.removeEventListener('unload', handleUnload)
+    }
   }, [])
 
   return (
