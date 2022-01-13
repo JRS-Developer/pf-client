@@ -4,11 +4,11 @@ import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 import { useHistory } from 'react-router-dom'
 import Logo from '../../logo2.png'
 import Gaia from './Gaia'
-import Pricing from './Pricing'
+
 import Who from './Who'
 
 const useStyles = makeStyles((theme) => ({
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
     '&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb': {
       borderRadius: 8,
-      backgroundColor: '#6b6b6b',
+      backgroundColor: theme.palette.primary.main,
       minHeight: 24,
     },
     '&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus': {
@@ -42,7 +42,7 @@ export default function LandingPage() {
   const classes = useStyles()
   const [value, setValue] = useState('¿Que es GAIA?')
   const [scroll, setScroll] = useState(0)
-  const pages = ['¿Que es GAIA?', 'Planes', '¿Quienes somos?']
+  const pages = ['¿Que es GAIA?', '¿Quienes somos?']
   const history = useHistory()
 
   function handleClick(e) {
@@ -51,6 +51,8 @@ export default function LandingPage() {
 
   function handleScroll(e) {
     setScroll(e.target.scrollTop)
+    console.log(e.target.scrollTop)
+    console.log(e.target.offsetHeight)
   }
 
   function show(value) {
@@ -58,8 +60,7 @@ export default function LandingPage() {
       case '¿Que es GAIA?':
         return <Gaia scroll={scroll}/>
 
-      case 'Planes':
-        return <Pricing/>
+
 
       case '¿Quienes somos?':
         return <Who/>
@@ -117,7 +118,7 @@ export default function LandingPage() {
       <Box
         className={classes.box}
         onScroll={handleScroll}
-        sx={{ height: 'calc(100vh - 64px)', overflow: 'auto' , mt: '64px' }}
+        sx={{ height: 'calc(100vh - 64px)', overflow: 'auto', overflowX: "hidden" , mt: '64px' }}
       >
         {show(value)}
       </Box>

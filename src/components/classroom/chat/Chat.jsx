@@ -24,7 +24,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 // Imports
 
-const user = localStorage.getItem('user')
+
 const drawerWidth = 240
 const chatHeight = 'calc(100vh - 252px)'
 
@@ -60,6 +60,8 @@ const Chat = () => {
   const [openUsers, setOpenUsers] = useState(false)
   const [isPrivate, setIsPrivate] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null)
+
+  const user = localStorage.getItem('user')
 
   const classes = useStyles()
 
@@ -126,13 +128,14 @@ const Chat = () => {
 
   useEffect(() => {
     // Despues de obtener la info del chat, mando un socket.emit para unirme al chat
-
     if (chat) {
       socket.emit('join', {
         chatId: chat._id,
         userId: userInfo.id,
       })
+      
     }
+
 
     return () => {
       // Dejo el chat
@@ -157,6 +160,7 @@ const Chat = () => {
     return () => {
       dispatch(resetStore())
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, params])
 
   // Mostrar typing cuando otro usuario esta escribiendo

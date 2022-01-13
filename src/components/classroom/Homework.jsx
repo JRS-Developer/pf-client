@@ -230,7 +230,7 @@ export default function Homework() {
                   }
                   onClick={handleSubmit}
                 >
-                  Marcar tarea como hecha
+                  Entregar
                 </Button>
               </Box>
             </Grid>
