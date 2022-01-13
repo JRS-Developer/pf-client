@@ -6,15 +6,15 @@ import ListItem from '@mui/material/ListItem'
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button'
-import ListItemAvatar from '@mui/material/ListItemAvatar'
 import ListItemText from '@mui/material/ListItemText'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import Checkbox from '@mui/material/Checkbox'
 import Avatar from '@mui/material/Avatar'
+import ListItemAvatar from '@mui/material/ListItemAvatar'
 import CircularProgress from '@mui/material/CircularProgress'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 import {
   getNotifications,
   removeNotifications,
@@ -35,20 +35,25 @@ const Notification = ({
           edge="start"
           checked={checked.indexOf(id) !== -1}
           tabIndex={-1}
-          disableRipple
           inputProps={{ 'aria-labelledby': id }}
         />
       </ListItemIcon>
-      <Box
+      <ListItemButton
         sx={{
           width: '100%',
         }}
+        component={RouterLink}
+        to={url}
       >
+        {/* TODO: Descomentar esto cuando el poder colocar el quien envia el mensaje funcione */}
+        {/* <ListItemAvatar>
+          <Avatar>B</Avatar>
+        </ListItemAvatar> */}
         <ListItemText
-          primary={<Typography>{title}</Typography>}
+          primary={<Typography color="primary">{title}</Typography>}
           secondary={description}
         />
-      </Box>
+      </ListItemButton>
     </ListItem>
   )
 }
@@ -59,6 +64,8 @@ const Notifications = () => {
   const { notifications, loading } = useSelector(
     (state) => state.notificationReducer
   )
+
+  const user = localStorage.getItem('user')
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value)
@@ -73,18 +80,19 @@ const Notifications = () => {
     setChecked(newChecked)
   }
 
-  const handleLeido = () => {
+  const handleLeido = async () => {
     setChecked([])
-    dispatch(removeNotifications(checked))
+
+    await dispatch(removeNotifications(checked))
+    await dispatch(getNotifications(user))
   }
 
-  const handleTodoLeidos = () => {
+  const handleTodoLeidos = async () => {
     // Aqui deberia ejecutar el action de eliminar notificaciones
     const ids = notifications.map((notification) => notification.id)
-    dispatch(removeNotifications(ids))
+    await dispatch(removeNotifications(ids))
+    await dispatch(getNotifications(user))
   }
-
-  const user = localStorage.getItem('user')
 
   const dispatch = useDispatch()
 
