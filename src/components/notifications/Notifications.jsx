@@ -54,10 +54,11 @@ const Notification = ({
 }
 
 const Notifications = () => {
-  // const { notifications, loading } = useSelector(
-  //   (state) => state.notificationsReducer
-  // )
   const [checked, setChecked] = React.useState([])
+
+  const { notifications, loading } = useSelector(
+    (state) => state.notificationReducer
+  )
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value)
@@ -71,20 +72,16 @@ const Notifications = () => {
 
     setChecked(newChecked)
   }
-  const { notifications, loading } = useSelector(
-    (state) => state.notificationReducer
-  )
-  console.log(notifications)
 
   const handleLeido = () => {
     setChecked([])
-    removeNotifications(checked)
+    dispatch(removeNotifications(checked))
   }
 
   const handleTodoLeidos = () => {
     // Aqui deberia ejecutar el action de eliminar notificaciones
     const ids = notifications.map((notification) => notification.id)
-    removeNotifications(ids)
+    dispatch(removeNotifications(ids))
   }
 
   const user = localStorage.getItem('user')
@@ -108,14 +105,27 @@ const Notifications = () => {
           <Box
             sx={{
               ml: 'auto',
+              display: 'flex',
+              gap: 1,
             }}
           >
-            {checked.length ? (
-              <Button onClick={handleLeido}>Marcar como leido</Button>
+            {loading ? (
+              <CircularProgress />
+            ) : notifications.length > 0 ? (
+              <>
+                <Button
+                  onClick={handleLeido}
+                  variant="contained"
+                  disabled={checked.length === 0}
+                >
+                  Marcar como leido
+                </Button>
+
+                <Button variant="outlined" onClick={handleTodoLeidos}>
+                  Marcar todo como leido
+                </Button>
+              </>
             ) : null}
-            <Button variant="outlined" onClick={handleTodoLeidos}>
-              Marcar todo como leido
-            </Button>
           </Box>
         </Grid>
       </Paper>

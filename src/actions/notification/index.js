@@ -39,11 +39,17 @@ export const addNotification = (notification) => {
   }
 }
 
-export const removeNotifications = (notifications) => async (dispatch) => {
+export const removeNotifications = (notificationsIds) => async (dispatch) => {
   try {
+    const { data } = await axios.delete(`${REACT_APP_WEBPUSH}/notifications/`, {
+      data: {
+        notificationsIds,
+      },
+    })
+
     dispatch({
       type: actionTypes.REMOVE_NOTIFICATIONS,
-      payload: notifications,
+      payload: data.message,
     })
   } catch (error) {
     dispatch({
