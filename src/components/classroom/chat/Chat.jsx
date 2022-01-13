@@ -160,6 +160,7 @@ const Chat = () => {
     return () => {
       dispatch(resetStore())
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, params])
 
   // Mostrar typing cuando otro usuario esta escribiendo
