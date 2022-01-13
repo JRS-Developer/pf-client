@@ -17,9 +17,12 @@ jobs:
       - run: npm run build
         env:
           REACT_APP_SERVER: ${{ secrets.REACT_APP_SERVER }}
-          REACT_APP_SOCKET: ${{ secrets.REACT_APP_SOCKET }}
+          REACT_APP_SOCKET_CHAT: ${{ secrets.REACT_APP_SOCKET_CHAT }}
           REACT_APP_CHAT: ${{ secrets.REACT_APP_CHAT }}
-
+          REACT_APP_SOCKET_NOTIFICATION: ${{ secrets.REACT_APP_SOCKET_NOTIFICATION }}
+          REACT_APP_VAPID: ${{ secrets.REACT_APP_VAPID }}
+          REACT_APP_WEBPUSH: ${{ secrets.REACT_APP_WEBPUSH }}
+          
       - name: GitHub Action for Firebase
         uses: w9jds/firebase-action@v1.5.0
         with:
