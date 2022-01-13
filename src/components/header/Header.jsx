@@ -20,9 +20,10 @@ import { Close } from '@mui/icons-material'
 import Switch from '@mui/material/Switch'
 import { HeaderDiv } from './HeaderStyles'
 import { logout } from '../../actions/auth'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Logo from '../../logo2.png'
 import { useHistory } from 'react-router-dom'
+import { getNotifications } from '../../actions/notification'
 
 // const Search = styled('div')(({ theme }) => ({
 //   position: 'relative',
@@ -74,12 +75,14 @@ export default function Header({
 }) {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
-  const [anchorNotification, setAnchorNotification] = React.useState(null)
-  const isNotificationOpen = Boolean(anchorNotification)
+  /* const [anchorNotification, setAnchorNotification] = React.useState(null) */
+  /* const isNotificationOpen = Boolean(anchorNotification) */
   const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
   const dispatch = useDispatch()
   const history = useHistory()
+
+  const { notifications } = useSelector((state) => state.notificationReducer)
 
   const handleModeChange = () => {
     if (mode) {
@@ -91,14 +94,13 @@ export default function Header({
     }
   }
 
-  const handleNotificationOpen = (event) => {
+  /* const handleNotificationOpen = (event) => {
     setAnchorNotification(event.currentTarget)
     /*  setOpen(!open) */
-  }
 
-  const handleNotificationClose = () => {
+  /* const handleNotificationClose = () => {
     setAnchorNotification(null)
-  }
+  } */
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget)
@@ -147,7 +149,7 @@ export default function Header({
     </Menu>
   )
 
-  const notificationRender = (
+  /* const notificationRender = (
     <Menu
       anchorEl={anchorNotification}
       anchorOrigin={{
@@ -169,7 +171,7 @@ export default function Header({
         Ver todas las notificaciones
       </MenuItem>
     </Menu>
-  )
+  ) */
 
   const mobileMenuId = 'primary-search-account-menu-mobile'
   const renderMobileMenu = (
@@ -199,10 +201,11 @@ export default function Header({
       <MenuItem>
         <IconButton
           size="large"
-          aria-label="show 17 new notifications"
+          aria-label="show new notifications"
           color="inherit"
+          onClick={() => handleMenuClose('/notifications')}
         >
-          <Badge badgeContent={17} color="error">
+          <Badge badgeContent={notifications.length} color="error">
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -257,9 +260,9 @@ export default function Header({
                 size="large"
                 aria-label="show 17 new notifications"
                 color="inherit"
-                onClick={handleNotificationOpen}
+                onClick={() => handleMenuClose('/notifications')}
               >
-                <Badge badgeContent={17} color="secondary">
+                <Badge badgeContent={notifications.length} color="secondary">
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
@@ -300,7 +303,7 @@ export default function Header({
         </AppBar>
         {renderMobileMenu}
         {renderMenu}
-        {notificationRender}
+        {/* {notificationRender} */}
       </Box>
     </HeaderDiv>
   )
