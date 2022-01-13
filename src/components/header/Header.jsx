@@ -120,6 +120,11 @@ export default function Header({
     setMobileMoreAnchorEl(event.currentTarget)
   }
 
+  React.useEffect(() => {
+    const user = localStorage.getItem('user')
+    user && dispatch(getNotifications(user))
+  }, [dispatch])
+
   const menuId = 'primary-search-account-menu'
   const renderMenu = (
     <Menu
