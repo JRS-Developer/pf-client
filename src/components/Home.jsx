@@ -8,6 +8,10 @@ import Navbar from './navbar/Navbar'
 import Header from './header/Header'
 import Container from './container/Container'
 
+import { socketNotification } from './socket'
+import {subscription} from '../serviceWorkerRegistration'
+
+
 const Home = () => {
   const [sideToggle, setSideToggle] = useState(false)
 
@@ -21,6 +25,9 @@ const Home = () => {
   const [secondary, setSecondary] = useState(
     localStorage.getItem('secondary') || themes.GaiaTheme.palette.secondary.main
   )
+
+  const user = localStorage.getItem('user')
+
   const [custom, setCustom] = useState({
     typography: {
       fontSize: 12,
@@ -58,6 +65,14 @@ const Home = () => {
       },
     })
   }, [primary, secondary])
+
+  useEffect(() => {
+    subscription()
+  }, []);
+
+  useEffect(() => {
+    socketNotification.emit('online', user)
+  })
 
   const actualTheme = theme !== 'custom' ? themes[theme] : custom
 

@@ -11,9 +11,8 @@ import {
 } from '../../actions/school'
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 350, hide: true },
-  { field: 'name', headerName: 'Nombre', width: 300 },
-  { field: 'status', headerName: 'Estado', width: 300 },
+  { field: 'name', headerName: 'Name', width: 300 },
+  { field: 'status', headerName: 'Status', width: 300 },
 ]
 
 const form = SchoolForm

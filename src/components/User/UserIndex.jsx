@@ -10,7 +10,6 @@ import {
 import { format } from 'date-fns'
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 300, hide: true },
   {
     field: 'firstName',
     headerName: 'Nombre',

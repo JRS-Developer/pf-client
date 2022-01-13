@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React from 'react'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -16,6 +17,7 @@ import FileUpload from './FileUpload'
 import CardMedia from '@mui/material/CardMedia'
 import Card from '@mui/material/Card'
 import LinearProgress from '@mui/material/LinearProgress'
+import { socketNotification } from '../socket'
 
 export default function CreatePost({
   getPosts,
@@ -126,6 +128,27 @@ export default function CreatePost({
 
     await dispatch(createPost(form))
     setPostSubmitted(!postSubmitted)
+
+    const sender = localStorage.getItem('user')
+
+    const message = {
+      title: post.title,
+      text: post.text
+    }
+
+    const notification = {
+      sender, 
+      clase_Id: claseId,
+      materiaId,
+      school_Id: schoolId,
+      ciclo_lectivo_Id: cicloLectivoId,
+      message
+    }
+
+    // dispatch(addNotification({data: notification, userId: sender}))
+    
+    socketNotification.emit('notification', notification)
+    
   }
 
   return (

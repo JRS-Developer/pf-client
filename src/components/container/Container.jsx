@@ -23,7 +23,8 @@ import TeacherIndex from '../teacher/TeacherIndex'
 import TablaEntregas from '../teacher/homework/TablaEntregas.jsx'
 import TeacherClassroom from '../teacher/TeacherClassroom'
 import ActionsMateria from '../teacher/ActionsMateria'
-import socket from '../socket'
+import Notifications from '../notifications/Notifications'
+import { socketChat } from '../socket'
 import Noticias from '../noticias/Noticias'
 
 
@@ -38,10 +39,10 @@ const Content = ({
   // Seteamos al usuario como usuario conectado en el socket
   useEffect(() => {
     const user = localStorage.getItem('user')
-    socket.emit('go-online', user)
+    socketChat.emit('go-online', user)
 
-    const handleUnload = (e) => {
-      socket.emit('go-offline', user)
+    const handleUnload = () => {
+      socketChat.emit('go-offline', user)
       // e.preventDefault()
       // e.returnValue = ''
     }
@@ -100,6 +101,7 @@ const Content = ({
             setSecondary={setSecondary}
           />
         </Route>
+        <Route exact path="/notifications" component={Notifications} />
         <Route exact path="/classroom-teacher" component={TeacherClassroom} />
         <Route
           exact

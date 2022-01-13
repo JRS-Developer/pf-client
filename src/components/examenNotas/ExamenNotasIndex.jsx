@@ -18,7 +18,6 @@ export default function ExamenNotasIndex({student = false}) {
   const param = useParams()
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 300, hide: true },
     { field: 'fecha', headerName: 'FECHA EVALUACIÓN', width: 200 },
     { field: 'school', headerName: 'ESCUELA', width: 300 },
     { field: 'clase', headerName: 'CLASE', width: 200 },
@@ -54,7 +53,6 @@ export default function ExamenNotasIndex({student = false}) {
       id: param.materia_id || param.materiaId,
     }
 
- 
     dispatch(listExamenNotas(body, student))
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch])

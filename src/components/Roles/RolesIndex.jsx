@@ -10,7 +10,6 @@ import {
 } from '../../actions/role'
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 300 },
   { field: 'name', headerName: 'Roles', width: 400 },
 ]
 

@@ -19,6 +19,7 @@ import { getSchoolReducer } from './school'
 import { getChatReducer } from './chat'
 import { getTeacherReducer } from './teacher'
 import { getExamenNotasReducer } from './examenNotas'
+import notificationReducer from './notification'
 
 export default combineReducers({
   usersReducer: getUsersReducer,
@@ -42,4 +43,5 @@ export default combineReducers({
   chatReducer: getChatReducer,
   teacherReducer: getTeacherReducer,
   examenNotasReducer: getExamenNotasReducer,
+  notificationReducer,
 })
