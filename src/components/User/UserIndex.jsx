@@ -10,7 +10,7 @@ import {
 import { format } from 'date-fns'
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 300 },
+  // { field: 'id', headerName: 'ID', width: 300 },
   {
     field: 'firstName',
     headerName: 'Nombre',
@@ -26,21 +26,21 @@ const columns = [
   {
     field: 'userName',
     headerName: 'Nombre de usuario',
-    width: 120,
+    width: 150,
     editable: true,
   },
   {
     field: 'email',
     headerName: 'Correo Electronico',
-    width: 150,
+    width: 250,
     editable: true,
   },
-  {
-    field: 'password',
-    headerName: 'Contraseña',
-    width: 150,
-    editable: true,
-  },
+  // {
+  //   field: 'password',
+  //   headerName: 'Contraseña',
+  //   width: 150,
+  //   editable: true,
+  // },
   {
     field: 'role',
     headerName: 'Rol',

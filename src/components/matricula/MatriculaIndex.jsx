@@ -25,7 +25,7 @@ const columns = [
   { field: 'identification', headerName: 'Identification', width: 300 },
   { field: 'school', headerName: 'Escuela', width: 300 },
   { field: 'class', headerName: 'Clase', width: 300 },
-  { field: 'ciclo_electivo', headerName: 'Ciclo Electivo', width: 200 },
+  { field: 'ciclo_electivo', headerName: 'Ciclo Lectivo', width: 200 },
 ]
 
 const form = MatriculaForm
