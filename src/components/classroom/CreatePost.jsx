@@ -145,8 +145,10 @@ export default function CreatePost({
       message
     }
 
-    dispatch(addNotification({data: notification, userId: sender}))
+    // dispatch(addNotification({data: notification, userId: sender}))
+    
     socketNotification.emit('notification', notification)
+    
   }
 
   return (

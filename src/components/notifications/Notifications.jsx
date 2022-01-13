@@ -6,16 +6,16 @@ import ListItem from '@mui/material/ListItem'
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button'
-import ListItemAvatar from '@mui/material/ListItemAvatar'
+// import ListItemAvatar from '@mui/material/ListItemAvatar'
 import ListItemText from '@mui/material/ListItemText'
-import ListItemButton from '@mui/material/ListItemButton'
+// import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import Checkbox from '@mui/material/Checkbox'
-import Avatar from '@mui/material/Avatar'
+// import Avatar from '@mui/material/Avatar'
 import CircularProgress from '@mui/material/CircularProgress'
 import { useDispatch, useSelector } from 'react-redux'
 import { socketNotification } from '../socket'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import {
   getNotifications,
   removeNotifications,
@@ -79,7 +79,7 @@ const Notifications = () => {
 
   React.useEffect(() => {
     socketNotification.on('notification',data => {
-     
+      console.log(data)
     })
   }, [])
 

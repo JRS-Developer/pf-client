@@ -1,7 +1,7 @@
 import io from 'socket.io-client'
 import store from '../store/'
 import { setNewMessage, addOnlineUser, removeOnlineUser } from '../actions/chat'
-import { addNotification } from '../actions/notification'
+// import { addNotification } from '../actions/notification'
 const { REACT_APP_SOCKET_CHAT, REACT_APP_SOCKET_NOTIFICATION } = process.env;
 
 
