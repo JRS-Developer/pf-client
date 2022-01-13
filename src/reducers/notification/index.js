@@ -4,6 +4,7 @@ const initialState = {
   notifications: [],
   loading: false,
   error: null,
+  message: null,
 }
 
 export default function reducer(state = initialState, action) {
@@ -30,6 +31,12 @@ export default function reducer(state = initialState, action) {
         ...state,
         loading: false,
         error: action.payload,
+      }
+    case actionTypes.REMOVE_NOTIFICATIONS:
+      return {
+        ...state,
+        loading: false,
+        message: action.payload,
       }
     default:
       return state

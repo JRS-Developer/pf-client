@@ -6,16 +6,17 @@ import ListItem from '@mui/material/ListItem'
 import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button'
-// import ListItemAvatar from '@mui/material/ListItemAvatar'
 import ListItemText from '@mui/material/ListItemText'
-// import ListItemButton from '@mui/material/ListItemButton'
+import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import Checkbox from '@mui/material/Checkbox'
-// import Avatar from '@mui/material/Avatar'
-import CircularProgress from '@mui/material/CircularProgress'
 import { useDispatch, useSelector } from 'react-redux'
 import { socketNotification } from '../socket'
 // import { Link } from 'react-router-dom'
+import Avatar from '@mui/material/Avatar'
+import ListItemAvatar from '@mui/material/ListItemAvatar'
+import CircularProgress from '@mui/material/CircularProgress'
+import { Link as RouterLink } from 'react-router-dom'
 import {
   getNotifications,
   removeNotifications,
@@ -36,29 +37,37 @@ const Notification = ({
           edge="start"
           checked={checked.indexOf(id) !== -1}
           tabIndex={-1}
-          disableRipple
           inputProps={{ 'aria-labelledby': id }}
         />
       </ListItemIcon>
-      <Box
+      <ListItemButton
         sx={{
           width: '100%',
         }}
+        component={RouterLink}
+        to={url}
       >
+        {/* TODO: Descomentar esto cuando el poder colocar el quien envia el mensaje funcione */}
+        {/* <ListItemAvatar>
+          <Avatar>B</Avatar>
+        </ListItemAvatar> */}
         <ListItemText
-          primary={<Typography>{title}</Typography>}
+          primary={<Typography color="primary">{title}</Typography>}
           secondary={description}
         />
-      </Box>
+      </ListItemButton>
     </ListItem>
   )
 }
 
 const Notifications = () => {
-  // const { notifications, loading } = useSelector(
-  //   (state) => state.notificationsReducer
-  // )
   const [checked, setChecked] = React.useState([])
+
+  const { notifications, loading } = useSelector(
+    (state) => state.notificationReducer
+  )
+
+  const user = localStorage.getItem('user')
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value)
@@ -72,10 +81,6 @@ const Notifications = () => {
 
     setChecked(newChecked)
   }
-  const { notifications, loading } = useSelector(
-    (state) => state.notificationReducer
-  )
-  console.log(notifications)
 
   React.useEffect(() => {
     socketNotification.on('notification',data => {
@@ -83,18 +88,20 @@ const Notifications = () => {
     })
   }, [])
 
-  const handleLeido = () => {
+  
+  const handleLeido = async () => {
     setChecked([])
-    removeNotifications(checked)
+
+    await dispatch(removeNotifications(checked))
+    await dispatch(getNotifications(user))
   }
 
-  const handleTodoLeidos = () => {
+  const handleTodoLeidos = async () => {
     // Aqui deberia ejecutar el action de eliminar notificaciones
     const ids = notifications.map((notification) => notification.id)
-    removeNotifications(ids)
+    await dispatch(removeNotifications(ids))
+    await dispatch(getNotifications(user))
   }
-
-  const user = localStorage.getItem('user')
 
   const dispatch = useDispatch()
 
@@ -115,14 +122,27 @@ const Notifications = () => {
           <Box
             sx={{
               ml: 'auto',
+              display: 'flex',
+              gap: 1,
             }}
           >
-            {checked.length ? (
-              <Button onClick={handleLeido}>Marcar como leido</Button>
+            {loading ? (
+              <CircularProgress />
+            ) : notifications.length > 0 ? (
+              <>
+                <Button
+                  onClick={handleLeido}
+                  variant="contained"
+                  disabled={checked.length === 0}
+                >
+                  Marcar como leido
+                </Button>
+
+                <Button variant="outlined" onClick={handleTodoLeidos}>
+                  Marcar todo como leido
+                </Button>
+              </>
             ) : null}
-            <Button variant="outlined" onClick={handleTodoLeidos}>
-              Marcar todo como leido
-            </Button>
           </Box>
         </Grid>
       </Paper>
