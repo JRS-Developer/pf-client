@@ -24,7 +24,7 @@ import TablaEntregas from '../teacher/homework/TablaEntregas.jsx'
 import TeacherClassroom from '../teacher/TeacherClassroom'
 import ActionsMateria from '../teacher/ActionsMateria'
 import Notifications from '../notifications/Notifications'
-import { socketChat } from '../socket'
+import { socketChat, socketNotification } from '../socket'
 import Noticias from '../noticias/Noticias'
 
 const user = localStorage.getItem('user')
@@ -39,7 +39,8 @@ const Content = ({
 }) => {
   // Seteamos al usuario como usuario conectado en el socket
   useEffect(() => {
-    socketChat.emit('go-online', user)
+    socketChat.emit('go-online', user);
+    socketNotification.emit('online', user)
   }, [])
 
   return (

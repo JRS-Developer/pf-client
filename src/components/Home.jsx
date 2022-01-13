@@ -8,7 +8,7 @@ import Navbar from './navbar/Navbar'
 import Header from './header/Header'
 import Container from './container/Container'
 
-import { socketNotification } from './socket'
+// import { socketNotification } from './socket'
 import {subscription} from '../serviceWorkerRegistration'
 
 
@@ -26,7 +26,7 @@ const Home = () => {
     localStorage.getItem('secondary') || themes.GaiaTheme.palette.secondary.main
   )
 
-  const user = localStorage.getItem('user')
+  // const user = localStorage.getItem('user')
 
   const [custom, setCustom] = useState({
     typography: {
@@ -70,9 +70,9 @@ const Home = () => {
     subscription()
   }, []);
 
-  useEffect(() => {
-    socketNotification.emit('online', user)
-  })
+  // useEffect(() => {
+  //   socketNotification.emit('online', user)
+  // })
 
   const actualTheme = theme !== 'custom' ? themes[theme] : custom
 
