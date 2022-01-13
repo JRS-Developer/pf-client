@@ -14,19 +14,24 @@ import Avatar from '@mui/material/Avatar'
 import ListItemAvatar from '@mui/material/ListItemAvatar'
 import CircularProgress from '@mui/material/CircularProgress'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link as RouterLink } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import {
   getNotifications,
   removeNotifications,
 } from '../../actions/notification'
+import { formatDistanceToNow } from 'date-fns'
+import { es } from 'date-fns/locale'
 
 const Notification = ({
   id,
   url,
   message: description,
   title,
+  sender,
+  createdAt,
   handleToggle,
   checked,
+  handleClick,
 }) => {
   return (
     <ListItem>
@@ -42,16 +47,28 @@ const Notification = ({
         sx={{
           width: '100%',
         }}
-        component={RouterLink}
-        to={url}
+        onClick={handleClick}
       >
-        {/* TODO: Descomentar esto cuando el poder colocar el quien envia el mensaje funcione */}
-        {/* <ListItemAvatar>
-          <Avatar>B</Avatar>
-        </ListItemAvatar> */}
+        <ListItemAvatar>
+          <Avatar
+            src={sender.avatar}
+            alt={`${sender.firstName} - ${sender.lastName}`}
+          >
+            {sender.firstName.charAt(0).toUpperCase()}
+          </Avatar>
+        </ListItemAvatar>
         <ListItemText
           primary={<Typography color="primary">{title}</Typography>}
           secondary={description}
+        />
+        <ListItemText
+          primary={
+            <Typography color="primary" align="right">
+              {formatDistanceToNow(new Date(createdAt), {
+                locale: es,
+              })}
+            </Typography>
+          }
         />
       </ListItemButton>
     </ListItem>
@@ -64,6 +81,8 @@ const Notifications = () => {
   const { notifications, loading } = useSelector(
     (state) => state.notificationReducer
   )
+
+  const history = useHistory()
 
   const user = localStorage.getItem('user')
 
@@ -85,6 +104,11 @@ const Notifications = () => {
 
     await dispatch(removeNotifications(checked))
     await dispatch(getNotifications(user))
+  }
+
+  const handleClick = (id, url) => () => {
+    history.push(url)
+    dispatch(removeNotifications([id]))
   }
 
   const handleTodoLeidos = async () => {
@@ -138,24 +162,49 @@ const Notifications = () => {
         </Grid>
       </Paper>
       <List>
-        <Paper>
-          {loading ? (
+        {loading ? (
+          <Paper
+            sx={{
+              p: 3,
+              minHeight: '100px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
             <CircularProgress />
-          ) : notifications.length ? (
-            notifications.map((notification) => (
+          </Paper>
+        ) : notifications.length ? (
+          <Paper>
+            {notifications.map((notification) => (
               <Notification
                 key={notification.id}
                 {...notification}
                 handleToggle={handleToggle}
                 checked={checked}
+                handleClick={handleClick(notification.id, notification.url)}
               />
-            ))
-          ) : (
+            ))}
+          </Paper>
+        ) : (
+          <Paper
+            sx={{
+              p: 3,
+              minHeight: '100px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
             <ListItem>
-              <ListItemText primary="No hay notificaciones" />
+              <ListItemText
+                primary={
+                  <Typography variant="h6">No hay notificaciones</Typography>
+                }
+              />
             </ListItem>
-          )}
-        </Paper>
+          </Paper>
+        )}
       </List>
     </Box>
   )
