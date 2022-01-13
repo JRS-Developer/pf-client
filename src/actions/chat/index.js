@@ -49,7 +49,7 @@ export const getMessages =
           throw e
         }
       }
-
+      console.log(chatData)
       // Obtengo los mensajes del chat
       let messagesRequest = getChatMessages(chatData._id)
 

@@ -117,7 +117,7 @@ const Chat = () => {
     // Crep un unico _id para el mensaje, esto es para los otros usuarios
     const _id = new Date().getTime()
 
-    socketChat.emit('message', { user, message, chatId: chat._id, _id })
+    socketChat.emit('message', { user, message, chatId: chat._id, _id})
   }
 
   const findUserData = (users, userId) => {

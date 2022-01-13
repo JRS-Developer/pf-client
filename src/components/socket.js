@@ -1,7 +1,9 @@
 import io from 'socket.io-client'
 import store from '../store/'
 import { setNewMessage, addOnlineUser, removeOnlineUser } from '../actions/chat'
-const { REACT_APP_SOCKET_CHAT, REACT_APP_SOCKET_NOTIFICATION } = process.env
+// import { addNotification } from '../actions/notification'
+const { REACT_APP_SOCKET_CHAT, REACT_APP_SOCKET_NOTIFICATION } = process.env;
+
 
 if (!REACT_APP_SOCKET_CHAT?.startsWith('http')) {
   console.error(
@@ -32,5 +34,22 @@ socketChat.on('offline', (userId) => {
 })
 
 // Notification
+
+// socketNotification.on('new-notification', (data) => {
+// })
+
+// socketNotification.on('online', (userId) => {
+//   store.dispatch()
+// })
+
+// socketNotification.on('notification', (data) => {
+  
+// })
+
+// socketNotification.on('offline', (userId) => {
+//   store.dispatch()
+// })
+
+
 
 export { socketChat, socketNotification }
