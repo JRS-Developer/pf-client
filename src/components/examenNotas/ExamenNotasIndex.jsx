@@ -43,7 +43,7 @@ export default function ExamenNotasIndex({student = false}) {
   examenNotas?.map(nt => (
     suma += parseFloat(nt.nota)
   ));
-  promedio = suma / examenNotas.length;
+  promedio = suma / examenNotas?.length;
 
   useEffect(() => {
     const body = {
@@ -53,15 +53,16 @@ export default function ExamenNotasIndex({student = false}) {
       id: param.materia_id || param.materiaId,
     }
 
-    dispatch(listExamenNotas(body))
-  }, [dispatch, param])
+    dispatch(listExamenNotas(body, student))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch])
 
 
   return (
     <>
       {student && <><h3>Promedio: {promedio.toFixed(2)}</h3> <Divider /></> }
       
-      {
+      {examenNotas &&
         <Table
           data={data}
           DialogForm={form}

@@ -9,10 +9,6 @@ import { useParams } from 'react-router-dom'
 import CreatePost from './CreatePost'
 import ConfirmDialog from '../alert/ConfirmDialog'
 import EditPostForm from './EditPostForm'
-import Paper from '@mui/material/Paper'
-import TextField from '@mui/material/TextField'
-
-import Button from '@mui/material/Button'
 
 export default function Feed({ valueCiclo, valueSchool, noticias, nuevo }) {
   const [open, setOpen] = useState(false) //Este es para el Dialog que muestra la imagen de una publicacion

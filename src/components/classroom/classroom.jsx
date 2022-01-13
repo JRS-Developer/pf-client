@@ -12,7 +12,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import Paper from '@mui/material/Paper';
 //import NotasProfesor from '../notas/NotasProfesor';
 import ExamenNotasIndex from '../examenNotas/ExamenNotasIndex';
-import FullScreenDialog from './chat/ListUser';
+// import FullScreenDialog from './chat/ListUser';
 import AssignmentIcon from '@mui/icons-material/Assignment'
 import FeedIcon from '@mui/icons-material/Feed';
 import VideoCameraFrontIcon from '@mui/icons-material/VideoCameraFront';

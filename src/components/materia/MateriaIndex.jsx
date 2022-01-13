@@ -9,8 +9,7 @@ import { getMaterias as listMaterias, getDataById, modifiedMateria } from "../..
 const columns = [
   { field: 'name', headerName: 'Name', width: 300},
   { field: 'description', headerName: 'Descripción', width: 300},
-  { field: 'status', headerName: 'Status', width: 300},
-
+  { field: 'status', headerName: 'Estado', width: 300},
 ];
 
 const form = MateriaForm
@@ -23,16 +22,15 @@ export default function MateriaIndex() {
 
   const data = {
     columns,
-    rows: materias
+    rows: materias.map(m => Object.assign({...m, status: m.status ? "Activo" : "Inactivo"}))
   }
 
   useEffect(() => {
     dispatch(listMaterias())
   }, [dispatch])
 
-  return (
-    <>
-      { <Table
+  return materias && 
+      ( <Table
         data={data}
         DialogForm={form}
         title="MATERIAS"
@@ -41,7 +39,6 @@ export default function MateriaIndex() {
         modifiedAction={modifiedMateria}
         listData={listMaterias}
         loading={loadingMaterias}
-      /> }
-    </>
+      />
   )
 }
