@@ -255,7 +255,7 @@ export default function Gaia({ scroll }) {
               id="niñite"
               style={{ width: '100%', height: '250px' }}
               alt="Classroom"
-              src="/imgLanding/Profe.jpg"
+              src="/imgLanding/profe.jpg"
             />
           </ObjectFit>
         </Grid>
